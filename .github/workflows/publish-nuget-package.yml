@@ -1,0 +1,37 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  run-tests:
+    uses: ./.github/workflows/run-tests.yml
+
+  publish-nuget-package:
+    needs: run-tests
+    runs-on: ubuntu-22.04
+    env:
+      WebManagerSettings__IsHeadlessEnabled: "true"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore src/Karpatium/Karpatium.csproj
+
+      - name: Build
+        run: dotnet build src/Karpatium/Karpatium.csproj --configuration Release --no-restore /p:ContinuousIntegrationBuild=true
+
+      - name: Pack
+        run: dotnet pack src/Karpatium/Karpatium.csproj --configuration Release --no-build
+
+      - name: Publish
+        run: dotnet nuget push src/Karpatium/bin/Release/**/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json

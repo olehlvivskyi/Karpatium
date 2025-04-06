@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karpatium", "src\Karpatium\Karpatium.csproj", "{DFB4A9E8-575C-44B5-862E-1CEC015AA59B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsQa.UI", "examples\ToolsQa.UI\ToolsQa.UI.csproj", "{0671A146-E789-4195-B5FC-A29F17D94612}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsQa.Tests", "examples\ToolsQa.Tests\ToolsQa.Tests.csproj", "{E2F97126-8894-4642-886D-B5E5C310597F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFB4A9E8-575C-44B5-862E-1CEC015AA59B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFB4A9E8-575C-44B5-862E-1CEC015AA59B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFB4A9E8-575C-44B5-862E-1CEC015AA59B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFB4A9E8-575C-44B5-862E-1CEC015AA59B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0671A146-E789-4195-B5FC-A29F17D94612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0671A146-E789-4195-B5FC-A29F17D94612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0671A146-E789-4195-B5FC-A29F17D94612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0671A146-E789-4195-B5FC-A29F17D94612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2F97126-8894-4642-886D-B5E5C310597F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F97126-8894-4642-886D-B5E5C310597F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F97126-8894-4642-886D-B5E5C310597F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F97126-8894-4642-886D-B5E5C310597F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
