@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <None Include="../../README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+    
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>Karpatium</PackageId>
+        <Version>0.1.5</Version>
+        <Authors>Oleh Lvivskyi</Authors>
+        <PackageReleaseNotes>
+This is the initial alpha release.
+- The package is still under development.
+- Currently, no implementation is included.
+- Stay tuned for future updates!
+        </PackageReleaseNotes>
+        <PackageTags>karpatium; selenium; test-automation; web automation; ui-automation; qa; automation </PackageTags>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/olehlvivskyi/Karpatium</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+</Project>
