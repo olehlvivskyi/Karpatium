@@ -3,6 +3,13 @@
     <ItemGroup>
         <None Include="../../README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NUnit" Version="4.2.2" />
+      <PackageReference Include="Selenium.WebDriver" Version="4.32.0" />
+      <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="137.0.7151.600-beta" />
+      <PackageReference Include="Serilog" Version="4.2.0" />
+    </ItemGroup>
     
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
@@ -11,12 +18,12 @@
     
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Karpatium</PackageId>
-        <Version>0.1.5</Version>
+        <Version>0.2.0</Version>
         <Authors>Oleh Lvivskyi</Authors>
         <PackageReleaseNotes>
 This is the initial alpha release.
 - The package is still under development.
-- Currently, no implementation is included.
+- Currently, almost no implementation is included.
 - Stay tuned for future updates!
         </PackageReleaseNotes>
         <PackageTags>karpatium; selenium; test-automation; web automation; ui-automation; qa; automation </PackageTags>
