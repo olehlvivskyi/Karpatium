@@ -2,6 +2,7 @@
 
     <ItemGroup>
         <None Include="../../README.md" Pack="true" PackagePath="\"/>
+        <None Include="../../icon.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -21,8 +22,9 @@
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Karpatium</PackageId>
-        <Version>0.3.0</Version>
+        <Version>0.3.1</Version>
         <Authors>Oleh Lvivskyi</Authors>
+        <PackageIcon>icon.png</PackageIcon>
         <PackageReleaseNotes>
 This is the initial alpha release.
 - The package is still under development.
