@@ -1,3 +1,5 @@
+using Karpatium.Core.Web.BrowserParts;
+
 namespace Karpatium.Core.Web;
 
 /// <summary>
@@ -5,6 +7,16 @@ namespace Karpatium.Core.Web;
 /// </summary>
 public interface IBrowser
 {
+    /// <summary>
+    /// Provides access to advanced interactions within the browser instance.
+    /// </summary>
+    AdvancedInteractions AdvancedInteractions { get; }
+    
+    /// <summary>
+    /// Provides access to JavaScript execution within the browser instance.
+    /// </summary>
+    JavaScript JavaScript { get; }
+    
     /// <summary>
     /// Gets the current URL of the webpage loaded in the browser instance.
     /// </summary>

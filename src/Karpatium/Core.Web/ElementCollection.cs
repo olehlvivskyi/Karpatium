@@ -1,4 +1,5 @@
 using System.Collections;
+using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
 
 namespace Karpatium.Core.Web;
@@ -47,10 +48,12 @@ public class ElementCollection<TElement> : IReadOnlyList<TElement>
     {
         get
         {
-            IReadOnlyList<IWebElement> elements = Parent == null
-                ? WebManager.BrowserWrapper.FindElements(Selector!)
-                : Parent.FindElements(Selector!);
-
+            IReadOnlyList<IWebElement> elements = Parent == null 
+                ? ConditionalWaiter.ForResult(() => WebManager.BrowserWrapper.FindElements(Selector!),
+                    $"{nameof(WebElementsWrapper)} from global DOM failed.") 
+                : ConditionalWaiter.ForResult(() => Parent.FindElements(Selector!),
+                    $"{nameof(WebElementsWrapper)} from parent element failed.");
+            
             return elements;
         }
     }

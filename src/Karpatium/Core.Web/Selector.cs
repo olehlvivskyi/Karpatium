@@ -12,6 +12,27 @@ public sealed class Selector
     private Selector(By by) => ByWrapper = by;
 
     /// <summary>
+    /// Creates a selector for finding elements by their HTML class attribute.
+    /// </summary>
+    /// <param name="className">The class name of the HTML element to locate.</param>
+    /// <returns>A <see cref="Selector"/> for locating elements with the specified class name.</returns>
+    /// <example>
+    /// Given the following HTML:
+    /// <code>
+    /// &lt;div class="content-box"&gt;Hello, World!&lt;/div&gt;
+    /// </code>
+    /// You can locate the div element using:
+    /// <code>
+    /// Selector.Class("content-box");
+    /// </code>
+    /// </example>
+    public static Selector Class(string className)
+    {
+        var selector = By.ClassName(className);
+        return new Selector(selector);
+    }
+    
+    /// <summary>
     /// Creates a selector for finding elements using a CSS selector.
     /// </summary>
     /// <param name="css">The CSS selector string used to locate HTML elements.</param>
@@ -29,6 +50,27 @@ public sealed class Selector
     public static Selector Css(string css)
     {
         var selector = By.CssSelector(css);
+        return new Selector(selector);
+    }
+
+    /// <summary>
+    /// Creates a selector for finding elements using the data-testid attribute.
+    /// </summary>
+    /// <param name="dataTestId">The value of the data-testid attribute to locate the HTML element.</param>
+    /// <returns>A <see cref="Selector"/> for locating elements with the specified data-testid attribute.</returns>
+    /// <example>
+    /// Given the following HTML:
+    /// <code>
+    /// &lt;button data-testid="submit-button"&gt;Submit&lt;/button&gt;
+    /// </code>
+    /// You can locate the button element using:
+    /// <code>
+    /// Selector.DataTestId("submit-button");
+    /// </code>
+    /// </example>
+    public static Selector DataTestId(string dataTestId)
+    {
+        var selector = By.CssSelector($"[data-testid='{dataTestId}']");
         return new Selector(selector);
     }
     
@@ -115,4 +157,10 @@ public sealed class Selector
         var selector = By.XPath(xpath);
         return new Selector(selector);
     }
+
+    /// <summary>
+    /// Returns a string representation of the selector, reflecting the criteria used to locate the UI elements.
+    /// </summary>
+    /// <returns>A string describing the locator criteria for the selector.</returns>
+    public override string ToString() => ByWrapper.ToString();
 }

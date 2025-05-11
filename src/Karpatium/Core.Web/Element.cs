@@ -1,3 +1,4 @@
+using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
 
 namespace Karpatium.Core.Web;
@@ -38,8 +39,10 @@ public abstract class Element
         get
         {
             IWebElement element = MultipleWrapper ?? (Parent == null
-                ? WebManager.BrowserWrapper.FindElement(Selector!)
-                : Parent.FindElement(Selector!));
+                ? ConditionalWaiter.ForResult(() => WebManager.BrowserWrapper.FindElement(Selector!), 
+                    $"{nameof(WebElementWrapper)} from global DOM failed.")
+                : ConditionalWaiter.ForResult(() => Parent.FindElement(Selector!), 
+                    $"{nameof(WebElementWrapper)} from parent element failed."));
             return element;
         }
     }
@@ -52,5 +55,8 @@ public abstract class Element
     /// <summary>
     /// Simulates a click action on the element.
     /// </summary>
-    public void Click() => WebElementWrapper.Click();
+    public void Click()
+    {
+        ConditionalWaiter.ForNoException(() => WebElementWrapper.Click(), $"{nameof(Click)} failed.");
+    }
 }

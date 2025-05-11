@@ -1,3 +1,4 @@
+using Karpatium.Core.Web.BrowserParts;
 using OpenQA.Selenium;
 using Serilog;
 
@@ -17,6 +18,9 @@ internal sealed class Browser : IBrowser
     internal Browser(IWebDriver driver)
     {
         DriverWrapper = driver;
+        
+        AdvancedInteractions = new AdvancedInteractions(driver);
+        JavaScript = new JavaScript(driver);
     }
 
     /// <summary>
@@ -37,6 +41,16 @@ internal sealed class Browser : IBrowser
     /// Closes all browser windows and safely ends the WebDriver session.
     /// </summary>
     internal void Quit() => DriverWrapper.Quit();
+    
+    /// <summary>
+    /// Provides access to advanced interactions within the browser instance.
+    /// </summary>
+    public AdvancedInteractions AdvancedInteractions { get; }
+
+    /// <summary>
+    /// Provides access to JavaScript execution within the browser instance.
+    /// </summary>
+    public JavaScript JavaScript { get; }
 
     /// <summary>
     /// Gets the current URL of the webpage loaded in the browser instance.
