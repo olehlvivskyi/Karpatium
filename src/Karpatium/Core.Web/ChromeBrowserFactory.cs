@@ -31,7 +31,7 @@ internal sealed class ChromeBrowserFactory : IBrowserFactory
 
         if (browserSettings.IsHeadlessEnabled)
         {
-            chromeOptions.AddArguments("--headless");
+            chromeOptions.AddArguments("--headless=new");
             chromeOptions.AddArguments("window-size=1920,1080");
         }
 

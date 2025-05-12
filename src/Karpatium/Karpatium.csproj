@@ -22,7 +22,7 @@
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Karpatium</PackageId>
-        <Version>0.3.1</Version>
+        <Version>0.3.3</Version>
         <Authors>Oleh Lvivskyi</Authors>
         <PackageIcon>icon.png</PackageIcon>
         <PackageReleaseNotes>

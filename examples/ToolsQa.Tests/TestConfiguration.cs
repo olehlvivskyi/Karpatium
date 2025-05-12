@@ -11,7 +11,8 @@ public static class TestConfiguration
     {
         IConfigurationBuilder builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile(JsonFilePath);
+            .AddJsonFile(JsonFilePath)
+            .AddEnvironmentVariables();
 
         IConfiguration config = builder.Build();
         return config;
