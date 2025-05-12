@@ -1,17 +1,15 @@
+using Karpatium.Core.Utilities;
 using Karpatium.Core.Web;
+using Newtonsoft.Json;
 using Serilog;
 
 namespace ToolsQa.Tests;
 
-/*
- * The ToolsQa.Tests project is currently in its initial draft stage, created primarily to validate the framework
- * and page object structure.
- * At this stage, it lacks configuration, structured layering, and additional functionality, which will be introduced
- * in upcoming commits.
- * Stay tuned for further updates and improvements.
- */
-public abstract class BaseFixture
+public abstract class BaseFixture<TTestData>
 {
+    protected abstract string TestDataPath { get; }
+    protected TTestData TestData { get; private set; }
+    
     [OneTimeSetUp]
     public void BaseOneTimeSetUp()
     {
@@ -20,14 +18,33 @@ public abstract class BaseFixture
             .MinimumLevel.Verbose()
             .CreateLogger();
         
-        WebManager.Initialize(new TestConfiguration());
+        TestData = typeof(TTestData) == typeof(EmptyTestData)
+            ? default!
+            : GetTestDataFromJson();
+        
+        WebManager.Initialize(TestConfiguration.WebManagerSettings);
         WebManager.Browser.MaximizeWindow();
-        WebManager.Browser.NavigateTo("https://demoqa.com");
     }
     
     [OneTimeTearDown]
     public void BaseOneTimeTearDown()
     {
         WebManager.Quit();
+    }
+
+    protected void RemoveBannerAndFooter()
+    {
+        ConditionalRunner.IgnoreException(() => 
+            WebManager.Browser.JavaScript.Execute(TestConfiguration.TestSettings.BannerRemovalScript));
+        ConditionalRunner.IgnoreException(() => 
+            WebManager.Browser.JavaScript.Execute(TestConfiguration.TestSettings.FooterRemovalScript));
+    }
+    
+    private TTestData GetTestDataFromJson()
+    {
+        string jsonFileName = TestDataPath;
+        string jsonText = File.ReadAllText(jsonFileName);
+        TTestData testData = JsonConvert.DeserializeObject<TTestData>(jsonText)!;
+        return testData;
     }
 }

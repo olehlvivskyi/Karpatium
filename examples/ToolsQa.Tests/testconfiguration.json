@@ -1,0 +1,15 @@
+{
+  "ApplicationSettings": {
+    "BaseUrl": "https://demoqa.com"
+  },
+  "TestSettings": {
+    "BannerRemovalScript": "document.querySelector('#fixedban').remove();",
+    "FooterRemovalScript": "document.querySelector('footer').remove();"
+  },
+  "WebManagerSettings": {
+    "BrowserType": "Chrome",
+    "IsHeadlessEnabled": false,
+    "IsLocalExecution":  true,
+    "RemoteUrl": ""
+  }
+}

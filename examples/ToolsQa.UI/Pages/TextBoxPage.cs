@@ -27,7 +27,7 @@ public class TextBoxPage(string relativePath) : BasePage(relativePath)
     {
         Log.Information("{PageName}: Retrieving the submitted current address.", nameof(TextBoxPage));
         
-        var currentAddress = CurrentAddressOutput.Text.Split(':')[1];
+        string currentAddress = CurrentAddressOutput.Text.Split(':')[1];
         Log.Debug("{PageName}: currentAddress = `{CurrentAddress}`", 
             nameof(TextBoxPage), currentAddress);
         
@@ -42,7 +42,7 @@ public class TextBoxPage(string relativePath) : BasePage(relativePath)
     {
         Log.Information("{PageName}: Retrieving the submitted full name.", nameof(TextBoxPage));
         
-        var fullName = FullNameOutput.Text.Split(':')[1];
+        string fullName = FullNameOutput.Text.Split(':')[1];
         Log.Debug("{PageName}: fullName = `{FullName}`", 
             nameof(TextBoxPage), fullName);
         
@@ -57,7 +57,7 @@ public class TextBoxPage(string relativePath) : BasePage(relativePath)
     {
         Log.Information("{PageName}: Retrieving the submitted email address.", nameof(TextBoxPage));
         
-        var email = EmailOutput.Text.Split(':')[1];
+        string email = EmailOutput.Text.Split(':')[1];
         Log.Debug("{PageName}: email = `{Email}`", 
             nameof(TextBoxPage), email);
         
@@ -72,7 +72,7 @@ public class TextBoxPage(string relativePath) : BasePage(relativePath)
     {
         Log.Information("{PageName}: Retrieving the submitted permanent address.", nameof(TextBoxPage));
         
-        var permanentAddress = PermanentAddressOutput.Text.Split(':')[1];
+        string permanentAddress = PermanentAddressOutput.Text.Split(':')[1];
         Log.Debug("{PageName}: permanentAddress = `{PermanentAddress}`",
             nameof(TextBoxPage), permanentAddress);
         

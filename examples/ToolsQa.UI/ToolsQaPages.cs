@@ -11,6 +11,11 @@ namespace ToolsQa.UI;
 public static class ToolsQaPages
 {
     /// <summary>
+    /// Represents the "CheckBox" page.
+    /// </summary>
+    public static CheckBoxPage CheckBoxPage => new (ToolsQaPageUrls.CheckBoxPage);
+    
+    /// <summary>
     /// Represents the "TextBox" page.
     /// </summary>
     public static TextBoxPage TextBoxPage => new (ToolsQaPageUrls.TextBoxPage);
