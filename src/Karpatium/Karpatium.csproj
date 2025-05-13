@@ -22,13 +22,13 @@
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Karpatium</PackageId>
-        <Version>0.3.3</Version>
+        <Version>0.4.0</Version>
         <Authors>Oleh Lvivskyi</Authors>
         <PackageIcon>icon.png</PackageIcon>
         <PackageReleaseNotes>
-This is the initial alpha release.
+This is the MVP release.
 - The package is still under development.
-- Currently, almost no implementation is included.
+- Currently, only the basic functionality is included.
 - Stay tuned for future updates!
         </PackageReleaseNotes>
         <PackageTags>karpatium; selenium; test-automation; web automation; ui-automation; qa; automation </PackageTags>
