@@ -7,7 +7,7 @@ namespace ToolsQa.UI.Pages;
 /// <summary>
 /// Represents the "CheckBox" page.
 /// </summary>
-public class CheckBoxPage(string relativePath) : BasePage(relativePath)
+public sealed class CheckBoxPage(string relativePath) : BasePage(relativePath)
 {
     private CommonElement ExpandAll => ElementFactory.Create<CommonElement>(Selector.Class("rct-option-expand-all"));
     private ElementCollection<CommonElement> Nodes => ElementFactory.CreateMultiple<CommonElement>(Selector.Class("rct-node-leaf"));
@@ -34,8 +34,7 @@ public class CheckBoxPage(string relativePath) : BasePage(relativePath)
         IReadOnlyList<string> selectedNodes = SelectedNodes
             .Select(node => node.Text)
             .ToList();
-        Log.Debug("{PageName}: selectedNodes = `{@SelectedNodes}`", 
-            nameof(CheckBoxPage), selectedNodes);
+        Log.Debug("{PageName}: selectedNodes = `{@SelectedNodes}`", nameof(CheckBoxPage), selectedNodes);
 
         return selectedNodes;
     }
@@ -46,8 +45,7 @@ public class CheckBoxPage(string relativePath) : BasePage(relativePath)
     /// <param name="nodeName">The name of the node to be selected.</param>
     public void SelectNode(string nodeName)
     {
-        Log.Information("{PageName}: Selecting `{NodeName}` node.",
-            nameof(CheckBoxPage), nodeName);
+        Log.Information("{PageName}: Selecting `{NodeName}` node.", nameof(CheckBoxPage), nodeName);
         
         CommonElement nodeToSelect = Nodes.First(node => node.Text.Contains(nodeName));
         CommonElement nodeCheckBox = ElementFactory.Create<CommonElement>(Selector.Class("rct-checkbox"), nodeToSelect);

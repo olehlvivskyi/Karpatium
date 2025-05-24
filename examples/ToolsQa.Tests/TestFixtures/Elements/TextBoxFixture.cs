@@ -2,7 +2,7 @@ using Karpatium.Core.TestData;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
-namespace ToolsQa.Tests.TestFixtures;
+namespace ToolsQa.Tests.TestFixtures.Elements;
 
 [TestFixture]
 public class TextBoxFixture : BaseFixture<EmptyTestData>
@@ -17,7 +17,7 @@ public class TextBoxFixture : BaseFixture<EmptyTestData>
     }
     
     [Test]
-    public void VerifyThatAllDataIsCorrectlySubmitted()
+    public void EnsureThatAllDataIsCorrectlySubmitted()
     {
         string fullName = TestDataGenerator.GetFullName();
         string email = TestDataGenerator.GetEmail();

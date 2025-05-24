@@ -49,14 +49,15 @@ public abstract class Element
 
     private IWebElement FindElement(Selector selector) => WebElementWrapper.FindElement(selector.ByWrapper);
     
-    internal IReadOnlyList<IWebElement> FindElements(Selector selector) 
-        => WebElementWrapper.FindElements(selector.ByWrapper);
+    internal IReadOnlyList<IWebElement> FindElements(Selector selector) => WebElementWrapper.FindElements(selector.ByWrapper);
 
+    /// <summary>
+    /// Gets a value indicating whether the element is disabled.
+    /// </summary>
+    public bool IsDisabled => ConditionalWaiter.ForResult(() => !WebElementWrapper.Enabled, $"{nameof(IsDisabled)} failed.");
+    
     /// <summary>
     /// Simulates a click action on the element.
     /// </summary>
-    public void Click()
-    {
-        ConditionalWaiter.ForNoException(() => WebElementWrapper.Click(), $"{nameof(Click)} failed.");
-    }
+    public void Click() => ConditionalWaiter.ForNoException(() => WebElementWrapper.Click(), $"{nameof(Click)} failed.");
 }

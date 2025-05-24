@@ -16,6 +16,11 @@ public static class ToolsQaPages
     public static CheckBoxPage CheckBoxPage => new (ToolsQaPageUrls.CheckBoxPage);
     
     /// <summary>
+    /// Represents the "RadioButton" page.
+    /// </summary>
+    public static RadioButtonPage RadioButtonPage => new (ToolsQaPageUrls.RadioButtonPage);
+    
+    /// <summary>
     /// Represents the "TextBox" page.
     /// </summary>
     public static TextBoxPage TextBoxPage => new (ToolsQaPageUrls.TextBoxPage);

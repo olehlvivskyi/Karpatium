@@ -11,6 +11,11 @@ public static class ToolsQaPageUrls
     public static string CheckBoxPage => "/checkbox";
     
     /// <summary>
+    /// Represents the "RadioButton" page relative URL.
+    /// </summary>
+    public static string RadioButtonPage => "/radio-button";
+    
+    /// <summary>
     /// Represents the "TextBox" page relative URL.
     /// </summary>
     public static string TextBoxPage => "/text-box";

@@ -1,22 +1,22 @@
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
-namespace ToolsQa.Tests.TestFixtures;
+namespace ToolsQa.Tests.TestFixtures.Elements;
 
 [TestFixture]
 public class CheckBoxFixture : BaseFixture<CheckBoxTestData>
 {
-    protected override string TestDataPath => "TestData/CheckBoxData.json";
+    protected override string TestDataPath => "TestData/Elements/CheckBoxData.json";
     
     [SetUp]
-    public void CheckBoxOneTimeSetUp()
+    public void CheckBoxSetUp()
     {
         WebManager.Browser.NavigateTo($"{TestConfiguration.ApplicationSettings.BaseUrl}{ToolsQaPageUrls.CheckBoxPage}");
         RemoveBannerAndFooter();
     }
     
     [Test] 
-    public void VerifyThatMultipleNodesAreSelected()
+    public void EnsureThatMultipleNodesAreSelected()
     {
         IReadOnlyList<string> nodeNames = 
             [ TestData.MultipleNodesName1.ToLowerInvariant(), TestData.MultipleNodesName2.ToLowerInvariant() ];
@@ -30,7 +30,7 @@ public class CheckBoxFixture : BaseFixture<CheckBoxTestData>
     }
 
     [Test] 
-    public void VerifyThatSingleNodeIsSelected()
+    public void EnsureThatSingleNodeIsSelected()
     {
         ToolsQaPages.CheckBoxPage.ClickExpandAll();
         ToolsQaPages.CheckBoxPage.SelectNode(TestData.SingleNodeName);

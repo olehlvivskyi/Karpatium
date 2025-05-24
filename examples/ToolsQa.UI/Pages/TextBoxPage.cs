@@ -7,7 +7,7 @@ namespace ToolsQa.UI.Pages;
 /// <summary>
 /// Represents the "TextBox" page.
 /// </summary>
-public class TextBoxPage(string relativePath) : BasePage(relativePath)
+public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
 {
     private InputElement CurrentAddressInput => ElementFactory.Create<InputElement>(Selector.Id("currentAddress"));
     private CommonElement CurrentAddressOutput => ElementFactory.Create<CommonElement>(Selector.Css("p#currentAddress"));
