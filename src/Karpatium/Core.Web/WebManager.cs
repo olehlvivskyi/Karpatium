@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using Karpatium.Core.Utilities;
 using NUnit.Framework;
 using Serilog;
 
@@ -79,6 +80,8 @@ public static class WebManager
         IBrowserFactory browserFactory = BrowserFactory.Get(browserSettings);
         BrowserWrapper = browserFactory.CreateBrowser(browserSettings);
         WaiterWrapper = new Waiter(BrowserWrapper);
+
+        Directory.CreateDirectory(PathUtils.GetLocalUserPath(browserSettings.DownloadedFilesFolderName));
     }
 
     /// <summary>
