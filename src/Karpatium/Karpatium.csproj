@@ -30,7 +30,7 @@
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Karpatium</PackageId>
-        <Version>0.7.0</Version>
+        <Version>0.8.0</Version>
         <Authors>Oleh Lvivskyi</Authors>
         <PackageIcon>icon.png</PackageIcon>
         <PackageDescription>
