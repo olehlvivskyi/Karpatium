@@ -1,5 +1,5 @@
-using Karpatium.Core.Web.BrowserParts;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using Serilog;
 
 namespace Karpatium.Core.Web;
@@ -10,6 +10,9 @@ namespace Karpatium.Core.Web;
 internal sealed class Browser : IBrowser
 {
     private IWebDriver DriverWrapper { get; }
+    
+    internal Actions Actions => new(DriverWrapper);
+    private IJavaScriptExecutor JavaScriptExecutorWrapper => (IJavaScriptExecutor) DriverWrapper;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Browser"/> class with the specified WebDriver.
@@ -18,9 +21,6 @@ internal sealed class Browser : IBrowser
     internal Browser(IWebDriver driver)
     {
         DriverWrapper = driver;
-        
-        AdvancedInteractions = new AdvancedInteractions(driver);
-        JavaScript = new JavaScript(driver);
     }
 
     /// <summary>
@@ -41,16 +41,6 @@ internal sealed class Browser : IBrowser
     /// Closes all browser windows and safely ends the WebDriver session.
     /// </summary>
     internal void Quit() => DriverWrapper.Quit();
-    
-    /// <summary>
-    /// Provides access to advanced interactions within the browser instance.
-    /// </summary>
-    public AdvancedInteractions AdvancedInteractions { get; }
-
-    /// <summary>
-    /// Provides access to JavaScript execution within the browser instance.
-    /// </summary>
-    public JavaScript JavaScript { get; }
 
     /// <summary>
     /// Gets the current URL of the webpage loaded in the browser instance.
@@ -59,6 +49,18 @@ internal sealed class Browser : IBrowser
     /// A string representing the URL of the current webpage.
     /// </value>
     public string Url => DriverWrapper.Url;
+    
+    /// <summary>
+    /// Executes the specified JavaScript code in the context of the currently selected frame or window.
+    /// </summary>
+    /// <param name="script">The JavaScript code to execute.</param>
+    /// <param name="args">The arguments to be passed to the script, if any.</param>
+    /// <returns>The result of the script execution, which may be null or an object depending on the script.</returns>
+    public object? ExecuteJavascript(string script, params object[] args)
+    {
+        var result = JavaScriptExecutorWrapper.ExecuteScript(script, args);
+        return result;
+    }
 
     /// <summary>
     /// Maximizes the browser window to occupy the full screen.

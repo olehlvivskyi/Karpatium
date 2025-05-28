@@ -1,5 +1,6 @@
 using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace Karpatium.Core.Web;
 
@@ -60,4 +61,22 @@ public abstract class Element
     /// Simulates a click action on the element.
     /// </summary>
     public void Click() => ConditionalWaiter.ForNoException(() => WebElementWrapper.Click(), $"{nameof(Click)} failed.");
+
+    /// <summary>
+    /// Simulates a double-click action on the element.
+    /// </summary>
+    public void DoubleClick()
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.DoubleClick(WebElementWrapper).Perform(), 
+            $"{nameof(DoubleClick)} failed.");
+    }
+
+    /// <summary>
+    /// Simulates a right-click action (context click) on the element.
+    /// </summary>
+    public void RightClick()
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.ContextClick(WebElementWrapper).Perform(), 
+            $"{nameof(RightClick)} failed.");
+    }
 }

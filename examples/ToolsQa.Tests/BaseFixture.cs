@@ -35,9 +35,9 @@ public abstract class BaseFixture<TTestData>
     protected void RemoveBannerAndFooter()
     {
         ConditionalRunner.IgnoreException(() => 
-            WebManager.Browser.JavaScript.Execute(TestConfiguration.TestSettings.BannerRemovalScript));
+            WebManager.Browser.ExecuteJavascript(TestConfiguration.TestSettings.BannerRemovalScript));
         ConditionalRunner.IgnoreException(() => 
-            WebManager.Browser.JavaScript.Execute(TestConfiguration.TestSettings.FooterRemovalScript));
+            WebManager.Browser.ExecuteJavascript(TestConfiguration.TestSettings.FooterRemovalScript));
     }
     
     private TTestData GetTestDataFromJson()
