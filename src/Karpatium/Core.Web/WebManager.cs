@@ -81,7 +81,9 @@ public static class WebManager
         BrowserWrapper = browserFactory.CreateBrowser(browserSettings);
         WaiterWrapper = new Waiter(BrowserWrapper);
 
-        Directory.CreateDirectory(PathUtils.GetLocalUserPath(browserSettings.DownloadedFilesFolderName));
+        string downloadedFilesFolder = PathUtils.GetLocalUserPath(browserSettings.DownloadedFilesFolderName);
+        Log.Verbose("WebManager: Creating `{DownloadedFilesFolder} folder for downloaded files.", downloadedFilesFolder);
+        Directory.CreateDirectory(downloadedFilesFolder);
     }
 
     /// <summary>
