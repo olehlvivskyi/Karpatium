@@ -40,6 +40,7 @@ public sealed class LinksPage(string relativePath) : BasePage(relativePath)
         Log.Information("{PageName}: Clicking on the \"Created\" link.", PageName);
         
         Created.Click();
+        WebManager.Waiter.ForPageSourceIsNotChanged();
     }
 
     /// <summary>
@@ -60,5 +61,6 @@ public sealed class LinksPage(string relativePath) : BasePage(relativePath)
         Log.Information("{PageName}: Clicking \"Not Found\" link.", PageName);
         
         NotFound.Click();
+        WebManager.Waiter.ForPageSourceIsNotChanged();
     }
 }
