@@ -1,5 +1,5 @@
-using Karpatium.Core.Web.BrowserParts;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using Serilog;
 
 namespace Karpatium.Core.Web;
@@ -7,21 +7,12 @@ namespace Karpatium.Core.Web;
 /// <summary>
 /// Represents a browser instance for managing test execution.
 /// </summary>
-internal sealed class Browser : IBrowser
+internal sealed class Browser(IWebDriver driver) : IBrowser
 {
-    private IWebDriver DriverWrapper { get; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Browser"/> class with the specified WebDriver.
-    /// </summary>
-    /// <param name="driver">The WebDriver instance to be wrapped and controlled by the browser.</param>
-    internal Browser(IWebDriver driver)
-    {
-        DriverWrapper = driver;
-        
-        AdvancedInteractions = new AdvancedInteractions(driver);
-        JavaScript = new JavaScript(driver);
-    }
+    private IWebDriver DriverWrapper { get; } = driver;
+    
+    internal Actions Actions => new(DriverWrapper);
+    private IJavaScriptExecutor JavaScriptExecutorWrapper => (IJavaScriptExecutor) DriverWrapper;
 
     /// <summary>
     /// Finds and returns the first web element that matches the specified sFelector.
@@ -41,16 +32,14 @@ internal sealed class Browser : IBrowser
     /// Closes all browser windows and safely ends the WebDriver session.
     /// </summary>
     internal void Quit() => DriverWrapper.Quit();
-    
-    /// <summary>
-    /// Provides access to advanced interactions within the browser instance.
-    /// </summary>
-    public AdvancedInteractions AdvancedInteractions { get; }
 
     /// <summary>
-    /// Provides access to JavaScript execution within the browser instance.
+    /// Gets the source code of the current webpage loaded in the browser instance.
     /// </summary>
-    public JavaScript JavaScript { get; }
+    /// <value>
+    /// A string representing the HTML source of the current webpage.
+    /// </value>
+    public string PageSource => DriverWrapper.PageSource;
 
     /// <summary>
     /// Gets the current URL of the webpage loaded in the browser instance.
@@ -59,6 +48,18 @@ internal sealed class Browser : IBrowser
     /// A string representing the URL of the current webpage.
     /// </value>
     public string Url => DriverWrapper.Url;
+    
+    /// <summary>
+    /// Executes the specified JavaScript code in the context of the currently selected frame or window.
+    /// </summary>
+    /// <param name="script">The JavaScript code to execute.</param>
+    /// <param name="args">The arguments to be passed to the script, if any.</param>
+    /// <returns>The result of the script execution, which may be null or an object depending on the script.</returns>
+    public object? ExecuteJavascript(string script, params object[] args)
+    {
+        var result = JavaScriptExecutorWrapper.ExecuteScript(script, args);
+        return result;
+    }
 
     /// <summary>
     /// Maximizes the browser window to occupy the full screen.
@@ -82,5 +83,21 @@ internal sealed class Browser : IBrowser
         Log.Verbose("Browser: Navigating to `{Url}` url.", url);
         
         DriverWrapper.Navigate().GoToUrl(url);
+    }
+    
+    /// <summary>
+    /// Switches the browser focus to the most recently opened browser tab or window.
+    /// </summary>
+    public void SwitchToChildTab()
+    {
+        DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles.Last());
+    }
+
+    /// <summary>
+    /// Switches the browser focus to the parent tab or the first opened browser window.
+    /// </summary>
+    public void SwitchToParentTab()
+    {
+        DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles.First());
     }
 }

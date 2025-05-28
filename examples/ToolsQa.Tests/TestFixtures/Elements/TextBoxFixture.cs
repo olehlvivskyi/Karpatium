@@ -2,7 +2,7 @@ using Karpatium.Core.TestData;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
-namespace ToolsQa.Tests.TestFixtures;
+namespace ToolsQa.Tests.TestFixtures.Elements;
 
 [TestFixture]
 public class TextBoxFixture : BaseFixture<EmptyTestData>
@@ -10,14 +10,13 @@ public class TextBoxFixture : BaseFixture<EmptyTestData>
     protected override string TestDataPath => string.Empty;
     
     [OneTimeSetUp]
-    public void TextBoxOneTimeSetUp()
+    public void OneTimeSetUp()
     {
         WebManager.Browser.NavigateTo($"{TestConfiguration.ApplicationSettings.BaseUrl}{ToolsQaPageUrls.TextBoxPage}");
-        RemoveBannerAndFooter();
     }
     
     [Test]
-    public void VerifyThatAllDataIsCorrectlySubmitted()
+    public void EnsureThatFormIsSubmitted()
     {
         string fullName = TestDataGenerator.GetFullName();
         string email = TestDataGenerator.GetEmail();
@@ -36,10 +35,10 @@ public class TextBoxFixture : BaseFixture<EmptyTestData>
         string actualCurrentAddress = ToolsQaPages.TextBoxPage.GetSubmittedCurrentAddress();
         Assert.Multiple(() =>
         {
-            Assert.That(actualFullName, Is.EqualTo(fullName), "Full name is incorrect.");
-            Assert.That(actualEmail, Is.EqualTo(email), "Email is incorrect.");
-            Assert.That(actualPermanentAddress, Is.EqualTo(permanentAddress), "Permanent address is incorrect.");
-            Assert.That(actualCurrentAddress, Is.EqualTo(currentAddress), "Current address is incorrect.");
+            Assert.That(actualFullName, Is.EqualTo(fullName), "Incorrect full name.");
+            Assert.That(actualEmail, Is.EqualTo(email), "Incorrect email.");
+            Assert.That(actualPermanentAddress, Is.EqualTo(permanentAddress), "Incorrect permanent address.");
+            Assert.That(actualCurrentAddress, Is.EqualTo(currentAddress), "Incorrect current address.");
         });
     }
 }

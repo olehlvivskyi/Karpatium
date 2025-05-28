@@ -1,3 +1,4 @@
+using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
@@ -27,6 +28,7 @@ internal sealed class ChromeBrowserFactory : IBrowserFactory
         var chromeOptions = new ChromeOptions();
 
         chromeOptions.AddUserProfilePreference("disable-popup-blocking", true);
+        chromeOptions.AddUserProfilePreference("download.default_directory", PathUtils.GetLocalUserPath(browserSettings.DownloadedFilesFolderName));
         chromeOptions.AddUserProfilePreference("download.prompt_for_download", false);
 
         if (browserSettings.IsHeadlessEnabled)

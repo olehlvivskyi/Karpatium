@@ -1,5 +1,6 @@
 using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace Karpatium.Core.Web;
 
@@ -49,14 +50,81 @@ public abstract class Element
 
     private IWebElement FindElement(Selector selector) => WebElementWrapper.FindElement(selector.ByWrapper);
     
-    internal IReadOnlyList<IWebElement> FindElements(Selector selector) 
-        => WebElementWrapper.FindElements(selector.ByWrapper);
+    internal IReadOnlyList<IWebElement> FindElements(Selector selector) => WebElementWrapper.FindElements(selector.ByWrapper);
 
+    /// <summary>
+    /// Indicates whether the element exists in the DOM.
+    /// </summary>
+    public bool Exists
+    {
+        get
+        {
+            try
+            {
+                IWebElement element = MultipleWrapper ?? (Parent == null
+                    ? WebManager.BrowserWrapper.FindElement(Selector!)
+                    : Parent.FindElement(Selector!));
+                return !string.IsNullOrEmpty(element.TagName);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Gets a value indicating whether the element is enabled.
+    /// </summary>
+    public bool IsEnabled => ConditionalWaiter.ForResult(() => WebElementWrapper.Enabled, $"{nameof(IsEnabled)} failed.");
+
+    /// <summary>
+    /// Indicates whether the element is currently visible on the page.
+    /// </summary>
+    public bool IsVisible => ConditionalWaiter.ForResult(() => Exists && WebElementWrapper.Displayed, $"{nameof(IsVisible)} failed.");
+    
     /// <summary>
     /// Simulates a click action on the element.
     /// </summary>
     public void Click()
     {
         ConditionalWaiter.ForNoException(() => WebElementWrapper.Click(), $"{nameof(Click)} failed.");
+    }
+
+    /// <summary>
+    /// Simulates a double-click action on the element.
+    /// </summary>
+    public void DoubleClick()
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.DoubleClick(WebElementWrapper).Perform(), 
+            $"{nameof(DoubleClick)} failed.");
+    }
+
+    /// <summary>
+    /// Gets the value of the specified attribute of the element.
+    /// </summary>
+    /// <param name="attribute">The name of the attribute to retrieve.</param>
+    public string? GetAttribute(string attribute)
+    {
+        return ConditionalWaiter.ForResult(() => WebElementWrapper.GetAttribute(attribute), $"{nameof(GetAttribute)} failed.");
+    }
+
+    /// <summary>
+    /// Retrieves the CSS value of the specified property from the element.
+    /// </summary>
+    /// <param name="property">The name of the CSS property whose value is to be retrieved.</param>
+    /// <returns>The CSS value of the specified property as a string.</returns>
+    public string GetCssValue(string property)
+    {
+        return ConditionalWaiter.ForResult(() => WebElementWrapper.GetCssValue(property), $"{nameof(GetCssValue)} failed.");
+    }
+
+    /// <summary>
+    /// Simulates a right-click action (context click) on the element.
+    /// </summary>
+    public void RightClick()
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.ContextClick(WebElementWrapper).Perform(), 
+            $"{nameof(RightClick)} failed.");
     }
 }

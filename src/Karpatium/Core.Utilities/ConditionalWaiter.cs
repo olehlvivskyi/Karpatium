@@ -55,15 +55,32 @@ public static class ConditionalWaiter
     /// <param name="anonymousFunction">A function representing the condition to be evaluated.</param>
     /// <param name="message">The message that will be included if the timeout is reached.</param>
     /// <param name="timeoutInSeconds">The maximum duration, in seconds, to wait for the condition to be true.</param>
-    public static void ForTrue(Func<bool> anonymousFunction, string message,
-        int timeoutInSeconds = DefaultTimeoutInSeconds)
+    public static void ForTrue(Func<bool> anonymousFunction, string message, int timeoutInSeconds = DefaultTimeoutInSeconds)
     {
         LastException = null;
         Wait(anonymousFunction, message, timeoutInSeconds);
     }
 
-    private static void Wait(Action anonymousFunction, string message = "", 
-        int timeoutInSeconds = DefaultTimeoutInSeconds)
+    /// <summary>
+    /// Waits for the specified condition to evaluate to true within a configurable timeout period.
+    /// Any exceptions thrown during execution are suppressed.
+    /// </summary>
+    /// <param name="anonymousFunction">The function that evaluates the condition to be checked.</param>
+    /// <param name="timeoutInSeconds">The maximum duration, in seconds, to wait for the condition to be met.</param>
+    public static void ForTrueIfPossible(Func<bool> anonymousFunction, int timeoutInSeconds = DefaultTimeoutInSeconds)
+    {
+        try
+        {
+            LastException = null;
+            Wait(anonymousFunction, timeoutInSeconds: timeoutInSeconds);
+        }
+        catch
+        {
+            // ignored
+        }
+    }
+
+    private static void Wait(Action anonymousFunction, string message = "", int timeoutInSeconds = DefaultTimeoutInSeconds)
     {
         var stopwatch = Stopwatch.StartNew();
         do
@@ -85,6 +102,25 @@ public static class ConditionalWaiter
         throw LastException;
     }
     
+    private static void Wait(Func<bool> anonymousFunction, string message = "", int timeoutInSeconds = DefaultTimeoutInSeconds)
+    {
+        var stopwatch = Stopwatch.StartNew();
+        do
+        {
+            if (TryWithExceptionHandling(anonymousFunction))
+            {
+                return;
+            }
+        }
+        while (stopwatch.Elapsed.TotalSeconds < timeoutInSeconds);
+        if (LastException != null)
+        {
+            throw new AggregateException(new TimeoutException($"{message}: Timeout of '{timeoutInSeconds}' seconds reached."), LastException);
+        }
+
+        throw new TimeoutException($"{message}: Timeout of '{timeoutInSeconds}' seconds reached.");
+    }
+    
     private static T Wait<T>(Func<T> anonymousFunction, string message, int timeoutInSeconds = DefaultTimeoutInSeconds)
     {
         var stopwatch = Stopwatch.StartNew();
@@ -101,6 +137,20 @@ public static class ConditionalWaiter
         Log.Error("{Message} Timeout of '{TimeoutInSeconds}' seconds reached.", message, timeoutInSeconds);
         
         throw LastException ?? new TimeoutException($"{message} Timeout of '{timeoutInSeconds}' seconds reached.");
+    }
+    
+    private static bool TryWithExceptionHandling(Func<bool> anonymousFunction)
+    {
+        try
+        {
+            return anonymousFunction();
+        }
+        catch (Exception exception)
+        {
+            LastException = exception;
+        }
+
+        return false;
     }
     
     private static (bool state, T result) TryWithExceptionHandling<T>(Func<T> anonymousFunction)
