@@ -8,6 +8,7 @@
   },
   "WebManagerSettings": {
     "BrowserType": "Chrome",
+    "DownloadedFilesFolderName": "Downloads",
     "IsHeadlessEnabled": false,
     "IsLocalExecution":  true,
     "RemoteUrl": ""

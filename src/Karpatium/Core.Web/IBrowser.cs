@@ -6,6 +6,14 @@ namespace Karpatium.Core.Web;
 public interface IBrowser
 {
     /// <summary>
+    /// Gets the source code of the current webpage loaded in the browser instance.
+    /// </summary>
+    /// <value>
+    /// A string representing the HTML source of the current webpage.
+    /// </value>
+    public string PageSource { get; }
+    
+    /// <summary>
     /// Gets the current URL of the webpage loaded in the browser instance.
     /// </summary>
     /// <value>
@@ -31,4 +39,14 @@ public interface IBrowser
     /// </summary>
     /// <param name="url">The URL to navigate to.</param>
     void NavigateTo(string url);
+
+    /// <summary>
+    /// Switches the browser focus to the most recently opened browser tab or window.
+    /// </summary>
+    public void SwitchToChildTab();
+
+    /// <summary>
+    /// Switches the browser focus to the parent tab or the first opened browser window.
+    /// </summary>
+    public void SwitchToParentTab();
 }

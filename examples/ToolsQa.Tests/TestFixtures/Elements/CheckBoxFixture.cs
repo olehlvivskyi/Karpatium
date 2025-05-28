@@ -12,21 +12,19 @@ public class CheckBoxFixture : BaseFixture<CheckBoxTestData>
     public void CheckBoxSetUp()
     {
         WebManager.Browser.NavigateTo($"{TestConfiguration.ApplicationSettings.BaseUrl}{ToolsQaPageUrls.CheckBoxPage}");
-        RemoveBannerAndFooter();
     }
     
     [Test] 
     public void EnsureThatMultipleNodesAreSelected()
     {
-        IReadOnlyList<string> nodeNames = 
-            [ TestData.MultipleNodesName1.ToLowerInvariant(), TestData.MultipleNodesName2.ToLowerInvariant() ];
+        IReadOnlyList<string> nodeNames = [TestData.MultipleNodesName1.ToLowerInvariant(), TestData.MultipleNodesName2.ToLowerInvariant() ];
         
         ToolsQaPages.CheckBoxPage.ClickExpandAll();
         ToolsQaPages.CheckBoxPage.SelectNode(TestData.MultipleNodesName1);
         ToolsQaPages.CheckBoxPage.SelectNode(TestData.MultipleNodesName2);
 
         IReadOnlyList<string> selectedNodeNames = ToolsQaPages.CheckBoxPage.GetSelectedNodes();
-        Assert.That(selectedNodeNames, Is.EquivalentTo(nodeNames));
+        Assert.That(selectedNodeNames, Is.EquivalentTo(nodeNames), "Incorrect selected nodes.");
     }
 
     [Test] 
@@ -36,7 +34,7 @@ public class CheckBoxFixture : BaseFixture<CheckBoxTestData>
         ToolsQaPages.CheckBoxPage.SelectNode(TestData.SingleNodeName);
 
         IReadOnlyList<string> selectedNodeNames = ToolsQaPages.CheckBoxPage.GetSelectedNodes();
-        Assert.That(selectedNodeNames, Has.Exactly(1).EqualTo(TestData.SingleNodeName.ToLowerInvariant()));
+        Assert.That(selectedNodeNames, Has.Exactly(1).EqualTo(TestData.SingleNodeName.ToLowerInvariant()), "Incorrect selected node.");
     }
 }
 

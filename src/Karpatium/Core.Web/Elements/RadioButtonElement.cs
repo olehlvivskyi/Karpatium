@@ -10,14 +10,12 @@ public sealed class RadioButtonElement : Element
     /// <summary>
     /// Gets a value indicating whether the radio button is currently checked.
     /// </summary>
-    /// <returns>
-    /// Returns <c>true</c> if the radio button is checked; otherwise, <c>false</c>.
-    /// </returns>
     public bool IsChecked
     {
         get
         {
             bool isChecked = ConditionalWaiter.ForResult(() => WebElementWrapper.Selected, $"{nameof(RadioButtonElement)}: {nameof(IsChecked)} failed.");
+            
             return isChecked;
         }
     }

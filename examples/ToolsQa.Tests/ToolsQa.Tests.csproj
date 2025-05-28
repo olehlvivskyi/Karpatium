@@ -44,7 +44,7 @@
       <None Update="TestData\Elements\CheckBoxData.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="TestData\Elements\RadioButtonData.json">
+      <None Update="TestData\Elements\test.jpg">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

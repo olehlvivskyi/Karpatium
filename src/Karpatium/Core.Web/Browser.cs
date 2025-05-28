@@ -7,21 +7,12 @@ namespace Karpatium.Core.Web;
 /// <summary>
 /// Represents a browser instance for managing test execution.
 /// </summary>
-internal sealed class Browser : IBrowser
+internal sealed class Browser(IWebDriver driver) : IBrowser
 {
-    private IWebDriver DriverWrapper { get; }
+    private IWebDriver DriverWrapper { get; } = driver;
     
     internal Actions Actions => new(DriverWrapper);
     private IJavaScriptExecutor JavaScriptExecutorWrapper => (IJavaScriptExecutor) DriverWrapper;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Browser"/> class with the specified WebDriver.
-    /// </summary>
-    /// <param name="driver">The WebDriver instance to be wrapped and controlled by the browser.</param>
-    internal Browser(IWebDriver driver)
-    {
-        DriverWrapper = driver;
-    }
 
     /// <summary>
     /// Finds and returns the first web element that matches the specified sFelector.
@@ -41,6 +32,14 @@ internal sealed class Browser : IBrowser
     /// Closes all browser windows and safely ends the WebDriver session.
     /// </summary>
     internal void Quit() => DriverWrapper.Quit();
+
+    /// <summary>
+    /// Gets the source code of the current webpage loaded in the browser instance.
+    /// </summary>
+    /// <value>
+    /// A string representing the HTML source of the current webpage.
+    /// </value>
+    public string PageSource => DriverWrapper.PageSource;
 
     /// <summary>
     /// Gets the current URL of the webpage loaded in the browser instance.
@@ -84,5 +83,21 @@ internal sealed class Browser : IBrowser
         Log.Verbose("Browser: Navigating to `{Url}` url.", url);
         
         DriverWrapper.Navigate().GoToUrl(url);
+    }
+    
+    /// <summary>
+    /// Switches the browser focus to the most recently opened browser tab or window.
+    /// </summary>
+    public void SwitchToChildTab()
+    {
+        DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles.Last());
+    }
+
+    /// <summary>
+    /// Switches the browser focus to the parent tab or the first opened browser window.
+    /// </summary>
+    public void SwitchToParentTab()
+    {
+        DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles.First());
     }
 }

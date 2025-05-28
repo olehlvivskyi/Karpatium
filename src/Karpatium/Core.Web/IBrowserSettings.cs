@@ -12,7 +12,16 @@ public interface IBrowserSettings
     /// The <see cref="BrowserType"/> specifies the browser (e.g., Chrome) that will be instantiated by the framework.
     /// </remarks>
     BrowserType BrowserType { get; }
-    
+
+    /// <summary>
+    /// Gets the downloaded files folder name.
+    /// </summary>
+    /// <remarks>
+    /// The <see cref="DownloadedFilesFolderName"/> property defines the folder name where files downloaded by the browser will be stored.
+    /// This folder is typically named "Downloads".
+    /// </remarks>
+    string DownloadedFilesFolderName { get; }
+
     /// <summary>
     /// Indicates whether the browser should run in headless mode.
     /// </summary>

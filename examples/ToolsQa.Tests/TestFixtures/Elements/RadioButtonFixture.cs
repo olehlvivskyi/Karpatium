@@ -4,21 +4,20 @@ using ToolsQa.UI;
 namespace ToolsQa.Tests.TestFixtures.Elements;
 
 [TestFixture]
-public class RadioButtonFixture : BaseFixture<RadioButtonTestData>
+public class RadioButtonFixture : BaseFixture<EmptyTestData>
 {
-    protected override string TestDataPath => "TestData/Elements/RadioButtonData.json";
+    protected override string TestDataPath => string.Empty;
     
     [SetUp]
     public void RadioButtonSetUp()
     {
         WebManager.Browser.NavigateTo($"{TestConfiguration.ApplicationSettings.BaseUrl}{ToolsQaPageUrls.RadioButtonPage}");
-        RemoveBannerAndFooter();
     }
     
     [Test]
     public void EnsureThatNoRadioButtonIsDisabled()
     {
-        Assert.That(ToolsQaPages.RadioButtonPage.IsNoDisabled, Is.True, "`No` radio button is not disabled.");
+        Assert.That(ToolsQaPages.RadioButtonPage.IsNoEnabled, Is.False, "\"No\" radio button is not disabled.");
     }
 
     [Test]
@@ -28,8 +27,8 @@ public class RadioButtonFixture : BaseFixture<RadioButtonTestData>
 
         Assert.Multiple(() =>
         {
-            Assert.That(ToolsQaPages.RadioButtonPage.IsYesChecked, Is.True, "`Yes` radio button is not checked.");
-            Assert.That(ToolsQaPages.RadioButtonPage.SelectedRadioButtonText, Is.EqualTo(TestData.YesText), "`Yes` radio button is not checked.");
+            Assert.That(ToolsQaPages.RadioButtonPage.IsYesChecked, Is.True, "\"Yes\" radio button is not checked.");
+            Assert.That(ToolsQaPages.RadioButtonPage.SelectedRadioButtonText, Is.EqualTo(ToolsQaConstants.RadioButtonPage.YesRadioButtonText), "`Yes` radio button is not checked.");
         });
     }
     
@@ -41,16 +40,9 @@ public class RadioButtonFixture : BaseFixture<RadioButtonTestData>
 
         Assert.Multiple(() =>
         {
-            Assert.That(ToolsQaPages.RadioButtonPage.IsYesChecked, Is.False, "`Yes` radio button is checked.");
-            Assert.That(ToolsQaPages.RadioButtonPage.IsImpressiveChecked, Is.True, "`Impressive` radio button is not checked.");
-            Assert.That(ToolsQaPages.RadioButtonPage.SelectedRadioButtonText, Is.EqualTo(TestData.ImpressiveText), "`Impressive` radio button is not checked.");
+            Assert.That(ToolsQaPages.RadioButtonPage.IsYesChecked, Is.False, "\"Yes\" radio button is checked.");
+            Assert.That(ToolsQaPages.RadioButtonPage.IsImpressiveChecked, Is.True, "\"Impressive\" radio button is not checked.");
+            Assert.That(ToolsQaPages.RadioButtonPage.SelectedRadioButtonText, Is.EqualTo(ToolsQaConstants.RadioButtonPage.ImpressiveRadioButtonText), "Incorrect selected radio button text.");
         });
     }
-}
-
-[Serializable]
-public sealed class RadioButtonTestData
-{
-    public required string ImpressiveText { get; init; }
-    public required string YesText { get; init; }
 }

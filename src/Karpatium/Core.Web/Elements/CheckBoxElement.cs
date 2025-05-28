@@ -10,14 +10,12 @@ public sealed class CheckBoxElement : Element
     /// <summary>
     /// Gets a value indicating whether the checkbox is currently checked.
     /// </summary>
-    /// <returns>
-    /// Returns <c>true</c> if the checkbox is checked; otherwise, <c>false</c>.
-    /// </returns>
     public bool IsChecked
     {
         get
         {
-            bool isChecked = ConditionalWaiter.ForResult(() => WebElementWrapper.Selected, "CheckBoxElement: IsChecked failed.");
+            bool isChecked = ConditionalWaiter.ForResult(() => WebElementWrapper.Selected, $"{nameof(CheckBoxElement)}: {nameof(IsChecked)} failed.");
+            
             return isChecked;
         }
     }

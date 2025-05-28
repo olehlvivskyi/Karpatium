@@ -5,20 +5,23 @@ using Serilog;
 namespace ToolsQa.UI.Pages;
 
 /// <summary>
-/// Represents the "CheckBox" page.
+/// Provides access to the "Check Box" page.
 /// </summary>
 public sealed class CheckBoxPage(string relativePath) : BasePage(relativePath)
 {
+    private const string PageName = nameof(CheckBoxPage);
+    
     private CommonElement ExpandAll => ElementFactory.Create<CommonElement>(Selector.Class("rct-option-expand-all"));
+    private CommonElement GetNodeCheckbox(CommonElement node) => ElementFactory.Create<CommonElement>(Selector.Class("rct-checkbox"), node);
     private ElementCollection<CommonElement> Nodes => ElementFactory.CreateMultiple<CommonElement>(Selector.Class("rct-node-leaf"));
     private ElementCollection<CommonElement> SelectedNodes => ElementFactory.CreateMultiple<CommonElement>(Selector.Class("text-success"));
 
     /// <summary>
-    /// Clicks "Expand All" button.
+    /// Clicks on the "Expand All" button.
     /// </summary>
     public void ClickExpandAll()
     {
-        Log.Information("{PageName}: Clicking `Expand All` button.", nameof(CheckBoxPage));
+        Log.Information("{PageName}: Clicking on the \"Expand All\" button.", PageName);
         
         ExpandAll.Click();
     }
@@ -29,12 +32,12 @@ public sealed class CheckBoxPage(string relativePath) : BasePage(relativePath)
     /// <returns>A read-only list of selected node names.</returns>
     public IReadOnlyList<string> GetSelectedNodes()
     {
-        Log.Information("{PageName}: Retrieving the names of the selected nodes.", nameof(CheckBoxPage));
+        Log.Information("{PageName}: Checking the names of the selected nodes.", PageName);
 
         IReadOnlyList<string> selectedNodes = SelectedNodes
             .Select(node => node.Text)
             .ToList();
-        Log.Debug("{PageName}: selectedNodes = `{@SelectedNodes}`", nameof(CheckBoxPage), selectedNodes);
+        Log.Debug("{PageName}: {MemberName} = `{@MemberValue}`", PageName, nameof(GetSelectedNodes), selectedNodes);
 
         return selectedNodes;
     }
@@ -45,10 +48,10 @@ public sealed class CheckBoxPage(string relativePath) : BasePage(relativePath)
     /// <param name="nodeName">The name of the node to be selected.</param>
     public void SelectNode(string nodeName)
     {
-        Log.Information("{PageName}: Selecting `{NodeName}` node.", nameof(CheckBoxPage), nodeName);
+        Log.Information("{PageName}: Selecting `{NodeName}` node.", PageName, nodeName);
         
         CommonElement nodeToSelect = Nodes.First(node => node.Text.Contains(nodeName));
-        CommonElement nodeCheckBox = ElementFactory.Create<CommonElement>(Selector.Class("rct-checkbox"), nodeToSelect);
+        CommonElement nodeCheckBox = GetNodeCheckbox(nodeToSelect);
         
         nodeCheckBox.Click();
     }

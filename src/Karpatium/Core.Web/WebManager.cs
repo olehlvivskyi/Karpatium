@@ -13,6 +13,7 @@ namespace Karpatium.Core.Web;
 public static class WebManager
 {
     private static ConcurrentDictionary<string, Browser> Browsers { get; } = new();
+    private static ConcurrentDictionary<string, Waiter> Waiters { get; } = new();
 
     /// <summary>
     /// Gets or sets the browser instance for the current test.
@@ -29,12 +30,34 @@ public static class WebManager
     }
 
     /// <summary>
+    /// Gets or sets the waiter instance for managing wait conditions.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if the waiter is accessed before initialization.
+    /// </exception>
+    private static Waiter WaiterWrapper
+    {
+        get => Waiters[TestContext.CurrentContext.WorkerId ?? "single"]
+               ?? throw new InvalidOperationException("WebManager is not initialized.");
+
+        set => Waiters[TestContext.CurrentContext.WorkerId ?? "single"] = value;
+    }
+
+    /// <summary>
     /// Provides access to the browser associated with the current test execution.
     /// </summary>
     /// <exception cref="InvalidOperationException">
     /// Thrown if the browser is accessed before initialization.
     /// </exception>
     public static IBrowser Browser => BrowserWrapper;
+
+    /// <summary>
+    /// Provides access to the waiter associated with the current test execution.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if WebWaiter is accessed before initialization.
+    /// </exception>
+    public static IWaiter Waiter => WaiterWrapper;
 
     /// <summary>
     /// Initializes a new browser instance using the provided settings.
@@ -55,6 +78,7 @@ public static class WebManager
         
         IBrowserFactory browserFactory = BrowserFactory.Get(browserSettings);
         BrowserWrapper = browserFactory.CreateBrowser(browserSettings);
+        WaiterWrapper = new Waiter(BrowserWrapper);
     }
 
     /// <summary>

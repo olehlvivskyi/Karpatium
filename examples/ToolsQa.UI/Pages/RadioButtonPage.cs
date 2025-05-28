@@ -5,10 +5,12 @@ using Serilog;
 namespace ToolsQa.UI.Pages;
 
 /// <summary>
-/// Represents the "RadioButton" page.
+/// Provides access to the "Radio Button" page.
 /// </summary>
 public sealed class RadioButtonPage(string relativePath) : BasePage(relativePath)
 {
+    private const string PageName = nameof(RadioButtonPage);
+
     private RadioButtonElement Impressive => ElementFactory.Create<RadioButtonElement>(Selector.Id("impressiveRadio"));
     private CommonElement ImpressiveLabel => ElementFactory.Create<CommonElement>(Selector.Css("label[for='impressiveRadio']"));
     private RadioButtonElement No => ElementFactory.Create<RadioButtonElement>(Selector.Id("noRadio"));
@@ -19,53 +21,47 @@ public sealed class RadioButtonPage(string relativePath) : BasePage(relativePath
     /// <summary>
     /// Gets a value indicating whether the "Impressive" radio button is checked.
     /// </summary>
-    /// <value>
-    /// True if the "Impressive" radio button is checked; otherwise, false.
-    /// </value>
     public bool IsImpressiveChecked
     {
         get
         {
-            Log.Information("{PageName}: Retrieving a value whether the `Impressive` radio button is checked.", nameof(RadioButtonPage));
+            Log.Information("{PageName}: Checking whether the \"Impressive\" radio button is checked.", PageName);
             
             bool isImpressiveChecked = Impressive.IsChecked;
-            Log.Debug("{PageName}: isImpressiveChecked = `{IsImpressiveChecked}`", nameof(RadioButtonPage), isImpressiveChecked);
+            Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, nameof(IsImpressiveChecked), isImpressiveChecked);
+            
             return isImpressiveChecked;
         }
     }
 
     /// <summary>
-    /// Gets a value indicating whether the "No" radio button is disabled.
+    /// Gets a value indicating whether the "No" radio button is enabled.
     /// </summary>
-    /// <value>
-    /// True if the "No" radio button is disabled; otherwise, false.
-    /// </value>
-    public bool IsNoDisabled
+    public bool IsNoEnabled
     {
         get
         {
-            Log.Information("{PageName}: Retrieving a value indicating whether the `No` radio button is disabled.", nameof(RadioButtonPage));
+            Log.Information("{PageName}: Checking whether the \"No\" radio button is enabled.", PageName);
             
-            bool isNoDisabled = No.IsDisabled;
-            Log.Debug("{PageName}: isNoDisabled = `{IsNoDisabled}`", nameof(RadioButtonPage), isNoDisabled);
-            return isNoDisabled;
+            bool isNoEnabled = No.IsEnabled;
+            Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, nameof(IsNoEnabled), isNoEnabled);
+            
+            return isNoEnabled;
         }
     }
 
     /// <summary>
     /// Gets a value indicating whether the "Yes" radio button is checked.
     /// </summary>
-    /// <value>
-    /// True if the "Yes" radio button is checked; otherwise, false.
-    /// </value>
     public bool IsYesChecked
     {
         get
         {
-            Log.Information("{PageName}: Retrieving a value whether the `Yes` radio button is checked.", nameof(RadioButtonPage));
+            Log.Information("{PageName}: Checking whether the \"Yes\" radio button is checked.", PageName);
 
             bool isYesChecked = Yes.IsChecked;
-            Log.Debug("{PageName}: isYesChecked = `{IsYesChecked}`", nameof(RadioButtonPage), isYesChecked);
+            Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, nameof(IsYesChecked), isYesChecked);
+            
             return isYesChecked;
         }
     }
@@ -73,17 +69,15 @@ public sealed class RadioButtonPage(string relativePath) : BasePage(relativePath
     /// <summary>
     /// Gets the text displayed for the currently selected radio button.
     /// </summary>
-    /// <value>
-    /// A string representing the text of the selected radio button.
-    /// </value>
     public string SelectedRadioButtonText
     {
         get
         {
-            Log.Information("{PageName}: Retrieving the text displayed for the currently selected radio button.", nameof(RadioButtonPage));
+            Log.Information("{PageName}: Checking the text displayed for the currently selected radio button.", PageName);
             
             string selectedRadioButtonText = TextSuccess.Text;
-            Log.Debug("{PageName}: selectedRadioButtonText = `{SelectedRadioButtonText}`", nameof(RadioButtonPage), selectedRadioButtonText);
+            Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, selectedRadioButtonText);
+            
             return selectedRadioButtonText;
         }
     }
@@ -93,7 +87,7 @@ public sealed class RadioButtonPage(string relativePath) : BasePage(relativePath
     /// </summary>
     public void CheckImpressive()
     {
-        Log.Information("{PageName}: Checking `Impressive` radio button.", nameof(RadioButtonPage));
+        Log.Information("{PageName}: Checking the \"Impressive\" radio button.", PageName);
 
         if (!Impressive.IsChecked)
         {
@@ -106,7 +100,7 @@ public sealed class RadioButtonPage(string relativePath) : BasePage(relativePath
     /// </summary>
     public void CheckYes()
     {
-        Log.Information("{PageName}: Checking `Yes` radio button.", nameof(RadioButtonPage));
+        Log.Information("{PageName}: Checking the \"Yes\" radio button.", PageName);
         
         if (!Yes.IsChecked)
         {
