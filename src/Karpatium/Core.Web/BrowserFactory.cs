@@ -16,9 +16,6 @@ internal static class BrowserFactory
     /// Creates an instance of an <see cref="IBrowserFactory"/> based on the provided browser settings.
     /// </summary>
     /// <param name="browserSettings">The browser settings used to determine the appropriate factory.</param>
-    /// <returns>
-    /// An instance of an <see cref="IBrowserFactory"/> corresponding to the specified browser settings.
-    /// </returns>
     /// <exception cref="BrowserFactoryNotImplementedException">
     /// Thrown when the factory for the given browser type is not implemented.
     /// </exception>

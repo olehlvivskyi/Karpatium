@@ -34,7 +34,6 @@ public abstract class Element
     /// <br />This property allows lazy resolution of the underlying web element, ensuring it is fetched
     /// as-needed and always reflects the current state of the page.
     /// </summary>
-    /// <returns>The resolved <see cref="IWebElement"/> instance that represents this element.</returns>
     internal IWebElement WebElementWrapper
     {
         get
@@ -113,7 +112,6 @@ public abstract class Element
     /// Retrieves the CSS value of the specified property from the element.
     /// </summary>
     /// <param name="property">The name of the CSS property whose value is to be retrieved.</param>
-    /// <returns>The CSS value of the specified property as a string.</returns>
     public string GetCssValue(string property)
     {
         return ConditionalWaiter.ForResult(() => WebElementWrapper.GetCssValue(property), $"{nameof(GetCssValue)} failed.");

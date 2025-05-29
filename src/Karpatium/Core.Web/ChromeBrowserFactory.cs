@@ -6,16 +6,10 @@ using OpenQA.Selenium.Remote;
 namespace Karpatium.Core.Web;
 
 /// <summary>
-/// A factory responsible for creating instances of the Chrome browser with specific configurations
-/// based on the provided settings.
+/// A factory responsible for creating instances of the Chrome browser with specific configurations based on the provided settings.
 /// </summary>
 internal sealed class ChromeBrowserFactory : IBrowserFactory
 {
-    /// <summary>
-    /// Creates and configures a browser instance based on the provided browser settings.
-    /// </summary>
-    /// <param name="browserSettings">The settings that define browser behaviors.</param>
-    /// <returns>Returns a <see cref="Browser"/> object configured as per the specified settings.</returns>
     public Browser CreateBrowser(IBrowserSettings browserSettings)
     {
         var chromeOptions = GetChromeOptions(browserSettings);

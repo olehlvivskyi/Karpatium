@@ -41,9 +41,6 @@ public class ElementCollection<TElement> : IReadOnlyList<TElement>
     /// <br />This property allows lazy resolution of the underlying collection of web elements, ensuring it is fetched
     /// as-needed and always reflects the current state of the page.
     /// </summary>
-    /// <returns>
-    /// A read only collection of <see cref="IWebElement"/> instances representing the elements.
-    /// </returns>
     private IReadOnlyList<IWebElement> WebElementsWrapper
     {
         get
@@ -62,7 +59,6 @@ public class ElementCollection<TElement> : IReadOnlyList<TElement>
     /// Gets HTML element at the specified index in the collection.
     /// </summary>
     /// <param name="index">The index of HTML element to retrieve.</param>
-    /// <returns>HTML element at the specified index.</returns>
     public TElement this[int index] => Elements[index];
 
     /// <summary>
@@ -73,12 +69,10 @@ public class ElementCollection<TElement> : IReadOnlyList<TElement>
     /// <summary>
     /// Returns an enumerator that iterates through HTML elements.
     /// </summary>
-    /// <returns>An enumerator for the collection.</returns>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <summary>
     /// Returns an enumerator that iterates through HTML elements.
     /// </summary>
-    /// <returns>An enumerator for the collection.</returns>
     public IEnumerator<TElement> GetEnumerator() => Elements.GetEnumerator();
 }

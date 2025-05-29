@@ -25,7 +25,7 @@ public static class WebManager
     internal static Browser BrowserWrapper
     {
         get => Browsers[TestContext.CurrentContext.WorkerId ?? "single"]
-               ?? throw new InvalidOperationException("WebManager is not initialized.");
+               ?? throw new InvalidOperationException($"{nameof(WebManager)} is not initialized.");
 
         private set => Browsers[TestContext.CurrentContext.WorkerId ?? "single"] = value;
     }
@@ -39,7 +39,7 @@ public static class WebManager
     private static Waiter WaiterWrapper
     {
         get => Waiters[TestContext.CurrentContext.WorkerId ?? "single"]
-               ?? throw new InvalidOperationException("WebManager is not initialized.");
+               ?? throw new InvalidOperationException($"{nameof(WebManager)} is not initialized.");
 
         set => Waiters[TestContext.CurrentContext.WorkerId ?? "single"] = value;
     }

@@ -38,6 +38,9 @@ public interface IBrowser
     /// Navigates the browser to the specified URL.
     /// </summary>
     /// <param name="url">The URL to navigate to.</param>
+    /// <exception cref="ArgumentException">
+    /// Thrown if the provided URL is null, empty, or not a valid absolute URI.
+    /// </exception>
     void NavigateTo(string url);
 
     /// <summary>
