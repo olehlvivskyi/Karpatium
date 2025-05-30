@@ -1,3 +1,5 @@
+using Allure.NUnit.Attributes;
+using Karpatium.Core.Utilities;
 using Karpatium.Core.Web;
 using Karpatium.Core.Web.Elements;
 using Serilog;
@@ -9,7 +11,7 @@ namespace ToolsQa.UI.Pages;
 /// </summary>
 public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
 {
-    private const string PageName = nameof(TextBoxPage);
+    protected override string PageName => "\"Text Box\" page";
     
     private InputElement CurrentAddressInput => ElementFactory.Create<InputElement>(Selector.Id("currentAddress"));
     private CommonElement CurrentAddressOutput => ElementFactory.Create<CommonElement>(Selector.Css("p#currentAddress"));
@@ -24,6 +26,7 @@ public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
     /// <summary>
     /// Clicks on the "Submit" button.
     /// </summary>
+    [AllureStep("Clicking on the \"Submit\" button.")]
     public void ClickSubmit()
     {
         Log.Information("{PageName}: Clicking on the \"Submit\" button.", PageName);
@@ -34,11 +37,12 @@ public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
     /// <summary>
     /// Gets the submitted current address.
     /// </summary>
+    [AllureStep("Checking the submitted current address.")]
     public string GetSubmittedCurrentAddress()
     {
         Log.Information("{PageName}: Checking the submitted current address.", PageName);
         
-        string currentAddress = CurrentAddressOutput.Text.Split(':')[1];
+        string currentAddress = ConditionalWaiter.ForResult(() => CurrentAddressOutput.Text.Split(':')[1].Trim(), $"{PageName}: {nameof(GetSubmittedCurrentAddress)} failed.");
         Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, nameof(GetSubmittedCurrentAddress), currentAddress);
         
         return currentAddress;
@@ -47,11 +51,12 @@ public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
     /// <summary>
     /// Gets the submitted full name.
     /// </summary>
+    [AllureStep("Checking the submitted full name.")]
     public string GetSubmittedFullName()
     {
         Log.Information("{PageName}: Checking the submitted full name.", PageName);
         
-        string fullName = FullNameOutput.Text.Split(':')[1];
+        string fullName = ConditionalWaiter.ForResult(() => FullNameOutput.Text.Split(':')[1].Trim(), $"{PageName}: {nameof(GetSubmittedFullName)} failed.");
         Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, nameof(GetSubmittedFullName), fullName);
         
         return fullName;
@@ -60,11 +65,12 @@ public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
     /// <summary>
     /// Gets the submitted email address.
     /// </summary>
+    [AllureStep("Checking the submitted email address.")]
     public string GetSubmittedEmail()
     {
         Log.Information("{PageName}: Checking the submitted email address.", PageName);
         
-        string email = EmailOutput.Text.Split(':')[1];
+        string email = ConditionalWaiter.ForResult(() => EmailOutput.Text.Split(':')[1].Trim(), $"{PageName}: {nameof(GetSubmittedEmail)} failed.");
         Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, nameof(GetSubmittedEmail), email);
         
         return email;
@@ -73,11 +79,12 @@ public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
     /// <summary>
     /// Gets the submitted permanent address.
     /// </summary>
+    [AllureStep("Checking the submitted permanent address.")]
     public string GetSubmittedPermanentAddress()
     {
         Log.Information("{PageName}: Checking the submitted permanent address.", PageName);
         
-        string permanentAddress = PermanentAddressOutput.Text.Split(':')[1];
+        string permanentAddress = ConditionalWaiter.ForResult(() => PermanentAddressOutput.Text.Split(':')[1].Trim(), $"{PageName}: {nameof(GetSubmittedPermanentAddress)} failed.");
         Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, nameof(GetSubmittedPermanentAddress), permanentAddress);
         
         return permanentAddress;
@@ -87,6 +94,7 @@ public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
     /// Sets value for "Current Address" field.
     /// </summary>
     /// <param name="currentAddress">The text to set as the current address.</param>
+    [AllureStep("Setting {currentAddress} for \"Current Address\" field.")]
     public void SetCurrentAddress(string currentAddress)
     {
         Log.Information("{PageName}: Setting `{CurrentAddress}` for \"Current Address\" field.", PageName, currentAddress);
@@ -98,6 +106,7 @@ public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
     /// Sets value for "Email" field.
     /// </summary>
     /// <param name="email">The text to set as the email address.</param>
+    [AllureStep("Setting {email} for \"Email\" field.")]
     public void SetEmail(string email)
     {
         Log.Information("{PageName}: Setting `{Email}` for \"Email\" field.", PageName, email);
@@ -109,6 +118,7 @@ public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
     /// Sets value for "Full Name" field.
     /// </summary>
     /// <param name="fullName">The text to set as the full name.</param>
+    [AllureStep("Setting {fullName} for \"Full Name\" field.")]
     public void SetFullName(string fullName)
     {
         Log.Information("{PageName}: Setting `{FullName}` for \"Full Name\" field.", PageName, fullName);
@@ -120,6 +130,7 @@ public sealed class TextBoxPage(string relativePath) : BasePage(relativePath)
     /// Sets value for "Permanent Address" field.
     /// </summary>
     /// <param name="permanentAddress">The text to set as the permanent address.</param>
+    [AllureStep("Setting {permanentAddress} for \"Permanent Address\" field.")]
     public void SetPermanentAddress(string permanentAddress)
     {
         Log.Information("{PageName}: Setting `{PermanentAddress}` for \"Permanent Address\" field.", PageName, permanentAddress);

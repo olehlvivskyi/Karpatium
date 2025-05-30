@@ -9,7 +9,7 @@ namespace ToolsQa.UI.Pages;
 /// </summary>
 public sealed class LinksPage(string relativePath) : BasePage(relativePath)
 {
-    private const string PageName = nameof(LinksPage);
+    protected override string PageName => "\"Links\" page";
     
     private CommonElement Created => ElementFactory.Create<CommonElement>(Selector.Id("created"));
     private CommonElement Home => ElementFactory.Create<CommonElement>(Selector.Id("simpleLink"));

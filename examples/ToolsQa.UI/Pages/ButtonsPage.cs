@@ -9,7 +9,7 @@ namespace ToolsQa.UI.Pages;
 /// </summary>
 public sealed class ButtonsPage(string relativePath) : BasePage(relativePath)
 {
-    private const string PageName = nameof(ButtonsPage);
+    protected override string PageName => "\"Buttons\" page";
     
     private CommonElement ClickMe => ElementFactory.Create<CommonElement>(Selector.XPath("//button[text()='Click Me']"));
     private CommonElement ClickMeMessage => ElementFactory.Create<CommonElement>(Selector.Id("dynamicClickMessage"));

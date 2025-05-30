@@ -1,3 +1,4 @@
+using Karpatium.Core.Utilities;
 using Karpatium.Core.Web;
 using Karpatium.Core.Web.Elements;
 using Serilog;
@@ -9,7 +10,7 @@ namespace ToolsQa.UI.Pages;
 /// </summary>
 public sealed class CheckBoxPage(string relativePath) : BasePage(relativePath)
 {
-    private const string PageName = nameof(CheckBoxPage);
+    protected override string PageName => "\"Check Box\" page";
     
     private CommonElement ExpandAll => ElementFactory.Create<CommonElement>(Selector.Class("rct-option-expand-all"));
     private CommonElement GetNodeCheckbox(CommonElement node) => ElementFactory.Create<CommonElement>(Selector.Class("rct-checkbox"), node);
@@ -34,9 +35,9 @@ public sealed class CheckBoxPage(string relativePath) : BasePage(relativePath)
     {
         Log.Information("{PageName}: Checking the names of the selected nodes.", PageName);
 
-        IReadOnlyList<string> selectedNodes = SelectedNodes
+        IReadOnlyList<string> selectedNodes = ConditionalWaiter.ForResult(() => SelectedNodes
             .Select(node => node.Text)
-            .ToList();
+            .ToList(), $"{PageName}: {nameof(GetSelectedNodes)} failed.");
         Log.Debug("{PageName}: {MemberName} = `{@MemberValue}`", PageName, nameof(GetSelectedNodes), selectedNodes);
 
         return selectedNodes;
@@ -50,7 +51,7 @@ public sealed class CheckBoxPage(string relativePath) : BasePage(relativePath)
     {
         Log.Information("{PageName}: Selecting `{NodeName}` node.", PageName, nodeName);
         
-        CommonElement nodeToSelect = Nodes.First(node => node.Text.Contains(nodeName));
+        CommonElement nodeToSelect = ConditionalWaiter.ForResult(() => Nodes.First(node => node.Text.Contains(nodeName)), $"{PageName}: {nameof(SelectNode)} failed.");
         CommonElement nodeCheckBox = GetNodeCheckbox(nodeToSelect);
         
         nodeCheckBox.Click();

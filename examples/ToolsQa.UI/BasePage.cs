@@ -8,10 +8,14 @@ namespace ToolsQa.UI;
 /// </summary>
 public abstract class BasePage
 {
+    protected abstract string PageName { get; }
+    
     internal BasePage(string relativePath)
     {
-        ConditionalWaiter.ForTrue(() => WebManager.Browser.Url.Contains(relativePath), $"Wait for `{relativePath}` page url failed.");
+        ConditionalWaiter.ForTrue(() => WebManager.Browser.Url.Contains(relativePath), $"{GetPageName()}: Wait for `{relativePath}` page url failed.");
         
         WebManager.Waiter.ForPageSourceIsNotChanged();
     }
+    
+    private string GetPageName() => PageName;
 }
