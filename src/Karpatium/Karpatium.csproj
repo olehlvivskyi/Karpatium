@@ -28,16 +28,16 @@
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Karpatium</PackageId>
-        <Version>0.8.0</Version>
+        <Version>0.9.0</Version>
         <Authors>Oleh Lvivskyi</Authors>
         <PackageIcon>icon.png</PackageIcon>
         <PackageDescription>
 Selenium-powered and NUnit-based test automation framework with Ukrainian roots and a mountain of features 🏔️
         </PackageDescription>
         <PackageReleaseNotes>
-This is the MVP release.
+This is the Pre-Release release.
 - The package is still under development.
-- Currently, only the basic functionality is included.
+- Currently, most of functionality is included.
 - Stay tuned for future updates!
         </PackageReleaseNotes>
         <PackageTags>karpatium; selenium; test-automation; web automation; ui-automation; qa; automation </PackageTags>
