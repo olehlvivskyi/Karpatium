@@ -43,6 +43,12 @@ public abstract class Element
                     $"{nameof(WebElementWrapper)} from global DOM failed.")
                 : ConditionalWaiter.ForResult(() => Parent.FindElement(Selector!), 
                     $"{nameof(WebElementWrapper)} from parent element failed."));
+            
+            if (WebManager.IsDemoModeEnabled)
+            {
+                ApplyDemoMode(element);
+            }
+            
             return element;
         }
     }
@@ -88,6 +94,7 @@ public abstract class Element
     public void Click()
     {
         ConditionalWaiter.ForNoException(() => WebElementWrapper.Click(), $"{nameof(Click)} failed.");
+        WebManager.Waiter.ForPageSourceIsNotChanged();
     }
 
     /// <summary>
@@ -95,8 +102,15 @@ public abstract class Element
     /// </summary>
     public void DoubleClick()
     {
-        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.DoubleClick(WebElementWrapper).Perform(), 
-            $"{nameof(DoubleClick)} failed.");
+        if (WebManager.CurrentBrowserType == BrowserType.Safari)
+        {
+            ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.ExecuteJavascript("arguments[0].dispatchEvent(new MouseEvent('dblclick', { 'bubbles': true }));", WebElementWrapper), $"{nameof(DoubleClick)} failed.");
+        }
+        else
+        {
+            ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.DoubleClick(WebElementWrapper).Perform(), $"{nameof(DoubleClick)} failed.");
+        }
+        WebManager.Waiter.ForPageSourceIsNotChanged();
     }
 
     /// <summary>
@@ -124,5 +138,21 @@ public abstract class Element
     {
         ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.ContextClick(WebElementWrapper).Perform(), 
             $"{nameof(RightClick)} failed.");
+    }
+    
+    private void ApplyDemoMode(IWebElement element)
+    {
+        const string demoAddJavaScriptStyle = "arguments[0].style.outline='3px solid rgba(255, 0, 0, 0.7)'; arguments[0].style.outlineOffset='-3px'; arguments[0].style.boxShadow='0 0 10px rgba(255, 0, 0, 0.7)';";
+        const string demoRemoveJavaScriptStyle = "arguments[0].style.outline=''; arguments[0].style.outlineOffset=''; arguments[0].style.boxShadow='';";
+
+        ConditionalWaiter.ForNoException(
+            () =>
+            {
+                WebManager.Browser.ExecuteJavascript(demoAddJavaScriptStyle, element);
+                Thread.Sleep(WebManager.DemoModeDelayInMilliseconds);
+                WebManager.Browser.ExecuteJavascript(demoRemoveJavaScriptStyle, element);
+                
+            },
+            "Element: Waiting for slow test and apply highlighting.");
     }
 }

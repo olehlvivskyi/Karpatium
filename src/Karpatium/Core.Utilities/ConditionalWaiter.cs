@@ -20,6 +20,37 @@ public static class ConditionalWaiter
 
         set => LastExceptions[TestContext.CurrentContext.WorkerId ?? "single"] = value!;
     }
+    
+    /// <summary>
+    /// Waits for the specified condition to evaluate to false within a configurable timeout period.
+    /// </summary>
+    /// <param name="anonymousFunction">A function representing the condition to be evaluated.</param>
+    /// <param name="message">The message that will be included if the timeout is reached.</param>
+    /// <param name="timeoutInSeconds">The maximum duration, in seconds, to wait for the condition to be false.</param>
+    public static void ForFalse(Func<bool> anonymousFunction, string message, int timeoutInSeconds = DefaultTimeoutInSeconds)
+    {
+        LastException = null;
+        Wait(() => !anonymousFunction(), message, timeoutInSeconds);
+    }
+
+    /// <summary>
+    /// Waits for the specified condition to evaluate to false within a configurable timeout period.
+    /// Any exceptions thrown during execution are suppressed.
+    /// </summary>
+    /// <param name="anonymousFunction">The function that evaluates the condition to be checked.</param>
+    /// <param name="timeoutInSeconds">The maximum duration, in seconds, to wait for the condition to be false.</param>
+    public static void ForFalseIfPossible(Func<bool> anonymousFunction, int timeoutInSeconds = DefaultTimeoutInSeconds)
+    {
+        try
+        {
+            LastException = null;
+            Wait(() => !anonymousFunction(), timeoutInSeconds: timeoutInSeconds);
+        }
+        catch
+        {
+            // ignored
+        }
+    }
 
     /// <summary>
     /// Waits for the specified action to execute without throwing any exceptions within a configurable timeout period.
@@ -66,7 +97,7 @@ public static class ConditionalWaiter
     /// Any exceptions thrown during execution are suppressed.
     /// </summary>
     /// <param name="anonymousFunction">The function that evaluates the condition to be checked.</param>
-    /// <param name="timeoutInSeconds">The maximum duration, in seconds, to wait for the condition to be met.</param>
+    /// <param name="timeoutInSeconds">The maximum duration, in seconds, to wait for the condition to be true.</param>
     public static void ForTrueIfPossible(Func<bool> anonymousFunction, int timeoutInSeconds = DefaultTimeoutInSeconds)
     {
         try

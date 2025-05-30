@@ -1,3 +1,4 @@
+using Karpatium.Core.Web.BrowserFactories;
 using Karpatium.Core.Web.Exceptions;
 
 namespace Karpatium.Core.Web;
@@ -9,7 +10,10 @@ internal static class BrowserFactory
 {
     private static readonly Dictionary<BrowserType, IBrowserFactory> Factories = new()
     {
-        { BrowserType.Chrome, new ChromeBrowserFactory() }
+        { BrowserType.Chrome, new ChromeBrowserFactory() },
+        { BrowserType.Edge, new EdgeBrowserFactory() },
+        { BrowserType.Firefox, new FirefoxBrowserFactory() },
+        { BrowserType.Safari, new SafariBrowserFactory() }
     };
     
     /// <summary>

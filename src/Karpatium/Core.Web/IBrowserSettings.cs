@@ -14,6 +14,14 @@ public interface IBrowserSettings
     BrowserType BrowserType { get; }
 
     /// <summary>
+    /// Gets the delay duration, in milliseconds, to be applied in demo mode during operations.
+    /// </summary>
+    /// <remarks>
+    /// The <see cref="DemoModeDelayInMilliseconds"/> defines the amount of time, in milliseconds, that the system will pause in demo mode to simulate a real-time user interaction for demonstration purposes.
+    /// </remarks>
+    int DemoModeDelayInMilliseconds { get; }
+
+    /// <summary>
     /// Gets the downloaded files folder name.
     /// </summary>
     /// <remarks>
@@ -21,6 +29,14 @@ public interface IBrowserSettings
     /// This folder is typically named "Downloads".
     /// </remarks>
     string DownloadedFilesFolderName { get; }
+
+    /// <summary>
+    /// Indicates whether the test automation is operating in demo mode.
+    /// </summary>
+    /// <remarks>
+    /// The <see cref="IsDemoModeEnabled"/> introduces delays and highlights elements, typically used to provide additional visual feedback. 
+    /// </remarks>
+    bool IsDemoModeEnabled { get; }
 
     /// <summary>
     /// Indicates whether the browser should run in headless mode.

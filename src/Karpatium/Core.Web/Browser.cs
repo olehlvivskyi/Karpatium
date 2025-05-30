@@ -1,3 +1,5 @@
+using System.Reflection;
+using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using Serilog;
@@ -29,6 +31,12 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
     internal IReadOnlyList<IWebElement> FindElements(Selector selector) => DriverWrapper.FindElements(selector.ByWrapper);
 
     /// <summary>
+    /// Captures a screenshot of the current browser window and returns it as a <see cref="Screenshot"/> object.
+    /// </summary>
+    /// <returns>A <see cref="Screenshot"/> object representing the current state of the browser window.</returns>
+    internal Screenshot GetScreenshot() => ((ITakesScreenshot)DriverWrapper).GetScreenshot();
+
+    /// <summary>
     /// Closes all browser windows and safely ends the WebDriver session.
     /// </summary>
     internal void Quit() => DriverWrapper.Quit();
@@ -56,7 +64,7 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
         
         DriverWrapper.Navigate().GoToUrl(url);
     }
-    
+
     public void SwitchToChildTab()
     {
         DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles.Last());

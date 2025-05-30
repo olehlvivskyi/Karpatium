@@ -19,9 +19,22 @@ public sealed class ImageElement : Element
         {
             bool isImageValid = ConditionalWaiter.ForResult(() 
                     => int.TryParse(GetAttribute("naturalWidth"), out int result) && result > 0, 
-                $"{nameof(ImageElement)}: {nameof(IsImageValid)} failed.");;
+                $"{nameof(ImageElement)}: {nameof(IsImageValid)} failed.");
             
             return isImageValid;
+        }
+    }
+
+    /// <summary>
+    /// Gets the "src" attribute of the image element.
+    /// </summary>
+    public string? Src
+    {
+        get
+        {
+            string? src = GetAttribute("src");
+            
+            return src;
         }
     }
 }

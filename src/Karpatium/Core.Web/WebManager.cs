@@ -1,6 +1,8 @@
 using System.Collections.Concurrent;
+using System.Reflection;
 using Karpatium.Core.Utilities;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using Serilog;
 
 namespace Karpatium.Core.Web;
@@ -17,6 +19,11 @@ public static class WebManager
     private static ConcurrentDictionary<string, Waiter> Waiters { get; } = new();
 
     /// <summary>
+    /// Gets the type of the browser that is currently being used for test execution.
+    /// </summary>
+    public static BrowserType CurrentBrowserType { get; private set; }
+    
+    /// <summary>
     /// Gets or sets the browser instance for the current test.
     /// </summary>
     /// <exception cref="InvalidOperationException">
@@ -29,6 +36,13 @@ public static class WebManager
 
         private set => Browsers[TestContext.CurrentContext.WorkerId ?? "single"] = value;
     }
+    
+    internal static int DemoModeDelayInMilliseconds { get; private set; }
+    
+    /// <summary>
+    /// Demo mode introduces delays and highlights elements, typically used to provide additional visual feedback. 
+    /// </summary>
+    internal static bool IsDemoModeEnabled { get; private set; }
 
     /// <summary>
     /// Gets or sets the waiter instance for managing wait conditions.
@@ -80,10 +94,45 @@ public static class WebManager
         IBrowserFactory browserFactory = BrowserFactory.Get(browserSettings);
         BrowserWrapper = browserFactory.CreateBrowser(browserSettings);
         WaiterWrapper = new Waiter(BrowserWrapper);
+        CurrentBrowserType = browserSettings.BrowserType;
+        IsDemoModeEnabled = browserSettings.IsDemoModeEnabled;
+        if (IsDemoModeEnabled)
+        {
+            DemoModeDelayInMilliseconds = browserSettings.DemoModeDelayInMilliseconds;
+        }
 
         string downloadedFilesFolder = PathUtils.GetLocalUserPath(browserSettings.DownloadedFilesFolderName);
-        Log.Verbose("WebManager: Creating `{DownloadedFilesFolder} folder for downloaded files.", downloadedFilesFolder);
+        Log.Verbose("WebManager: Ensuring that `{DownloadedFilesFolder} folder for downloaded files is created.", downloadedFilesFolder);
         Directory.CreateDirectory(downloadedFilesFolder);
+    }
+
+    /// <summary>
+    /// Saves the current page source of the browser session to a text file with the specified file name for debugging purposes.
+    /// </summary>
+    /// <param name="fileName">The name of the file (without extension) to store the page source.</param>
+    /// <returns>The full path to the file containing the page source.</returns>
+    public static string DebugPageSource(string fileName)
+    {
+        FileInfo fileInfo = new FileInfo(Path.Join(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "pagesource", $"{fileName}.txt"));
+        Directory.CreateDirectory(fileInfo.DirectoryName!);
+        File.WriteAllText(fileInfo.FullName, Browser.PageSource);
+        
+        return fileInfo.FullName;
+    }
+
+    /// <summary>
+    /// Captures a screenshot of the current browser window and saves it to the specified file path.
+    /// </summary>
+    /// <param name="fileName">The name of the file (without extension) where the screenshot will be saved.</param>
+    /// <returns>The full path of the file where the screenshot was saved.</returns>
+    public static string DebugScreenshot(string fileName)
+    {
+        FileInfo fileInfo = new FileInfo(Path.Join(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "screenshots", $"{fileName}.png"));
+        Directory.CreateDirectory(fileInfo.DirectoryName!);
+        Screenshot screenshot = BrowserWrapper.GetScreenshot();
+        screenshot.SaveAsFile(fileInfo.FullName);
+        
+        return fileInfo.FullName;
     }
 
     /// <summary>
