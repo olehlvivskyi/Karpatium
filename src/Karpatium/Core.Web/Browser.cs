@@ -1,3 +1,5 @@
+using System.Reflection;
+using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using Serilog;
@@ -29,50 +31,28 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
     internal IReadOnlyList<IWebElement> FindElements(Selector selector) => DriverWrapper.FindElements(selector.ByWrapper);
 
     /// <summary>
+    /// Captures a screenshot of the current browser window and returns it as a <see cref="Screenshot"/> object.
+    /// </summary>
+    /// <returns>A <see cref="Screenshot"/> object representing the current state of the browser window.</returns>
+    internal Screenshot GetScreenshot() => ((ITakesScreenshot)DriverWrapper).GetScreenshot();
+
+    /// <summary>
     /// Closes all browser windows and safely ends the WebDriver session.
     /// </summary>
     internal void Quit() => DriverWrapper.Quit();
-
-    /// <summary>
-    /// Gets the source code of the current webpage loaded in the browser instance.
-    /// </summary>
-    /// <value>
-    /// A string representing the HTML source of the current webpage.
-    /// </value>
+    
     public string PageSource => DriverWrapper.PageSource;
 
-    /// <summary>
-    /// Gets the current URL of the webpage loaded in the browser instance.
-    /// </summary>
-    /// <value>
-    /// A string representing the URL of the current webpage.
-    /// </value>
     public string Url => DriverWrapper.Url;
     
-    /// <summary>
-    /// Executes the specified JavaScript code in the context of the currently selected frame or window.
-    /// </summary>
-    /// <param name="script">The JavaScript code to execute.</param>
-    /// <param name="args">The arguments to be passed to the script, if any.</param>
-    /// <returns>The result of the script execution, which may be null or an object depending on the script.</returns>
     public object? ExecuteJavascript(string script, params object[] args)
     {
         var result = JavaScriptExecutorWrapper.ExecuteScript(script, args);
         return result;
     }
 
-    /// <summary>
-    /// Maximizes the browser window to occupy the full screen.
-    /// </summary>
     public void MaximizeWindow() => DriverWrapper.Manage().Window.Maximize();
-
-    /// <summary>
-    /// Navigates the browser to the specified URL.
-    /// </summary>
-    /// <param name="url">The URL to navigate to. Must be a well-formed absolute URI.</param>
-    /// <exception cref="ArgumentException">
-    /// Thrown if the provided URL is null, empty, or not a valid absolute URI.
-    /// </exception>
+    
     public void NavigateTo(string url)
     {
         if (string.IsNullOrWhiteSpace(url) || !Uri.IsWellFormedUriString(url, UriKind.Absolute))
@@ -80,22 +60,16 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
             throw new ArgumentException("The provided URL is invalid.", nameof(url));
         }
         
-        Log.Verbose("Browser: Navigating to `{Url}` url.", url);
+        Log.Verbose("{ClassName}: Navigating to `{Url}` url.", nameof(Browser), url);
         
         DriverWrapper.Navigate().GoToUrl(url);
     }
-    
-    /// <summary>
-    /// Switches the browser focus to the most recently opened browser tab or window.
-    /// </summary>
+
     public void SwitchToChildTab()
     {
         DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles.Last());
     }
 
-    /// <summary>
-    /// Switches the browser focus to the parent tab or the first opened browser window.
-    /// </summary>
     public void SwitchToParentTab()
     {
         DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles.First());

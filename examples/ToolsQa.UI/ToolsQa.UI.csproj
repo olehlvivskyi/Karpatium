@@ -10,4 +10,8 @@
       <ProjectReference Include="..\..\src\Karpatium\Karpatium.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Allure.NUnit" Version="2.12.1" />
+    </ItemGroup>
+
 </Project>

@@ -9,7 +9,7 @@ namespace ToolsQa.UI.Pages;
 /// </summary>
 public sealed class UploadDownloadPage(string relativePath) : BasePage(relativePath)
 {
-    private const string PageName = nameof(UploadDownloadPage);
+    protected override string PageName => "\"Upload Download\" page";
     
     private CommonElement Download => ElementFactory.Create<CommonElement>(Selector.Id("downloadButton"));
     private InputElement Upload => ElementFactory.Create<InputElement>(Selector.Id("uploadFile"));

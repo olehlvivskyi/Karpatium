@@ -9,7 +9,7 @@ namespace ToolsQa.UI.Pages;
 /// </summary>
 public sealed class BrokenPage(string relativePath) : BasePage(relativePath)
 {
-    private const string PageName = nameof(BrokenPage);
+    protected override string PageName => "\"Broken\" page";
     
     private ImageElement FirstLogo => ElementFactory.Create<ImageElement>(Selector.XPath("//p[text()='Valid image']/following-sibling::img"));
     private ImageElement SecondLogo => ElementFactory.Create<ImageElement>(Selector.XPath("//p[text()='Broken image']/following-sibling::img"));

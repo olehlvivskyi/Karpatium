@@ -1,3 +1,4 @@
+using Karpatium.Core.Web.BrowserFactories;
 using Karpatium.Core.Web.Exceptions;
 
 namespace Karpatium.Core.Web;
@@ -9,16 +10,16 @@ internal static class BrowserFactory
 {
     private static readonly Dictionary<BrowserType, IBrowserFactory> Factories = new()
     {
-        { BrowserType.Chrome, new ChromeBrowserFactory() }
+        { BrowserType.Chrome, new ChromeBrowserFactory() },
+        { BrowserType.Edge, new EdgeBrowserFactory() },
+        { BrowserType.Firefox, new FirefoxBrowserFactory() },
+        { BrowserType.Safari, new SafariBrowserFactory() }
     };
     
     /// <summary>
     /// Creates an instance of an <see cref="IBrowserFactory"/> based on the provided browser settings.
     /// </summary>
     /// <param name="browserSettings">The browser settings used to determine the appropriate factory.</param>
-    /// <returns>
-    /// An instance of an <see cref="IBrowserFactory"/> corresponding to the specified browser settings.
-    /// </returns>
     /// <exception cref="BrowserFactoryNotImplementedException">
     /// Thrown when the factory for the given browser type is not implemented.
     /// </exception>

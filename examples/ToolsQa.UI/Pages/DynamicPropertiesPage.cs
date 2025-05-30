@@ -9,7 +9,7 @@ namespace ToolsQa.UI.Pages;
 /// </summary>
 public sealed class DynamicPropertiesPage(string relativePath) : BasePage(relativePath)
 {
-    private const string PageName = nameof(DynamicPropertiesPage);
+    protected override string PageName => "\"Dynamic Properties\" page";
     
     private CommonElement FirstButton => ElementFactory.Create<CommonElement>(Selector.Id("enableAfter"));
     private CommonElement SecondButton => ElementFactory.Create<CommonElement>(Selector.Id("colorChange"));

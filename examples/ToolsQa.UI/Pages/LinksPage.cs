@@ -9,7 +9,7 @@ namespace ToolsQa.UI.Pages;
 /// </summary>
 public sealed class LinksPage(string relativePath) : BasePage(relativePath)
 {
-    private const string PageName = nameof(LinksPage);
+    protected override string PageName => "\"Links\" page";
     
     private CommonElement Created => ElementFactory.Create<CommonElement>(Selector.Id("created"));
     private CommonElement Home => ElementFactory.Create<CommonElement>(Selector.Id("simpleLink"));
@@ -40,6 +40,7 @@ public sealed class LinksPage(string relativePath) : BasePage(relativePath)
         Log.Information("{PageName}: Clicking on the \"Created\" link.", PageName);
         
         Created.Click();
+        WebManager.Waiter.ForPageSourceIsNotChanged();
     }
 
     /// <summary>
@@ -60,5 +61,6 @@ public sealed class LinksPage(string relativePath) : BasePage(relativePath)
         Log.Information("{PageName}: Clicking \"Not Found\" link.", PageName);
         
         NotFound.Click();
+        WebManager.Waiter.ForPageSourceIsNotChanged();
     }
 }

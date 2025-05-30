@@ -9,13 +9,20 @@ internal sealed class Waiter(Browser browser) : IWaiter
 {
     private Browser BrowserWrapper { get; } = browser;
 
-    /// <summary>
-    /// Waits until the page source remains unchanged for a specified timeout period.
-    /// </summary>
-    /// <param name="timeOutInSeconds">The maximum duration, in seconds, to wait for the page source to remain unchanged.
-    /// Default is 10 seconds.</param>
-    /// <param name="pollingIntervalInMilliseconds">The interval, in milliseconds, at which the page source is checked.
-    /// Default is 100 milliseconds.</param>
+    public void ForDocumentReadyStateToBeComplete(int timeOutInSeconds = 10)
+    {
+        ConditionalWaiter.ForTrue(() =>
+        {
+            string documentReadyState = BrowserWrapper.ExecuteJavascript("return document.readyState")?.ToString() ?? string.Empty;
+            return documentReadyState.Equals("complete");
+        }, "Wait for document ready state to be complete.", timeOutInSeconds);
+    }
+    
+    public void ForElementIsVisible(Element element, int timeOutInSeconds = 10)
+    {
+        ConditionalWaiter.ForTrue(() => element.IsVisible, $"{nameof(Waiter)}: {nameof(ForElementIsVisible)} failed.", timeOutInSeconds);
+    }
+
     public void ForPageSourceIsNotChanged(int timeOutInSeconds = 10, int pollingIntervalInMilliseconds = 100)
     {
         ConditionalWaiter.ForTrue(() =>
@@ -24,6 +31,6 @@ internal sealed class Waiter(Browser browser) : IWaiter
             Thread.Sleep(pollingIntervalInMilliseconds);
             var currentPageSource = BrowserWrapper.PageSource;
             return currentPageSource == previousPageSource;
-        }, $"`{nameof(ForPageSourceIsNotChanged)}` failed.", timeOutInSeconds);
+        }, $"{nameof(Waiter)}: {nameof(ForPageSourceIsNotChanged)} failed.", timeOutInSeconds);
     }
 }

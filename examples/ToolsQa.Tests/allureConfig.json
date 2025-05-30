@@ -1,0 +1,11 @@
+{
+  "allure": {
+    "directory": "allure-results",
+    "links": [
+      "https://issue.toolsqa.com/browse/{issue}",
+      "https://link.toolsqa.com/browse/{link}",
+      "https://tms.toolsqa.com/browse/{tms}"
+    ],
+    "title": "Tools QA Tests"
+  }
+}

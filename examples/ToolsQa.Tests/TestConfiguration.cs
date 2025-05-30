@@ -1,5 +1,6 @@
 using Karpatium.Core.Web;
 using Microsoft.Extensions.Configuration;
+using ToolsQa.Tests.TestUsers;
 
 namespace ToolsQa.Tests;
 
@@ -56,6 +57,14 @@ public sealed class ApplicationSettings
     /// Represents the base URL of the application, used to construct full navigation paths.
     /// </summary>
     public required string BaseUrl { get; init; }
+
+    /// <summary>
+    /// Represents a collection of user accounts defined in the application settings.
+    /// </summary>
+    /// <remarks>
+    /// Not currently utilized in the application, but serves as an example of using User Pool for parallelization.
+    /// </remarks>
+    public required IReadOnlyList<User> Users { get; init; }
 }
 
 /// <summary>
@@ -65,6 +74,16 @@ public sealed class ApplicationSettings
 public sealed class TestSettings
 {
     /// <summary>
+    /// Represents the JavaScript code used to remove an ad plus 1 from a webpage during test execution.
+    /// </summary>
+    public required string AdPlus1RemovalScript { get; init; }
+    
+    /// <summary>
+    /// Represents the JavaScript code used to remove an ad plus 2 from a webpage during test execution.
+    /// </summary>
+    public required string AdPlus2RemovalScript { get; init; }
+    
+    /// <summary>
     /// Represents the JavaScript code used to remove a banner from a webpage during test execution.
     /// </summary>
     public required string BannerRemovalScript { get; init; }
@@ -73,6 +92,11 @@ public sealed class TestSettings
     /// Represents the JavaScript code used to remove the footer from a web page during test execution.
     /// </summary>
     public required string FooterRemovalScript { get; init; }
+
+    /// <summary>
+    /// Represents the JavaScript code used to remove the right side from a web page during test execution.
+    /// </summary>
+    public required string RightSideRemovalScript { get; init; }
 }
 
 /// <summary>
@@ -82,7 +106,9 @@ public sealed class TestSettings
 public sealed class WebManagerSettings : IBrowserSettings
 {
     public required BrowserType BrowserType { get; init; }
+    public required int DemoModeDelayInMilliseconds { get; init; }
     public required string DownloadedFilesFolderName { get; init; }
+    public bool IsDemoModeEnabled { get; init; }
     public required bool IsHeadlessEnabled { get; init; }
     public required bool IsLocalExecution { get; init; }
     public required string RemoteUrl { get; init; }

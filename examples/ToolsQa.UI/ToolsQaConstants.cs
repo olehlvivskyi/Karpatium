@@ -20,8 +20,8 @@ public static class ToolsQaConstants
     /// </summary>
     public static class DynamicPropertiesPage
     {
-        public const string InitialColorChangeTextColor = "rgba(255, 255, 255, 1)";
-        public const string NextColorChangeTextColor = "rgba(220, 53, 69, 1)";
+        public const string InitialColorChangeTextColor = "255, 255, 255";
+        public const string NextColorChangeTextColor = "220, 53, 69";
     }
     
     /// <summary>

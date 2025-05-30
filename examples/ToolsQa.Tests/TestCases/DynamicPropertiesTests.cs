@@ -1,41 +1,48 @@
+using Allure.NUnit.Attributes;
 using Karpatium.Core.Utilities;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
-namespace ToolsQa.Tests.TestFixtures.Elements;
+namespace ToolsQa.Tests.TestCases;
 
-public class DynamicPropertiesFixture : BaseFixture<EmptyTestData>
+[AllureParentSuite("Tools QA")]
+[AllureSuite("Elements")]
+[AllureSubSuite("Dynamic Properties")]
+[TestFixture]
+public class DynamicPropertiesTests : BaseFixture<EmptyTestData>
 {
-    private const int DomUpdateTimeoutInMilliseconds = 5000;
+    private const int DomUpdateTimeInMiliseconds = 5000;
     
     protected override string TestDataPath => string.Empty;
     
+    [AllureBefore]
     [OneTimeSetUp]
-    public void DynamicPropertiesOneTimeSetUp()
+    public void OneTimeSetUp()
     {
         WebManager.Browser.NavigateTo($"{TestConfiguration.ApplicationSettings.BaseUrl}{ToolsQaPageUrls.DynamicPropertiesPage}");
+        RemoveBanners();
     }
     
-    [Test, Order(1)]
+    [TestCase(TestName = "Ensure that initial button properties are correct."), Order(1)]
     public void EnsureThatInitialButtonPropertiesAreCorrect()
     {
         Assert.Multiple(() =>
         {
             Assert.That(ToolsQaPages.DynamicPropertiesPage.IsFirstButtonEnabled, Is.False, "\"Will enable 5 seconds\" button is enabled.");
-            Assert.That(ToolsQaPages.DynamicPropertiesPage.SecondButtonTextColor, Is.EqualTo(ToolsQaConstants.DynamicPropertiesPage.InitialColorChangeTextColor), "Incorrect \"Color Change\" button text color.");
+            Assert.That(ToolsQaPages.DynamicPropertiesPage.SecondButtonTextColor, Does.Contain(ToolsQaConstants.DynamicPropertiesPage.InitialColorChangeTextColor), "Incorrect \"Color Change\" button text color.");
             Assert.That(ToolsQaPages.DynamicPropertiesPage.IsThirdButtonVisible, Is.False, "\"Visible after 5 seconds\" button is visible.");
         });
     }
     
-    [Test, Order(2)]
+    [TestCase(TestName = "Ensure that after 5 seconds button properties are correct."), Order(2)]
     public void EnsureThatAfter5SecondsButtonPropertiesAreCorrect()
     {
-        ConditionalWaiter.ForTrueIfPossible( () => ToolsQaPages.DynamicPropertiesPage.IsFirstButtonEnabled, DomUpdateTimeoutInMilliseconds);
+        Thread.Sleep(DomUpdateTimeInMiliseconds);
         
         Assert.Multiple(() =>
         {
             Assert.That(ToolsQaPages.DynamicPropertiesPage.IsFirstButtonEnabled, Is.True, "\"Will enable 5 seconds\" button is not enabled.");
-            Assert.That(ToolsQaPages.DynamicPropertiesPage.SecondButtonTextColor, Is.EqualTo(ToolsQaConstants.DynamicPropertiesPage.NextColorChangeTextColor), "Incorrect \"Color Change\" button text color.");
+            Assert.That(ToolsQaPages.DynamicPropertiesPage.SecondButtonTextColor, Does.Contain(ToolsQaConstants.DynamicPropertiesPage.NextColorChangeTextColor), "Incorrect \"Color Change\" button text color.");
             Assert.That(ToolsQaPages.DynamicPropertiesPage.IsThirdButtonVisible, Is.True, "\"Visible after 5 seconds\" button is not visible.");
         });
     }

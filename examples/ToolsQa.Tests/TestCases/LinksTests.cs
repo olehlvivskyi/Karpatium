@@ -1,19 +1,26 @@
+using Allure.NUnit.Attributes;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
-namespace ToolsQa.Tests.TestFixtures.Elements;
+namespace ToolsQa.Tests.TestCases;
 
-public class LinksFixture : BaseFixture<EmptyTestData>
+[AllureParentSuite("Tools QA")]
+[AllureSuite("Elements")]
+[AllureSubSuite("Links")]
+[TestFixture]
+public class LinksTests : BaseFixture<EmptyTestData>
 {
     protected override string TestDataPath => string.Empty;
     
+    [AllureBefore]
     [OneTimeSetUp]
-    public void LinksOneTimeSetUp()
+    public void OneTimeSetUp()
     {
         WebManager.Browser.NavigateTo($"{TestConfiguration.ApplicationSettings.BaseUrl}{ToolsQaPageUrls.LinksPage}");
+        RemoveBanners();
     }
     
-    [Test, Order(1)]
+    [TestCase(TestName = "Ensure that \"Created\" link returns 201."), Order(1)]
     public void EnsureThatCreateLinkReturns201()
     {
         ToolsQaPages.LinksPage.ClickCreated();
@@ -21,7 +28,7 @@ public class LinksFixture : BaseFixture<EmptyTestData>
         Assert.That(ToolsQaPages.LinksPage.LinkResponseText, Is.EqualTo(ToolsQaConstants.LinksPage.LinkResponse201), "Incorrect response.");
     }
 
-    [Test, Order(2)]
+    [TestCase(TestName = "Ensure that \"Not Found\" link returns 404."), Order(2)]
     public void EnsureThatNotFoundLinkReturns404()
     {
         ToolsQaPages.LinksPage.ClickNotFound();
@@ -29,7 +36,7 @@ public class LinksFixture : BaseFixture<EmptyTestData>
         Assert.That(ToolsQaPages.LinksPage.LinkResponseText, Is.EqualTo(ToolsQaConstants.LinksPage.LinkResponse404), "Incorrect response.");
     }
     
-    [Test, Order(3)]
+    [TestCase(TestName = "Ensure that \"Home\" link opens new page."), Order(3)]
     public void EnsureThatHomeLinkOpensNewPage()
     {
         ToolsQaPages.LinksPage.ClickHome();

@@ -11,7 +11,6 @@ public static class ElementFactory
     /// <typeparam name="TElement">The type of the element to create, which inherit from <see cref="Element"/> .</typeparam>
     /// <param name="selector">The selector that identifies the element within the web application.</param>
     /// <param name="parent">The optional parent element under which this element is scoped.</param>
-    /// <returns>An instance of the specified element type.</returns>
     public static TElement Create<TElement>(Selector selector, Element? parent = null)
         where TElement : Element, new()
     {
@@ -28,7 +27,6 @@ public static class ElementFactory
     /// <typeparam name="TElement">The type of the elements in the collection, which inherit from <see cref="Element"/>.</typeparam>
     /// <param name="selector">The selector that identifies the elements within the web application.</param>
     /// <param name="parent">The optional parent element under which this collection is scoped.</param>
-    /// <returns>A collection of the specified element type.</returns>
     public static ElementCollection<TElement> CreateMultiple<TElement>(Selector selector, Element? parent = null)
         where TElement : Element, new()
     {

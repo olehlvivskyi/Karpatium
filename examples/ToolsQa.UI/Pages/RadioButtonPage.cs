@@ -9,7 +9,7 @@ namespace ToolsQa.UI.Pages;
 /// </summary>
 public sealed class RadioButtonPage(string relativePath) : BasePage(relativePath)
 {
-    private const string PageName = nameof(RadioButtonPage);
+    protected override string PageName => "\"Radio Button\" page";
 
     private RadioButtonElement Impressive => ElementFactory.Create<RadioButtonElement>(Selector.Id("impressiveRadio"));
     private CommonElement ImpressiveLabel => ElementFactory.Create<CommonElement>(Selector.Css("label[for='impressiveRadio']"));
