@@ -37,7 +37,7 @@ public class DynamicPropertiesTests : BaseFixture<EmptyTestData>
     [TestCase(TestName = "Ensure that after 5 seconds button properties are correct."), Order(2)]
     public void EnsureThatAfter5SecondsButtonPropertiesAreCorrect()
     {
-        Thread.Sleep(TimeSpan.FromSeconds(DomUpdateTimeInMiliseconds));
+        Thread.Sleep(DomUpdateTimeInMiliseconds);
         
         Assert.Multiple(() =>
         {
