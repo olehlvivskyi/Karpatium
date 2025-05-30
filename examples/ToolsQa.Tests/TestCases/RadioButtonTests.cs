@@ -1,26 +1,32 @@
+using Allure.NUnit.Attributes;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
-namespace ToolsQa.Tests.TestFixtures.Elements;
+namespace ToolsQa.Tests.TestCases;
 
+[AllureParentSuite("Tools QA")]
+[AllureSuite("Elements")]
+[AllureSubSuite("Radio Button")]
 [TestFixture]
-public class RadioButtonFixture : BaseFixture<EmptyTestData>
+public class RadioButtonTests : BaseFixture<EmptyTestData>
 {
     protected override string TestDataPath => string.Empty;
     
+    [AllureBefore]
     [SetUp]
-    public void RadioButtonSetUp()
+    public void SetUp()
     {
         WebManager.Browser.NavigateTo($"{TestConfiguration.ApplicationSettings.BaseUrl}{ToolsQaPageUrls.RadioButtonPage}");
+        RemoveBanners();
     }
     
-    [Test]
+    [TestCase(TestName = "Ensure that \"No\" radio button is disabled.")]
     public void EnsureThatNoRadioButtonIsDisabled()
     {
         Assert.That(ToolsQaPages.RadioButtonPage.IsNoEnabled, Is.False, "\"No\" radio button is not disabled.");
     }
 
-    [Test]
+    [TestCase(TestName = "Ensure that \"Yes\" radio button is checked.")]
     public void EnsureThatYesRadioButtonIsChecked()
     {
         ToolsQaPages.RadioButtonPage.CheckYes();
@@ -32,7 +38,7 @@ public class RadioButtonFixture : BaseFixture<EmptyTestData>
         });
     }
     
-    [Test]
+    [TestCase(TestName = "Ensure that \"Yes\" radio button is not checked after \"Impressive\" radio button is checked.")]
     public void EnsureThatYesRadioButtonIsNotCheckedAfterImpressiveRadioButtonIsChecked()
     {
         ToolsQaPages.RadioButtonPage.CheckYes();

@@ -1,14 +1,41 @@
 {
   "ApplicationSettings": {
-    "BaseUrl": "https://demoqa.com"
+    "BaseUrl": "https://demoqa.com",
+    "Users": [
+      {
+        "Email": "user1@example.com",
+        "Password": "UniquePassword"
+      },
+      {
+        "Email": "user2@example.com",
+        "Password": "UniquePassword"
+      },
+      {
+        "Email": "user3@example.com",
+        "Password": "UniquePassword"
+      },
+      {
+        "Email": "user4@example.com",
+        "Password": "UniquePassword"
+      },
+      {
+        "Email": "user5@example.com",
+        "Password": "UniquePassword"
+      }
+    ]
   },
   "TestSettings": {
+    "AdPlus1RemovalScript": "document.querySelector('#Ad\\\\.Plus-970x250-1').remove();",
+    "AdPlus2RemovalScript": "document.querySelector('#Ad\\\\.Plus-970x250-2').remove();",
     "BannerRemovalScript": "document.querySelector('#fixedban').remove();",
-    "FooterRemovalScript": "document.querySelector('footer').remove();"
+    "FooterRemovalScript": "document.querySelector('footer').remove();",
+    "RightSideRemovalScript": "document.querySelector('#RightSide_Advertisement').remove();"
   },
   "WebManagerSettings": {
     "BrowserType": "Chrome",
+    "DemoModeDelayInMilliseconds": "500",
     "DownloadedFilesFolderName": "Downloads",
+    "IsDemoModeEnabled": false,
     "IsHeadlessEnabled": false,
     "IsLocalExecution":  true,
     "RemoteUrl": ""

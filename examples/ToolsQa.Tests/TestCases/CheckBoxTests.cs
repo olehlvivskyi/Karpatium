@@ -1,20 +1,26 @@
+using Allure.NUnit.Attributes;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
-namespace ToolsQa.Tests.TestFixtures.Elements;
+namespace ToolsQa.Tests.TestCases;
 
+[AllureParentSuite("Tools QA")]
+[AllureSuite("Elements")]
+[AllureSubSuite("Check Box")]
 [TestFixture]
-public class CheckBoxFixture : BaseFixture<CheckBoxTestData>
+public class CheckBoxTests : BaseFixture<CheckBoxTestData>
 {
-    protected override string TestDataPath => "TestData/Elements/CheckBoxData.json";
+    protected override string TestDataPath => "TestData/CheckBoxData.json";
     
+    [AllureBefore]
     [SetUp]
-    public void CheckBoxSetUp()
+    public void SetUp()
     {
         WebManager.Browser.NavigateTo($"{TestConfiguration.ApplicationSettings.BaseUrl}{ToolsQaPageUrls.CheckBoxPage}");
+        RemoveBanners();
     }
     
-    [Test] 
+    [TestCase(TestName = "Ensure that multiple nodes are selected.")]
     public void EnsureThatMultipleNodesAreSelected()
     {
         IReadOnlyList<string> nodeNames = [TestData.MultipleNodesName1.ToLowerInvariant(), TestData.MultipleNodesName2.ToLowerInvariant() ];
@@ -27,7 +33,7 @@ public class CheckBoxFixture : BaseFixture<CheckBoxTestData>
         Assert.That(selectedNodeNames, Is.EquivalentTo(nodeNames), "Incorrect selected nodes.");
     }
 
-    [Test] 
+    [TestCase(TestName = "Ensure that single node is selected.")]
     public void EnsureThatSingleNodeIsSelected()
     {
         ToolsQaPages.CheckBoxPage.ClickExpandAll();
