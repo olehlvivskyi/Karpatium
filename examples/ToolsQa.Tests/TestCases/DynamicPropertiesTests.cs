@@ -11,7 +11,7 @@ namespace ToolsQa.Tests.TestCases;
 [TestFixture]
 public class DynamicPropertiesTests : BaseFixture<EmptyTestData>
 {
-    private const int DomUpdateTimeoutInSeconds = 5;
+    private const int DomUpdateTimeInMiliseconds = 5000;
     
     protected override string TestDataPath => string.Empty;
     
@@ -37,7 +37,7 @@ public class DynamicPropertiesTests : BaseFixture<EmptyTestData>
     [TestCase(TestName = "Ensure that after 5 seconds button properties are correct."), Order(2)]
     public void EnsureThatAfter5SecondsButtonPropertiesAreCorrect()
     {
-        ConditionalWaiter.ForTrueIfPossible( () => ToolsQaPages.DynamicPropertiesPage.IsThirdButtonVisible, DomUpdateTimeoutInSeconds);
+        Thread.Sleep(TimeSpan.FromSeconds(DomUpdateTimeInMiliseconds));
         
         Assert.Multiple(() =>
         {
