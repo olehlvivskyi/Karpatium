@@ -25,7 +25,7 @@ public class WebTablesPage(string relativePath) : BasePage(relativePath)
     /// <summary>
     /// Provides access to the "Worker" table.
     /// </summary>
-    public WorkerTableLayout WorkerTable => new(WorkerTableWrapper);
+    public WorkerTableLayout WorkerTable => new(WorkerTableWrapper, PageName);
 
     /// <summary>
     /// Clicks on the "Add" button.

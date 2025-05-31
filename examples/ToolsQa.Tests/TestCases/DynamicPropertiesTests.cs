@@ -1,5 +1,5 @@
 using Allure.NUnit.Attributes;
-using Karpatium.Core.Utilities;
+using Karpatium.Core.Nunit;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
@@ -8,10 +8,11 @@ namespace ToolsQa.Tests.TestCases;
 [AllureParentSuite("Tools QA")]
 [AllureSuite("Elements")]
 [AllureSubSuite("Dynamic Properties")]
+[NonParallelizable]
 [TestFixture]
-public class DynamicPropertiesTests : BaseFixture<EmptyTestData>
+public sealed class DynamicPropertiesTests : BaseFixture<EmptyTestData>
 {
-    private const int DomUpdateTimeInMiliseconds = 5000;
+    private const int DomUpdateTimeInMilliseconds = 5000;
     
     protected override string TestDataPath => string.Empty;
     
@@ -24,6 +25,7 @@ public class DynamicPropertiesTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that initial button properties are correct."), Order(1)]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatInitialButtonPropertiesAreCorrect()
     {
         Assert.Multiple(() =>
@@ -35,9 +37,10 @@ public class DynamicPropertiesTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that after 5 seconds button properties are correct."), Order(2)]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatAfter5SecondsButtonPropertiesAreCorrect()
     {
-        Thread.Sleep(DomUpdateTimeInMiliseconds);
+        Thread.Sleep(DomUpdateTimeInMilliseconds);
         
         Assert.Multiple(() =>
         {

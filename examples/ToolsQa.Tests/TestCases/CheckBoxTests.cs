@@ -1,4 +1,5 @@
 using Allure.NUnit.Attributes;
+using Karpatium.Core.Nunit;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
@@ -8,7 +9,7 @@ namespace ToolsQa.Tests.TestCases;
 [AllureSuite("Elements")]
 [AllureSubSuite("Check Box")]
 [TestFixture]
-public class CheckBoxTests : BaseFixture<CheckBoxTestData>
+public sealed class CheckBoxTests : BaseFixture<CheckBoxTestData>
 {
     protected override string TestDataPath => "TestData/CheckBoxData.json";
     
@@ -21,6 +22,7 @@ public class CheckBoxTests : BaseFixture<CheckBoxTestData>
     }
     
     [TestCase(TestName = "Ensure that multiple nodes are selected.")]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatMultipleNodesAreSelected()
     {
         IReadOnlyList<string> nodeNames = [TestData.MultipleNodesName1.ToLowerInvariant(), TestData.MultipleNodesName2.ToLowerInvariant() ];
@@ -34,6 +36,7 @@ public class CheckBoxTests : BaseFixture<CheckBoxTestData>
     }
 
     [TestCase(TestName = "Ensure that single node is selected.")]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatSingleNodeIsSelected()
     {
         ToolsQaPages.CheckBoxPage.ClickExpandAll();

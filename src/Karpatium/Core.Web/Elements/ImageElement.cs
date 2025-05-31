@@ -5,8 +5,21 @@ namespace Karpatium.Core.Web.Elements;
 /// <summary>
 /// Represents an img HTML element.
 /// </summary>
-public sealed class ImageElement : Element
+public class ImageElement : Element
 {
+    /// <summary>
+    /// Gets the "alt" attribute of the image element.
+    /// </summary>
+    public string? Alt
+    {
+        get
+        {
+            string? src = GetAttribute("src");
+            
+            return src;
+        }
+    }
+    
     /// <summary>
     /// Indicates whether the image is valid.
     /// </summary>

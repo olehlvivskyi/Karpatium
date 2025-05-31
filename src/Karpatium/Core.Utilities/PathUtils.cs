@@ -10,10 +10,6 @@ public static class PathUtils
     /// </summary>
     /// <param name="folderName">The name of the folder to be appended to the user's home directory path.</param>
     /// <param name="fileName">The name of the file to be included in the path.</param>
-    /// <returns>
-    /// A string representing the full local path constructed from the user's profile directory,
-    /// the specified folder name, and optionally the file name.
-    /// </returns>
     public static string GetLocalUserPath(string folderName, string? fileName = null)
     {
         return string.IsNullOrEmpty(fileName)

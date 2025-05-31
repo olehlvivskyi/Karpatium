@@ -5,7 +5,7 @@ namespace Karpatium.Core.Web.Elements;
 /// <summary>
 /// Represents an input HTML element with "checkbox" type.
 /// </summary>
-public sealed class CheckBoxElement : Element
+public class CheckBoxElement : Element
 {
     /// <summary>
     /// Gets a value indicating whether the checkbox is currently checked.

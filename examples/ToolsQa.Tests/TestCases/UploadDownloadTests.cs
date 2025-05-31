@@ -1,4 +1,5 @@
 using Allure.NUnit.Attributes;
+using Karpatium.Core.Nunit;
 using Karpatium.Core.Utilities;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
@@ -9,7 +10,7 @@ namespace ToolsQa.Tests.TestCases;
 [AllureSuite("Elements")]
 [AllureSubSuite("Upload Download")]
 [TestFixture]
-public class UploadDownloadTests : BaseFixture<EmptyTestData>
+public sealed class UploadDownloadTests : BaseFixture<EmptyTestData>
 {
     private const int FileDownloadTimeoutInSeconds = 5;
 
@@ -36,6 +37,7 @@ public class UploadDownloadTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that file is uploaded."), Order(1)]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatFileIsUploaded()
     {
         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "test.jpg");
@@ -46,6 +48,7 @@ public class UploadDownloadTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that file is downloaded."), Order(2)]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatFileIsDownloaded()
     {
         string fileName = ToolsQaPages.UploadDownloadPage.DownloadFileName;

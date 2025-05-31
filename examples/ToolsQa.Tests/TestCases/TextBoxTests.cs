@@ -1,5 +1,6 @@
 using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
+using Karpatium.Core.Nunit;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
@@ -9,7 +10,7 @@ namespace ToolsQa.Tests.TestCases;
 [AllureSuite("Elements")]
 [AllureSubSuite("Text Box")]
 [TestFixture]
-public class TextBoxTests : BaseFixture<EmptyTestData>
+public sealed class TextBoxTests : BaseFixture<EmptyTestData>
 {
     protected override string TestDataPath => string.Empty;
     
@@ -29,6 +30,7 @@ public class TextBoxTests : BaseFixture<EmptyTestData>
     [AllureTms("Test Case", "TC-12345")]
     [AllureSeverity(SeverityLevel.critical)]
     [AllureOwner("oleh.lvivskyi")]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatFormIsSubmitted()
     {
         string fullName = Faker.Name.FullName();

@@ -9,7 +9,7 @@ using NUnit.Framework.Interfaces;
 using Serilog;
 using ToolsQa.Tests.TestUsers;
 
-[assembly:LevelOfParallelism(1)]
+[assembly:LevelOfParallelism(5)]
 
 namespace ToolsQa.Tests;
 
@@ -27,8 +27,10 @@ public abstract class BaseFixture<TTestData>
     public void BaseOneTimeSetUp()
     {
         Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console()
             .MinimumLevel.Verbose()
+            .Enrich.WithThreadId()
+            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}][{ThreadId}] {Message:lj}{NewLine}{Exception}")
+            .WriteTo.File(Path.Combine(Directory.GetCurrentDirectory(), "Logs", ".txt"), rollingInterval: RollingInterval.Day, outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}][{ThreadId}] {Message:lj}{NewLine}{Exception}")
             .CreateLogger();
 
         TestData = typeof(TTestData) == typeof(EmptyTestData)
@@ -38,7 +40,7 @@ public abstract class BaseFixture<TTestData>
         AllureReporter.CreateEnvironmentPropertiesFile();
         
         TestCaseUser = GetTestCaseUser();
-        Log.Information($"Test user: `{TestCaseUser.Email}`");
+        Log.Information($"{nameof(UsersPool)}: Engaged `{TestCaseUser.Email}` user.");
         
         WebManager.Initialize(TestConfiguration.WebManagerSettings);
         WebManager.Browser.MaximizeWindow();
@@ -57,12 +59,15 @@ public abstract class BaseFixture<TTestData>
     {
         if (!TestContext.CurrentContext.Result.Outcome.Equals(ResultState.Success))
         {
-            string fileName = $"{TestContext.CurrentContext.Test.MethodName} - {DateTime.UtcNow:yyyy.MM.dd-hh.mm.ss}";
+            string fileName = $"{DateTime.Now:yyyy.MM.dd-hh.mm.ss} - {GetTestName()}";
+            string browserLogsPath = WebManager.DebugBrowserLogs(fileName);
             string pageSourcePath = WebManager.DebugPageSource(fileName);
             string screenshotPath = WebManager.DebugScreenshot(fileName);
             Log.Error($"### Test Failed: {GetTestName()} ###");
+            Log.Verbose($"### Browser Logs: {browserLogsPath} ###");
             Log.Verbose($"### Page source: {pageSourcePath} ###");
             Log.Verbose($"### Screenshot: {screenshotPath} ### ");
+            AllureApi.AddAttachment(browserLogsPath);
             AllureApi.AddAttachment(pageSourcePath);
             AllureApi.AddAttachment(screenshotPath);
         }

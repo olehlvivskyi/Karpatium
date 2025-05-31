@@ -3,7 +3,7 @@ namespace ToolsQa.UI.Dto;
 /// <summary>
 /// Represents a Data Transfer Object (DTO) for a worker.
 /// </summary>
-public record WorkerDto
+public sealed record WorkerDto
 {
     public required string FirstName { get; init; }
     public required string LastName { get; init; }

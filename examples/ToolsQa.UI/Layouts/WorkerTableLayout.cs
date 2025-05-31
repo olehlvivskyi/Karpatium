@@ -4,57 +4,51 @@ using Karpatium.Core.Web;
 using Karpatium.Core.Web.Elements;
 using Serilog;
 using ToolsQa.UI.Components.React;
-using ToolsQa.UI.Pages;
 
 namespace ToolsQa.UI.Layouts;
 
 /// <summary>
 /// Provides access to the "Worker" table.
 /// </summary>
-public class WorkerTableLayout
+public sealed class WorkerTableLayout(CommonElement layoutWrapper, string pageName) : BaseLayout<CommonElement>(layoutWrapper, pageName)
 {
-    private const string PageName = nameof(WebTablesPage);
-    private const string TableName = nameof(WorkerTableLayout);
+    private readonly ReactTableComponent _tableComponent = new(layoutWrapper);
     
-    private readonly ReactTableComponent _tableComponent;
+    protected override string LayoutName => "\"Worker\" table";
 
-    internal WorkerTableLayout(Element tableWrapper)
-    {
-        _tableComponent = new(tableWrapper);
-    }
-    
     /// <summary>
     /// Gets a specific row where the cell value under a given header matches the specified text.
     /// </summary>
     /// <param name="header">The header text of the column to search in.</param>
     /// <param name="cellText">The cell text to match under the specified header column.</param>
-    public WorkerTableRowLayout? GetRow(WorkerTableHeader header, string cellText)
+    public WorkerTableRowItem? GetRow(WorkerTableHeader header, string cellText)
     {
-        Log.Information("{PageName}-{TableName}: Checking row where `{HeaderText}` header has `{CellText}` cell text.", PageName, TableName, header, cellText);
+        Log.Information("{PageName}[{LayoutName}]: Checking row where `{HeaderText}` header has `{CellText}` cell text.", PageName, LayoutName, header, cellText);
 
         string headerText = header.GetStringValue();
         ReactTableRowComponent? row = _tableComponent.GetRow(headerText, cellText);
-        Log.Debug("{PageName}-{TableName}: row = {Row}", PageName, TableName, row == null ? "null" : "not null");
+        Log.Debug("{PageName}[{LayoutName}]: row = `{Row}`", PageName, LayoutName, row?.ComponentWrapper.Text.Replace("\n", " | "));
         
         return row == null 
             ? null 
-            : new WorkerTableRowLayout(row);
+            : new WorkerTableRowItem(row, PageName, LayoutName);
     }
 }
 
 /// <summary>
 /// Provides access to the "Worker" table row.
 /// </summary>
-public class WorkerTableRowLayout
+public class WorkerTableRowItem
 {
-    private const string PageName = nameof(WebTablesPage);
-    private const string TableName = nameof(WorkerTableLayout);
-    
     private readonly ReactTableRowComponent _rowComponent;
-    
-    internal WorkerTableRowLayout(ReactTableRowComponent rowComponent)
+    private readonly string _pageName;
+    private readonly string _layoutName;
+
+    internal WorkerTableRowItem(ReactTableRowComponent rowComponent, string pageName, string layoutName)
     {
         _rowComponent = rowComponent;
+        _pageName = pageName;
+        _layoutName = layoutName;
     }
     
     private CommonElement Delete => ElementFactory.Create<CommonElement>(Selector.Css("[title='Delete']"), _rowComponent.ComponentWrapper);
@@ -65,7 +59,7 @@ public class WorkerTableRowLayout
     /// </summary>
     public void ClickDelete()
     {
-        Log.Information("{PageName}-{TableName}: Clicking on the \"Delete\" icon.", PageName, TableName);
+        Log.Information("{PageName}[{LayoutName}]: Clicking on the \"Delete\" icon.", _pageName, _layoutName);
         
         Delete.Click();
     }
@@ -75,7 +69,7 @@ public class WorkerTableRowLayout
     /// </summary>
     public void ClickEdit()
     {
-        Log.Information("{PageName}-{TableName}: Clicking on the \"Edit\" icon.", PageName, TableName);
+        Log.Information("{PageName}[{LayoutName}]: Clicking on the \"Edit\" icon.", _pageName, _layoutName);
         
         Edit.Click();
     }
@@ -86,11 +80,11 @@ public class WorkerTableRowLayout
     /// <param name="header">The header of the column whose cell text is to be retrieved.</param>
     public string GetCellText(WorkerTableHeader header)
     {
-        Log.Information("{PageName}-{TableName}: Checking cell text for \"{Header}\" header.", PageName, TableName, header);
+        Log.Information("{PageName}[{LayoutName}]: Checking cell text for \"{Header}\" header.", _pageName, _layoutName, header);
         
         string headerText = header.GetStringValue();
         string cellText = _rowComponent.GetCellText(headerText);
-        Log.Debug("{PageName}-{TableName}: cellText = `{CellText}`", PageName, TableName, cellText);
+        Log.Debug("{PageName}[{LayoutName}]: cellText = `{CellText}`", _pageName, _layoutName, cellText);
         
         return cellText;
     }

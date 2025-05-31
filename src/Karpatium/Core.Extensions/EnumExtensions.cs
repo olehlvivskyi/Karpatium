@@ -21,12 +21,12 @@ public static class EnumExtensions
 
         if (fieldInfo is null)
         {
-            throw new InvalidOperationException($"{nameof(GetStringValue)}: Field `{value.ToString()}` not found in `{type.FullName}`.");
+            throw new InvalidOperationException($"{nameof(EnumExtensions)}: Field `{value.ToString()}` not found in `{type.FullName}`.");
         }
 
         if (fieldInfo.GetCustomAttributes(typeof(StringValueAttribute), false) is not StringValueAttribute[] attributes || attributes.Length == 0)
         {
-            throw new InvalidOperationException($"{nameof(GetStringValue)}: No `{nameof(StringValueAttribute)}` found for field `{value.ToString()}` in `{type.FullName}`.");
+            throw new InvalidOperationException($"{nameof(EnumExtensions)}: No `{nameof(StringValueAttribute)}` found for field `{value.ToString()}` in `{type.FullName}`.");
         }
 
         return attributes[0].StringValue;

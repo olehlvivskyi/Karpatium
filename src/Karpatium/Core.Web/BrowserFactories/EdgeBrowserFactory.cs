@@ -22,9 +22,22 @@ internal sealed class EdgeBrowserFactory : IBrowserFactory
     {
         EdgeOptions edgeOptions = new EdgeOptions();
         
+        edgeOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
+        edgeOptions.SetLoggingPreference(LogType.Driver, LogLevel.All);
+        
         edgeOptions.AddUserProfilePreference("disable-popup-blocking", true);
+        
         edgeOptions.AddUserProfilePreference("download.default_directory", PathUtils.GetLocalUserPath(browserSettings.DownloadedFilesFolderName));
         edgeOptions.AddUserProfilePreference("download.prompt_for_download", false);
+        
+        edgeOptions.AddArgument("--disable-blink-features");
+        edgeOptions.AddArgument("--disable-extensions");
+        edgeOptions.AddArgument("--disable-notifications");
+        edgeOptions.AddArgument("--disable-save-password-bubble");
+        edgeOptions.AddArgument("--ignore-certificate-errors");
+        edgeOptions.AddArgument("--remote-debugging-pipe");
+
+        edgeOptions.AddExcludedArgument("enable-automation");
 
         if (browserSettings.IsHeadlessEnabled)
         {

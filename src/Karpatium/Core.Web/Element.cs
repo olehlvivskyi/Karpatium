@@ -1,6 +1,7 @@
+using System.Drawing;
+using System.Text.RegularExpressions;
 using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 
 namespace Karpatium.Core.Web;
 
@@ -13,6 +14,11 @@ public abstract class Element
     /// Represents the parent element of the current element, if one exists.
     /// </summary>
     internal Element? Parent { get; init; }
+
+    /// <summary>
+    /// Represents the parent element of the current element's shadow root, if present.
+    /// </summary>
+    internal Element? ShadowRootParent { get; init; }
     
     /// <summary>
     /// Represents the selector used for locating UI elements on a web page.
@@ -28,8 +34,8 @@ public abstract class Element
     /// Gets the underlying IWebElement associated with this element.
     /// <br />The resolution logic works as follows:
     /// <br />- If the element was found as part of a search for multiple elements, `MultipleWrapper` is returned.
-    /// <br />- If the element has a parent (`Parent`), it is located from the parent's context
-    /// using the defined `Selector`.
+    /// <br />- If the element has a parent (`ShadowRootParent`), it is located from the shadow root parent's context using the defined `Selector`.
+    /// <br />- If the element has a parent (`Parent`), it is located from the parent's context using the defined `Selector`.
     /// <br />- If no parent exists, the element is searched in the global DOM using the `Selector`.
     /// <br />This property allows lazy resolution of the underlying web element, ensuring it is fetched
     /// as-needed and always reflects the current state of the page.
@@ -38,25 +44,28 @@ public abstract class Element
     {
         get
         {
-            IWebElement element = MultipleWrapper ?? (Parent == null
-                ? ConditionalWaiter.ForResult(() => WebManager.BrowserWrapper.FindElement(Selector!), 
-                    $"{nameof(WebElementWrapper)} from global DOM failed.")
-                : ConditionalWaiter.ForResult(() => Parent.FindElement(Selector!), 
-                    $"{nameof(WebElementWrapper)} from parent element failed."));
-            
+            IWebElement element = MultipleWrapper 
+                                  ?? (ShadowRootParent != null 
+                                      ? ConditionalWaiter.ForResult(() => ShadowRootParent.GetShadowRootContext().FindElement(Selector!.ByWrapper), $"{nameof(WebElementWrapper)} from shadow root parent element failed.") 
+                                      : Parent == null 
+                                          ? ConditionalWaiter.ForResult(() => WebManager.BrowserWrapper.FindElement(Selector!), $"{nameof(WebElementWrapper)} from global DOM failed.") 
+                                          : ConditionalWaiter.ForResult(() => Parent.FindElement(Selector!), $"{nameof(WebElementWrapper)} from parent element failed."));
+
             if (WebManager.IsDemoModeEnabled)
             {
                 ApplyDemoMode(element);
             }
-            
+
             return element;
         }
     }
+    
+    private ISearchContext GetShadowRootContext() => WebElementWrapper.GetShadowRoot();
 
     private IWebElement FindElement(Selector selector) => WebElementWrapper.FindElement(selector.ByWrapper);
     
     internal IReadOnlyList<IWebElement> FindElements(Selector selector) => WebElementWrapper.FindElements(selector.ByWrapper);
-
+    
     /// <summary>
     /// Indicates whether the element exists in the DOM.
     /// </summary>
@@ -66,9 +75,13 @@ public abstract class Element
         {
             try
             {
-                IWebElement element = MultipleWrapper ?? (Parent == null
-                    ? WebManager.BrowserWrapper.FindElement(Selector!)
-                    : Parent.FindElement(Selector!));
+                IWebElement element = MultipleWrapper 
+                                      ?? (ShadowRootParent != null 
+                                          ? ConditionalWaiter.ForResult(() => ShadowRootParent.GetShadowRootContext().FindElement(Selector!.ByWrapper), $"{nameof(WebElementWrapper)} from shadow root parent element failed.") 
+                                          : Parent == null 
+                                              ? WebManager.BrowserWrapper.FindElement(Selector!) 
+                                              : Parent.FindElement(Selector!));
+                
                 return !string.IsNullOrEmpty(element.TagName);
             }
             catch
@@ -87,6 +100,11 @@ public abstract class Element
     /// Indicates whether the element is currently visible on the page.
     /// </summary>
     public bool IsVisible => ConditionalWaiter.ForResult(() => Exists && WebElementWrapper.Displayed, $"{nameof(IsVisible)} failed.");
+
+    /// <summary>
+    /// Retrieves the tag name of the current web element, as defined in the DOM.
+    /// </summary>
+    public string TagName => ConditionalWaiter.ForResult(() => WebElementWrapper.TagName, $"{nameof(TagName)} failed.");
     
     /// <summary>
     /// Simulates a click action on the element.
@@ -114,12 +132,32 @@ public abstract class Element
     }
 
     /// <summary>
+    /// Performs a drag-and-drop action by dragging the current element to another specified element.
+    /// </summary>
+    /// <param name="toElement">The target element where the current element will be dropped.</param>
+    public void DragAndDrop(Element toElement)
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.DragAndDrop(WebElementWrapper, toElement.WebElementWrapper).Perform(), $"{nameof(DragAndDrop)} failed.");
+    }
+
+    /// <summary>
     /// Gets the value of the specified attribute of the element.
     /// </summary>
     /// <param name="attribute">The name of the attribute to retrieve.</param>
     public string? GetAttribute(string attribute)
     {
         return ConditionalWaiter.ForResult(() => WebElementWrapper.GetAttribute(attribute), $"{nameof(GetAttribute)} failed.");
+    }
+
+    /// <summary>
+    /// Retrieves the list of class names assigned to the element.
+    /// </summary>
+    public IReadOnlyList<string> GetClassNames()
+    {
+        return GetAttribute("class")?
+                   .Split(' ')
+                   .ToList() 
+               ?? new List<string>();
     }
 
     /// <summary>
@@ -132,14 +170,55 @@ public abstract class Element
     }
 
     /// <summary>
+    /// Retrieves the inner HTML content of the element.
+    /// </summary>
+    public string GetInnerHtml() => ConditionalWaiter.ForResult(() => WebElementWrapper.GetAttribute("innerHTML")!, $"{nameof(GetInnerHtml)} failed.");
+    
+    /// <summary>
+    /// Retrieves the outer HTML content of the element.
+    /// </summary>
+    public string GetOuterHtml() => ConditionalWaiter.ForResult(() => WebElementWrapper.GetAttribute("outerHTML")!, $"{nameof(GetOuterHtml)} failed.");
+
+    /// <summary>
+    /// Retrieves the bounding rectangle of the element, including its position and size.
+    /// </summary>
+    /// <returns>A <see cref="Rectangle"/> representing the location and dimensions of the element.</returns>
+    public Rectangle GetBounds() => ConditionalWaiter.ForResult(() => new Rectangle(WebElementWrapper.Location, WebElementWrapper.Size), $"{nameof(GetBounds)} failed.");
+    
+    /// <summary>
+    /// Simulates hovering the mouse cursor over the element.
+    /// </summary>
+    public void HoverOver()
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.MoveToElement(WebElementWrapper).Perform(), $"{nameof(HoverOver)} failed.");
+    }
+
+    /// <summary>
     /// Simulates a right-click action (context click) on the element.
     /// </summary>
     public void RightClick()
     {
-        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.ContextClick(WebElementWrapper).Perform(), 
-            $"{nameof(RightClick)} failed.");
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.ContextClick(WebElementWrapper).Perform(), $"{nameof(RightClick)} failed.");
     }
-    
+
+    /// <summary>
+    /// Scrolls the element into the visible area of the browser window.
+    /// </summary>
+    public void ScrollTo()
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.ScrollToElement(WebElementWrapper).Perform(), $"{nameof(ScrollTo)} failed.");
+    }
+
+    /// <summary>
+    /// If the element exists, returns a string representation of the element.
+    /// </summary>
+    public override string ToString()
+    {
+        return Exists
+            ? Regex.Match(GetAttribute("outerHTML")!, @"<(\w+)\s+[^>]*>").Value
+            : "NoElementFound";
+    }
+
     private void ApplyDemoMode(IWebElement element)
     {
         const string demoAddJavaScriptStyle = "arguments[0].style.outline='3px solid rgba(255, 0, 0, 0.7)'; arguments[0].style.outlineOffset='-3px'; arguments[0].style.boxShadow='0 0 10px rgba(255, 0, 0, 0.7)';";

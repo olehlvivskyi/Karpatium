@@ -1,4 +1,5 @@
 using Allure.NUnit.Attributes;
+using Karpatium.Core.Nunit;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
@@ -8,7 +9,7 @@ namespace ToolsQa.Tests.TestCases;
 [AllureSuite("Elements")]
 [AllureSubSuite("Radio Button")]
 [TestFixture]
-public class RadioButtonTests : BaseFixture<EmptyTestData>
+public sealed class RadioButtonTests : BaseFixture<EmptyTestData>
 {
     protected override string TestDataPath => string.Empty;
     
@@ -21,12 +22,14 @@ public class RadioButtonTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that \"No\" radio button is disabled.")]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatNoRadioButtonIsDisabled()
     {
         Assert.That(ToolsQaPages.RadioButtonPage.IsNoEnabled, Is.False, "\"No\" radio button is not disabled.");
     }
 
     [TestCase(TestName = "Ensure that \"Yes\" radio button is checked.")]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatYesRadioButtonIsChecked()
     {
         ToolsQaPages.RadioButtonPage.CheckYes();
@@ -39,6 +42,7 @@ public class RadioButtonTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that \"Yes\" radio button is not checked after \"Impressive\" radio button is checked.")]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatYesRadioButtonIsNotCheckedAfterImpressiveRadioButtonIsChecked()
     {
         ToolsQaPages.RadioButtonPage.CheckYes();

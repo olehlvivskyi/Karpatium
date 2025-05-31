@@ -5,7 +5,7 @@ namespace Karpatium.Core.Web.Elements;
 /// <summary>
 /// Represents an input HTML element with "radio" type.
 /// </summary>
-public sealed class RadioButtonElement : Element
+public class RadioButtonElement : Element
 {
     /// <summary>
     /// Gets a value indicating whether the radio button is currently checked.

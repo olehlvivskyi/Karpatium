@@ -21,10 +21,23 @@ internal sealed class ChromeBrowserFactory : IBrowserFactory
     private ChromeOptions GetChromeOptions(IBrowserSettings browserSettings)
     {
         ChromeOptions chromeOptions = new ChromeOptions();
-
+        
+        chromeOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
+        chromeOptions.SetLoggingPreference(LogType.Driver, LogLevel.All);
+        
         chromeOptions.AddUserProfilePreference("disable-popup-blocking", true);
+        
         chromeOptions.AddUserProfilePreference("download.default_directory", PathUtils.GetLocalUserPath(browserSettings.DownloadedFilesFolderName));
         chromeOptions.AddUserProfilePreference("download.prompt_for_download", false);
+        
+        chromeOptions.AddArgument("--disable-blink-features");
+        chromeOptions.AddArgument("--disable-extensions");
+        chromeOptions.AddArgument("--disable-notifications");
+        chromeOptions.AddArgument("--disable-save-password-bubble");
+        chromeOptions.AddArgument("--ignore-certificate-errors");
+        chromeOptions.AddArgument("--remote-debugging-pipe");
+
+        chromeOptions.AddExcludedArgument("enable-automation");
 
         if (browserSettings.IsHeadlessEnabled)
         {

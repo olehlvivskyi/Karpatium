@@ -28,6 +28,6 @@ public static class StringExtensions
             }
         }
 
-        throw new ArgumentException($"{nameof(GetEnumValue)}: Value `{value}` is not valid for enum type `{type.Name}`.");
+        throw new ArgumentException($"{nameof(StringExtensions)}: Value `{value}` is not valid for enum type `{type.Name}`.");
     }
 }

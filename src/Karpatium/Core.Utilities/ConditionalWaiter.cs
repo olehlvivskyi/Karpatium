@@ -114,48 +114,46 @@ public static class ConditionalWaiter
     private static void Wait(Action anonymousFunction, string message = "", int timeoutInSeconds = DefaultTimeoutInSeconds)
     {
         var stopwatch = Stopwatch.StartNew();
-        do
+        while (stopwatch.Elapsed.TotalSeconds < timeoutInSeconds)
         {
             try
             {
                 anonymousFunction();
                 return;
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                LastException = exception;
+                LastException = ex;
             }
         }
-        while (stopwatch.Elapsed.TotalSeconds < timeoutInSeconds);
         
-        Log.Error("{Message} Timeout of '{TimeoutInSeconds}' seconds reached.", message, timeoutInSeconds);
+        Exception exception = LastException ?? new TimeoutException($"{anonymousFunction.Method.DeclaringType}: Timeout of `{timeoutInSeconds}` seconds reached.");
+        Log.Error(exception, "{ClassName}[{MemberName}]: An error occurred ({DeclaringType}).", nameof(ConditionalRunner), nameof(Wait), anonymousFunction.Method.DeclaringType);
         
-        throw LastException;
+        throw exception;
     }
     
     private static void Wait(Func<bool> anonymousFunction, string message = "", int timeoutInSeconds = DefaultTimeoutInSeconds)
     {
         var stopwatch = Stopwatch.StartNew();
-        do
+        while (stopwatch.Elapsed.TotalSeconds < timeoutInSeconds)
         {
             if (TryWithExceptionHandling(anonymousFunction))
             {
                 return;
             }
         }
-        while (stopwatch.Elapsed.TotalSeconds < timeoutInSeconds);
-        if (LastException != null)
-        {
-            throw new AggregateException(new TimeoutException($"{message}: Timeout of '{timeoutInSeconds}' seconds reached."), LastException);
-        }
-
-        throw new TimeoutException($"{message}: Timeout of '{timeoutInSeconds}' seconds reached.");
+        
+        Exception exception = LastException ?? new TimeoutException($"{anonymousFunction.Method.DeclaringType}: Timeout of `{timeoutInSeconds}` seconds reached.");
+        Log.Error(exception, "{ClassName}[{MemberName}]: An error occurred ({DeclaringType}).", nameof(ConditionalRunner), nameof(Wait), anonymousFunction.Method.DeclaringType);
+        
+        throw exception;
     }
     
     private static T Wait<T>(Func<T> anonymousFunction, string message, int timeoutInSeconds = DefaultTimeoutInSeconds)
     {
         var stopwatch = Stopwatch.StartNew();
-        do
+        while (stopwatch.Elapsed.TotalSeconds < timeoutInSeconds)
         {
             var response = TryWithExceptionHandling(anonymousFunction);
             if (response.state)
@@ -163,11 +161,11 @@ public static class ConditionalWaiter
                 return response.result;
             }
         }
-        while (stopwatch.Elapsed.TotalSeconds < timeoutInSeconds);
         
-        Log.Error("{Message} Timeout of '{TimeoutInSeconds}' seconds reached.", message, timeoutInSeconds);
+        Exception exception = LastException ?? new TimeoutException($"{anonymousFunction.Method.DeclaringType}: Timeout of `{timeoutInSeconds}` seconds reached.");
+        Log.Error(exception, "{ClassName}[{MemberName}]: An error occurred ({DeclaringType}).", nameof(ConditionalRunner), nameof(Wait), anonymousFunction.Method.DeclaringType);
         
-        throw LastException ?? new TimeoutException($"{message} Timeout of '{timeoutInSeconds}' seconds reached.");
+        throw exception;
     }
     
     private static bool TryWithExceptionHandling(Func<bool> anonymousFunction)

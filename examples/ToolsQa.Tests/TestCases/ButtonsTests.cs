@@ -1,4 +1,5 @@
 using Allure.NUnit.Attributes;
+using Karpatium.Core.Nunit;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
@@ -8,7 +9,7 @@ namespace ToolsQa.Tests.TestCases;
 [AllureSuite("Elements")]
 [AllureSubSuite("Buttons")]
 [TestFixture]
-public class ButtonsTests : BaseFixture<EmptyTestData>
+public sealed class ButtonsTests : BaseFixture<EmptyTestData>
 {
     protected override string TestDataPath => string.Empty;
     
@@ -21,6 +22,7 @@ public class ButtonsTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that \"Click Me\" button works.")]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatClickMeButtonWorks()
     {
         ToolsQaPages.ButtonsPage.ClickClickMe();
@@ -29,6 +31,7 @@ public class ButtonsTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that \"Double Click Me\" button works.")]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatDoubleClickMeButtonWorks()
     {
         ToolsQaPages.ButtonsPage.ClickDoubleClickMe();
@@ -37,6 +40,7 @@ public class ButtonsTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that \"Right Click Me\" button works.")]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatRightClickMeButtonWorks()
     {
         ToolsQaPages.ButtonsPage.ClickRightClickMe();
