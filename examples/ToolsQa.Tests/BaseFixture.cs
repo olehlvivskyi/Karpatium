@@ -9,7 +9,7 @@ using NUnit.Framework.Interfaces;
 using Serilog;
 using ToolsQa.Tests.TestUsers;
 
-[assembly:LevelOfParallelism(5)]
+[assembly:LevelOfParallelism(1)]
 
 namespace ToolsQa.Tests;
 
