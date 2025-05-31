@@ -8,6 +8,7 @@ namespace ToolsQa.Tests.TestCases;
 [AllureParentSuite("Tools QA")]
 [AllureSuite("Elements")]
 [AllureSubSuite("Dynamic Properties")]
+[NonParallelizable]
 [TestFixture]
 public sealed class DynamicPropertiesTests : BaseFixture<EmptyTestData>
 {
