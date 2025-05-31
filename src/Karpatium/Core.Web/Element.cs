@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -114,12 +115,32 @@ public abstract class Element
     }
 
     /// <summary>
+    /// Performs a drag-and-drop action by dragging the current element to another specified element.
+    /// </summary>
+    /// <param name="toElement">The target element where the current element will be dropped.</param>
+    public void DragAndDrop(Element toElement)
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.DragAndDrop(WebElementWrapper, toElement.WebElementWrapper).Perform(), $"{nameof(DragAndDrop)} failed.");
+    }
+
+    /// <summary>
     /// Gets the value of the specified attribute of the element.
     /// </summary>
     /// <param name="attribute">The name of the attribute to retrieve.</param>
     public string? GetAttribute(string attribute)
     {
         return ConditionalWaiter.ForResult(() => WebElementWrapper.GetAttribute(attribute), $"{nameof(GetAttribute)} failed.");
+    }
+
+    /// <summary>
+    /// Retrieves the list of class names assigned to the element.
+    /// </summary>
+    public IReadOnlyList<string> GetClassNames()
+    {
+        return GetAttribute("class")?
+                   .Split(' ')
+                   .ToList() 
+               ?? new List<string>();
     }
 
     /// <summary>
@@ -132,14 +153,39 @@ public abstract class Element
     }
 
     /// <summary>
+    /// Simulates hovering the mouse cursor over the element.
+    /// </summary>
+    public void HoverOver()
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.MoveToElement(WebElementWrapper).Perform(), $"{nameof(HoverOver)} failed.");
+    }
+
+    /// <summary>
     /// Simulates a right-click action (context click) on the element.
     /// </summary>
     public void RightClick()
     {
-        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.ContextClick(WebElementWrapper).Perform(), 
-            $"{nameof(RightClick)} failed.");
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.ContextClick(WebElementWrapper).Perform(), $"{nameof(RightClick)} failed.");
     }
-    
+
+    /// <summary>
+    /// Scrolls the element into the visible area of the browser window.
+    /// </summary>
+    public void ScrollTo()
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.Actions.ScrollToElement(WebElementWrapper).Perform(), $"{nameof(ScrollTo)} failed.");
+    }
+
+    /// <summary>
+    /// If the element exists, returns a string representation of the element.
+    /// </summary>
+    public override string ToString()
+    {
+        return Exists
+            ? Regex.Match(GetAttribute("outerHTML")!, @"<(\w+)\s+[^>]*>").Value
+            : "NoElementFound";
+    }
+
     private void ApplyDemoMode(IWebElement element)
     {
         const string demoAddJavaScriptStyle = "arguments[0].style.outline='3px solid rgba(255, 0, 0, 0.7)'; arguments[0].style.outlineOffset='-3px'; arguments[0].style.boxShadow='0 0 10px rgba(255, 0, 0, 0.7)';";

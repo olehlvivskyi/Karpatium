@@ -1,5 +1,4 @@
-using System.Reflection;
-using Karpatium.Core.Utilities;
+using System.Drawing;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using Serilog;
@@ -17,7 +16,7 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
     private IJavaScriptExecutor JavaScriptExecutorWrapper => (IJavaScriptExecutor) DriverWrapper;
 
     /// <summary>
-    /// Finds and returns the first web element that matches the specified sFelector.
+    /// Finds and returns the first web element that matches the specified selector.
     /// </summary>
     /// <param name="selector">The selector used to identify the web element.</param>
     /// <returns>The first <see cref="IWebElement"/> that matches the specified selector.</returns>
@@ -44,10 +43,27 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
     public string PageSource => DriverWrapper.PageSource;
 
     public string Url => DriverWrapper.Url;
-    
+
+    public void CloseTab(int tabNumber)
+    {
+        string windowHandle = DriverWrapper.WindowHandles[tabNumber - 1];
+        DriverWrapper.SwitchTo().Window(windowHandle);
+        DriverWrapper.Close();
+    }
+
+    public object? GetLocalStorageValue(string keyPart)
+    {
+        if (JavaScriptExecutorWrapper.ExecuteScript("return window.localStorage;") is not Dictionary<string, object> items)
+        {
+            return null;
+        }
+        
+        return items.FirstOrDefault(tempItem => tempItem.Key.Contains(keyPart)).Value;
+    }
+
     public object? ExecuteJavascript(string script, params object[] args)
     {
-        var result = JavaScriptExecutorWrapper.ExecuteScript(script, args);
+        object? result = JavaScriptExecutorWrapper.ExecuteScript(script, args);
         return result;
     }
 
@@ -65,13 +81,27 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
         DriverWrapper.Navigate().GoToUrl(url);
     }
 
-    public void SwitchToChildTab()
+    public void OpenNewTab(string url = "")
     {
-        DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles.Last());
+        DriverWrapper.SwitchTo().NewWindow(WindowType.Tab);
+        if (!string.IsNullOrWhiteSpace(url))
+        {
+            NavigateTo(url);
+        }
     }
 
-    public void SwitchToParentTab()
+    public void ReloadPage()
     {
-        DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles.First());
+        DriverWrapper.Navigate().Refresh();
+    }
+
+    public void ResizeWindow(int width, int height)
+    {
+        DriverWrapper.Manage().Window.Size = new Size(width, height);
+    }
+
+    public void SwitchToTab(int tabNumber)
+    {
+        DriverWrapper.SwitchTo().Window(DriverWrapper.WindowHandles[tabNumber - 1]);
     }
 }

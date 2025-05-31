@@ -22,11 +22,23 @@ public interface IBrowser
     string Url { get; }
 
     /// <summary>
+    /// Closes the browser tab specified by its index.
+    /// </summary>
+    /// <param name="tabNumber">The index of the tab to close, where 1 is the first tab.</param>
+    public void CloseTab(int tabNumber);
+
+    /// <summary>
+    /// Retrieves a value from the browser's local storage for the specified key or key fragment.
+    /// </summary>
+    /// <param name="keyPart">The key or part of the key used to locate the desired value in local storage.</param>
+    /// <returns>The value associated with the specified key or null if the key does not exist.</returns>
+    public object? GetLocalStorageValue(string keyPart);
+
+    /// <summary>
     /// Executes the specified JavaScript code in the context of the currently selected frame or window.
     /// </summary>
     /// <param name="script">The JavaScript code to execute.</param>
     /// <param name="args">The arguments to be passed to the script, if any.</param>
-    /// <returns>The result of the script execution, which may be null or an object depending on the script.</returns>
     public object? ExecuteJavascript(string script, params object[] args);
 
     /// <summary>
@@ -44,12 +56,26 @@ public interface IBrowser
     void NavigateTo(string url);
 
     /// <summary>
-    /// Switches the browser focus to the most recently opened browser tab or window.
+    /// Opens a new browser tab and navigates to the specified URL if provided.
     /// </summary>
-    public void SwitchToChildTab();
+    /// <param name="url">The URL to navigate to in the new tab.</param>
+    void OpenNewTab(string url = "");
 
     /// <summary>
-    /// Switches the browser focus to the parent tab or the first opened browser window.
+    /// Reloads the current page in the browser.
     /// </summary>
-    public void SwitchToParentTab();
+    void ReloadPage();
+
+    /// <summary>
+    /// Resizes the browser window to the specified width and height.
+    /// </summary>
+    /// <param name="width">The desired width of the browser window, in pixels.</param>
+    /// <param name="height">The desired height of the browser window, in pixels.</param>
+    void ResizeWindow(int width, int height);
+
+    /// <summary>
+    /// Switches the browser's focus to a specified tab based on its index.
+    /// </summary>
+    /// <param name="tabNumber">The index of the tab to switch to, where 1 is the first tab.</param>
+    public void SwitchToTab(int tabNumber);
 }

@@ -11,6 +11,8 @@ namespace ToolsQa.Tests.TestCases;
 [TestFixture]
 public sealed class LinksTests : BaseFixture<EmptyTestData>
 {
+    private const int ChildTabNumber = 2;
+    
     protected override string TestDataPath => string.Empty;
     
     [AllureBefore]
@@ -44,7 +46,7 @@ public sealed class LinksTests : BaseFixture<EmptyTestData>
     public void EnsureThatHomeLinkOpensNewPage()
     {
         ToolsQaPages.LinksPage.ClickHome();
-        WebManager.Browser.SwitchToChildTab();
+        WebManager.Browser.SwitchToTab(ChildTabNumber);
         
         Assert.That(WebManager.Browser.Url, Is.EqualTo(ToolsQaConstants.LinksPage.LinkTabUrl), "Incorrect url.");
     }
