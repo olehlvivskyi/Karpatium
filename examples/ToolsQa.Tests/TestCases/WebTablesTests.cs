@@ -12,6 +12,7 @@ namespace ToolsQa.Tests.TestCases;
 [AllureSuite("Elements")]
 [AllureSubSuite("Web Tables")]
 [TestFixture]
+[Order(1)]
 public sealed class WebTablesTests : BaseFixture<EmptyTestData>
 {
     protected override string TestDataPath => string.Empty;

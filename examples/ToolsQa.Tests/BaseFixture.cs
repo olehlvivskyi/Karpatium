@@ -7,10 +7,9 @@ using Karpatium.Core.Web;
 using Newtonsoft.Json;
 using NUnit.Framework.Interfaces;
 using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
 using ToolsQa.Tests.TestUsers;
 
-[assembly:LevelOfParallelism(1)]
+[assembly:LevelOfParallelism(5)]
 
 namespace ToolsQa.Tests;
 
@@ -28,9 +27,10 @@ public abstract class BaseFixture<TTestData>
     public void BaseOneTimeSetUp()
     {
         Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-            .WriteTo.File(Path.Combine(Directory.GetCurrentDirectory(), "Logs", $"{DateTime.Now:yyyy.MM.dd-hh.mm.ss}.all.txt"))
             .MinimumLevel.Verbose()
+            .Enrich.WithThreadId()
+            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}][{ThreadId}] {Message:lj}{NewLine}{Exception}")
+            .WriteTo.File(Path.Combine(Directory.GetCurrentDirectory(), "Logs", ".txt"), rollingInterval: RollingInterval.Day, outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}][{ThreadId}] {Message:lj}{NewLine}{Exception}")
             .CreateLogger();
 
         TestData = typeof(TTestData) == typeof(EmptyTestData)
