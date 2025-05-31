@@ -21,7 +21,7 @@ namespace Karpatium.Core.Nunit;
 /// <see cref="NUnit.Framework.Interfaces.ResultState.Failure"/>.
 /// </param>
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
-public class RetryOnErrorAndFailureAttribute(int retryCount) : NUnitAttribute, IRepeatTest
+public sealed class RetryOnErrorAndFailureAttribute(int retryCount) : NUnitAttribute, IRepeatTest
 {
     /// <summary>
     /// Wraps a test command to add retry functionality for tests that encounter errors or failures.

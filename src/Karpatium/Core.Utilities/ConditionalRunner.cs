@@ -1,3 +1,5 @@
+using Serilog;
+
 namespace Karpatium.Core.Utilities;
 
 /// <summary>
@@ -15,9 +17,9 @@ public static class ConditionalRunner
         {
             anonymousFunction();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
-            // Ignore
+            // ignored
         }
     }
 }
