@@ -36,4 +36,20 @@ public static class ElementFactory
             Parent = parent
         };
     }
+
+    /// <summary>
+    /// Creates an instance of a specific element type within a shadow DOM, using a given selector and shadow root element.
+    /// </summary>
+    /// <typeparam name="TElement">The type of the element to create, which inherits from <see cref="Element"/>.</typeparam>
+    /// <param name="shadowSelector">The selector that identifies the element within the shadow DOM.</param>
+    /// <param name="shadowRoot">The shadow root element under which this element is scoped.</param>
+    public static TElement CreateShadow<TElement>(Selector shadowSelector, Element shadowRoot)
+        where TElement : Element, new()
+    {
+        return new TElement
+        {
+            Selector = shadowSelector,
+            ShadowRootParent = shadowRoot
+        };
+    }
 }

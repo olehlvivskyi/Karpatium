@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Drawing;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -34,7 +33,7 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
     /// Retrieves the browser logs generated during the browsing session.
     /// </summary>
     /// <returns>A read-only collection of <see cref="LogEntry"/> containing the browser logs.</returns>
-    internal ReadOnlyCollection<LogEntry> GetBrowserLogs() => DriverWrapper.Manage().Logs.GetLog(LogType.Browser);
+    internal IReadOnlyList<LogEntry> GetBrowserLogs() => DriverWrapper.Manage().Logs.GetLog(LogType.Browser);
 
     /// <summary>
     /// Captures a screenshot of the current browser window and returns it as a <see cref="Screenshot"/> object.
@@ -48,8 +47,18 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
     internal void Quit() => DriverWrapper.Quit();
     
     public string PageSource => DriverWrapper.PageSource;
+    
+    public string Title => DriverWrapper.Title;
 
     public string Url => DriverWrapper.Url;
+    
+    public void AcceptAlert() => DriverWrapper.SwitchTo().Alert().Accept();
+    
+    public void AddCookie(string name, string value)
+    {
+        Cookie cookie = new Cookie(name, value);
+        DriverWrapper.Manage().Cookies.AddCookie(cookie);
+    }
 
     public void CloseTab(int tabNumber)
     {
@@ -57,7 +66,19 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
         DriverWrapper.SwitchTo().Window(windowHandle);
         DriverWrapper.Close();
     }
+    
+    public void DeleteAllCookies() => DriverWrapper.Manage().Cookies.DeleteAllCookies();
+    
+    public void DeleteCookie(string cookieName) => DriverWrapper.Manage().Cookies.DeleteCookieNamed(cookieName);
+    
+    public void DismissAlert() => DriverWrapper.SwitchTo().Alert().Dismiss();
 
+    public string? GetAlertText() => DriverWrapper.SwitchTo().Alert().Text;
+    
+    public IReadOnlyDictionary<string, string> GetAllCookies() => DriverWrapper.Manage().Cookies.AllCookies.ToDictionary(cookie => cookie.Name, cookie => cookie.Value);
+
+    public Rectangle GetBounds() => new Rectangle(DriverWrapper.Manage().Window.Position, DriverWrapper.Manage().Window.Size);
+    
     public object? GetLocalStorageValue(string keyPart)
     {
         if (JavaScriptExecutorWrapper.ExecuteScript("return window.localStorage;") is not Dictionary<string, object> items)
@@ -73,8 +94,16 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
         object? result = JavaScriptExecutorWrapper.ExecuteScript(script, args);
         return result;
     }
+    
+    public void FullScreenWindow() => DriverWrapper.Manage().Window.FullScreen();
 
     public void MaximizeWindow() => DriverWrapper.Manage().Window.Maximize();
+    
+    public void MinimizeWindow() => DriverWrapper.Manage().Window.Minimize();
+    
+    public void NavigateBack() => DriverWrapper.Navigate().Back();
+    
+    public void NavigateForward() => DriverWrapper.Navigate().Forward();
     
     public void NavigateTo(string url)
     {
@@ -106,6 +135,8 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
     {
         DriverWrapper.Manage().Window.Size = new Size(width, height);
     }
+    
+    public void SetAlertText(string text) => DriverWrapper.SwitchTo().Alert().SendKeys(text);
 
     public void SwitchToTab(int tabNumber)
     {
