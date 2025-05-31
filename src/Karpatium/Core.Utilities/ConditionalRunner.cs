@@ -17,7 +17,7 @@ public static class ConditionalRunner
         {
             anonymousFunction();
         }
-        catch (Exception exception)
+        catch (Exception)
         {
             // ignored
         }
