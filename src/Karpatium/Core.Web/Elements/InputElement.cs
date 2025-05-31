@@ -6,7 +6,7 @@ namespace Karpatium.Core.Web.Elements;
 /// <summary>
 /// Represents an input HTML element with "text" type or textarea HTML element.
 /// </summary>
-public sealed class InputElement : Element
+public class InputElement : Element
 {
     /// <summary>
     /// Gets the "value" attribute of the input or textarea HTML element.

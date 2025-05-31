@@ -20,6 +20,9 @@ internal sealed class SafariBrowserFactory : IBrowserFactory
     private SafariOptions GetSafariOptions(IBrowserSettings browserSettings)
     {
         SafariOptions safariOptions = new SafariOptions();
+        
+        safariOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
+        safariOptions.SetLoggingPreference(LogType.Driver, LogLevel.All);
 
         if (browserSettings.IsHeadlessEnabled)
         {

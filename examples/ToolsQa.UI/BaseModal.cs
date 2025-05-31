@@ -10,6 +10,7 @@ public abstract class BaseModal<TElement> where TElement : Element
 {
     protected readonly TElement ModalWrapper;
     protected readonly string PageName;
+    protected abstract string ModalName { get; }
 
     protected BaseModal(TElement modalWrapper, string pageName)
     {

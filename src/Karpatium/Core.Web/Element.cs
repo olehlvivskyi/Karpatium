@@ -1,7 +1,6 @@
 using System.Text.RegularExpressions;
 using Karpatium.Core.Utilities;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 
 namespace Karpatium.Core.Web;
 
@@ -151,6 +150,16 @@ public abstract class Element
     {
         return ConditionalWaiter.ForResult(() => WebElementWrapper.GetCssValue(property), $"{nameof(GetCssValue)} failed.");
     }
+
+    /// <summary>
+    /// Retrieves the inner HTML content of the element.
+    /// </summary>
+    public string GetInnerHtml() => ConditionalWaiter.ForResult(() => WebElementWrapper.GetAttribute("innerHTML")!, $"{nameof(GetInnerHtml)} failed.");
+    
+    /// <summary>
+    /// Retrieves the outer HTML content of the element.
+    /// </summary>
+    public string GetOuterHtml() => ConditionalWaiter.ForResult(() => WebElementWrapper.GetAttribute("outerHTML")!, $"{nameof(GetOuterHtml)} failed.");
 
     /// <summary>
     /// Simulates hovering the mouse cursor over the element.

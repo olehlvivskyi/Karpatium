@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Drawing;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -28,6 +29,12 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
     /// <param name="selector">The selector used to identify the web elements.</param>
     /// <returns>A read-only list of <see cref="IWebElement"/> that match the specified selector.</returns>
     internal IReadOnlyList<IWebElement> FindElements(Selector selector) => DriverWrapper.FindElements(selector.ByWrapper);
+
+    /// <summary>
+    /// Retrieves the browser logs generated during the browsing session.
+    /// </summary>
+    /// <returns>A read-only collection of <see cref="LogEntry"/> containing the browser logs.</returns>
+    internal ReadOnlyCollection<LogEntry> GetBrowserLogs() => DriverWrapper.Manage().Logs.GetLog(LogType.Browser);
 
     /// <summary>
     /// Captures a screenshot of the current browser window and returns it as a <see cref="Screenshot"/> object.

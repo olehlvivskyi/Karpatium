@@ -12,8 +12,7 @@ public abstract class BasePage
     
     internal BasePage(string relativePath)
     {
-        ConditionalWaiter.ForTrue(() => WebManager.Browser.Url.Contains(relativePath), $"{GetPageName()}: Wait for `{relativePath}` page url failed.");
-        
+        WebManager.Waiter.ForUrlToBe(relativePath);
         WebManager.Waiter.ForPageSourceIsNotChanged();
     }
     

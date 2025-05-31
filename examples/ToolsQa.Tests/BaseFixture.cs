@@ -7,6 +7,7 @@ using Karpatium.Core.Web;
 using Newtonsoft.Json;
 using NUnit.Framework.Interfaces;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using ToolsQa.Tests.TestUsers;
 
 [assembly:LevelOfParallelism(1)]
@@ -27,7 +28,8 @@ public abstract class BaseFixture<TTestData>
     public void BaseOneTimeSetUp()
     {
         Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console()
+            .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+            .WriteTo.File(Path.Combine(Directory.GetCurrentDirectory(), "Logs", $"{DateTime.Now:yyyy.MM.dd-hh.mm.ss}.all.txt"))
             .MinimumLevel.Verbose()
             .CreateLogger();
 
@@ -57,12 +59,15 @@ public abstract class BaseFixture<TTestData>
     {
         if (!TestContext.CurrentContext.Result.Outcome.Equals(ResultState.Success))
         {
-            string fileName = $"{TestContext.CurrentContext.Test.MethodName} - {DateTime.UtcNow:yyyy.MM.dd-hh.mm.ss}";
+            string fileName = $"{DateTime.Now:yyyy.MM.dd-hh.mm.ss} - {GetTestName()}";
+            string browserLogsPath = WebManager.DebugBrowserLogs(fileName);
             string pageSourcePath = WebManager.DebugPageSource(fileName);
             string screenshotPath = WebManager.DebugScreenshot(fileName);
             Log.Error($"### Test Failed: {GetTestName()} ###");
+            Log.Verbose($"### Browser Logs: {browserLogsPath} ###");
             Log.Verbose($"### Page source: {pageSourcePath} ###");
             Log.Verbose($"### Screenshot: {screenshotPath} ### ");
+            AllureApi.AddAttachment(browserLogsPath);
             AllureApi.AddAttachment(pageSourcePath);
             AllureApi.AddAttachment(screenshotPath);
         }

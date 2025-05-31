@@ -22,16 +22,21 @@ internal sealed class FirefoxBrowserFactory : IBrowserFactory
     {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         
+        firefoxOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
+        firefoxOptions.SetLoggingPreference(LogType.Driver, LogLevel.All);
+        
         firefoxOptions.SetPreference("browser.download.folderList", 2);
         firefoxOptions.SetPreference("browser.download.dir", PathUtils.GetLocalUserPath(browserSettings.DownloadedFilesFolderName));
+        firefoxOptions.SetPreference("browser.download.useDownloadDir", "true");
         firefoxOptions.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf,application/zip,application/octet-stream,text/csv,application/vnd.ms-excel,image/jpeg,image/png,image/gif,image/bmp,image/webp,image/svg+xml,image/tiff,image/x-icon,image/pjpeg");
         firefoxOptions.SetPreference("browser.download.manager.showWhenStarting", false);
         firefoxOptions.SetPreference("browser.helperApps.alwaysAsk.force", false);
         
         if (browserSettings.IsHeadlessEnabled)
         {
-            firefoxOptions.AddArguments("--headless=new");
-            firefoxOptions.AddArguments("window-size=1920,1080");
+            firefoxOptions.AddArgument("-headless");
+            firefoxOptions.AddArgument("--width=1920");
+            firefoxOptions.AddArgument("--height=1080");
         }
 
         return firefoxOptions;

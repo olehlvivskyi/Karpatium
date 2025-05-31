@@ -34,7 +34,7 @@ public sealed class WebTablesTests : BaseFixture<EmptyTestData>
         ToolsQaPages.WebTablesPage.RegistrationFormModal.FillForm(worker);
         ToolsQaPages.WebTablesPage.RegistrationFormModal.ClickSubmit();
 
-        WorkerTableRowLayout row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
+        WorkerTableRowItem row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
                                    ?? throw new Exception($"Row with `{worker.Email}` email not found.");
         string actualFirstName = row.GetCellText(WorkerTableHeader.FirstName);
         string actualLastName = row.GetCellText(WorkerTableHeader.LastName);
@@ -64,7 +64,7 @@ public sealed class WebTablesTests : BaseFixture<EmptyTestData>
         ToolsQaPages.WebTablesPage.RegistrationFormModal.FillForm(worker);
         ToolsQaPages.WebTablesPage.RegistrationFormModal.ClickSubmit();
 
-        WorkerTableRowLayout? row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
+        WorkerTableRowItem? row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
                                     ?? throw new Exception($"Row with `{worker.Email}` email not found.");
         row.ClickDelete();
 
@@ -82,7 +82,7 @@ public sealed class WebTablesTests : BaseFixture<EmptyTestData>
         ToolsQaPages.WebTablesPage.RegistrationFormModal.FillForm(worker);
         ToolsQaPages.WebTablesPage.RegistrationFormModal.ClickSubmit();
 
-        WorkerTableRowLayout row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
+        WorkerTableRowItem row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
                               ?? throw new Exception($"Row with `{worker.Email}` email not found.");
         row.ClickEdit();
         

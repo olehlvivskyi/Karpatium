@@ -10,7 +10,7 @@ namespace ToolsQa.UI.Modals;
 /// </summary>
 public sealed class RegistrationFormModal(CommonElement modalWrapper, string pageName) : BaseModal<CommonElement>(modalWrapper, pageName)
 {
-    private const string ModalName = nameof(RegistrationFormModal);
+    protected override string ModalName => "\"Registration Form\" modal";
 
     private InputElement Age => ElementFactory.Create<InputElement>(Selector.Id("age"), ModalWrapper);
     private InputElement Department => ElementFactory.Create<InputElement>(Selector.Id("department"), ModalWrapper);
@@ -25,7 +25,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// </summary>
     public void ClickSubmit()
     {
-        Log.Information("{PageName}-{ModalName}: Clicking on the \"Submit\" button.", PageName, ModalName);
+        Log.Information("{PageName}[{ModalName}]: Clicking on the \"Submit\" button.", PageName, ModalName);
         
         Submit.Click();
     }
@@ -36,7 +36,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="age">The text to set as the age.</param>
     public void SetAge(string age)
     {
-        Log.Information("{PageName}-{ModalName}: Setting `{Age}` for \"Age\" field.", PageName, ModalName, age);
+        Log.Information("{PageName}[{ModalName}]: Setting `{Age}` for \"Age\" field.", PageName, ModalName, age);
         
         Age.SetText(age);
     }
@@ -47,7 +47,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="department">The text to set as the department.</param>
     public void SetDepartment(string department)
     {
-        Log.Information("{PageName}-{ModalName}: Setting `{Department}` for \"Department\" field.", PageName, ModalName, department);
+        Log.Information("{PageName}[{ModalName}]: Setting `{Department}` for \"Department\" field.", PageName, ModalName, department);
         
         Department.SetText(department);
     }
@@ -58,7 +58,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="email">The text to set as the email.</param>
     public void SetEmail(string email)
     {
-        Log.Information("{PageName}-{ModalName}: Setting `{Email}` for \"Email\" field.", PageName, ModalName, email);
+        Log.Information("{PageName}[{ModalName}]: Setting `{Email}` for \"Email\" field.", PageName, ModalName, email);
         
         Email.SetText(email);
     }
@@ -69,7 +69,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="firstName">The text to set as the first name.</param>
     public void SetFirstName(string firstName)
     {
-        Log.Information("{PageName}-{ModalName}: Setting `{FirstName}` for \"First Name\" field.", PageName, ModalName, firstName);
+        Log.Information("{PageName}[{ModalName}]: Setting `{FirstName}` for \"First Name\" field.", PageName, ModalName, firstName);
         
         FirstName.SetText(firstName);
     }
@@ -80,7 +80,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="lastName">The text to set as the last name.</param>
     public void SetLastName(string lastName)
     {
-        Log.Information("{PageName}-{ModalName}: Setting `{LastName}` for \"Last Name\" field.", PageName, ModalName, lastName);
+        Log.Information("{PageName}[{ModalName}]: Setting `{LastName}` for \"Last Name\" field.", PageName, ModalName, lastName);
         
         LastName.SetText(lastName);
     }
@@ -91,7 +91,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="salary">The text to set as the salary.</param>
     public void SetSalary(string salary)
     {
-        Log.Information("{PageName}-{ModalName}: Setting `{Salary}` for \"Salary\" field.", PageName, ModalName, salary);
+        Log.Information("{PageName}[{ModalName}]: Setting `{Salary}` for \"Salary\" field.", PageName, ModalName, salary);
         
         Salary.SetText(salary);
     }
