@@ -7,11 +7,11 @@ namespace ToolsQa.UI.Components.React;
 /// <summary>
 /// Represents a React table component.
 /// </summary>
-internal class ReactTableComponent : BaseComponent
+internal sealed class ReactTableComponent : BaseComponent<CommonElement>
 {
     private readonly List<string> _headers;
     
-    internal ReactTableComponent(Element componentWrapper) : base(componentWrapper)
+    internal ReactTableComponent(CommonElement componentWrapper) : base(componentWrapper)
     {
         _headers = ConditionalWaiter.ForResult(() => Headers.Select(header => header.Text).ToList(), $"{nameof(ReactTableComponent)}: {nameof(ReactTableComponent)} failed.");
     }

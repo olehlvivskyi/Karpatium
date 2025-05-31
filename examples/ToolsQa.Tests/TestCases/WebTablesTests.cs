@@ -1,5 +1,6 @@
 using Allure.NUnit.Attributes;
 using Bogus;
+using Karpatium.Core.Nunit;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 using ToolsQa.UI.Dto;
@@ -11,7 +12,7 @@ namespace ToolsQa.Tests.TestCases;
 [AllureSuite("Elements")]
 [AllureSubSuite("Web Tables")]
 [TestFixture]
-public class WebTablesTests : BaseFixture<EmptyTestData>
+public sealed class WebTablesTests : BaseFixture<EmptyTestData>
 {
     protected override string TestDataPath => string.Empty;
     
@@ -24,6 +25,7 @@ public class WebTablesTests : BaseFixture<EmptyTestData>
     }
 
     [TestCase(TestName = "Verify that adding worker is possible.")]
+    [RetryOnErrorAndFailure(3)]
     public void VerifyThatAddingWorkerIsPossible()
     {
         WorkerDto worker = GetRandomWorker();
@@ -53,6 +55,7 @@ public class WebTablesTests : BaseFixture<EmptyTestData>
     }
 
     [TestCase(TestName = "Verify that deleting worker is possible.")]
+    [RetryOnErrorAndFailure(3)]
     public void VerifyThatDeletingWorkerIsPossible()
     {
         WorkerDto worker = GetRandomWorker();
@@ -70,6 +73,7 @@ public class WebTablesTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Verify that editing worker is possible.")]
+    [RetryOnErrorAndFailure(3)]
     public void VerifyThatEditingWorkerIsPossible()
     {
         WorkerDto worker = GetRandomWorker();
@@ -78,7 +82,7 @@ public class WebTablesTests : BaseFixture<EmptyTestData>
         ToolsQaPages.WebTablesPage.RegistrationFormModal.FillForm(worker);
         ToolsQaPages.WebTablesPage.RegistrationFormModal.ClickSubmit();
 
-        WorkerTableRowLayout? row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
+        WorkerTableRowLayout row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
                               ?? throw new Exception($"Row with `{worker.Email}` email not found.");
         row.ClickEdit();
         

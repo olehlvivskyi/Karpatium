@@ -11,18 +11,12 @@ namespace ToolsQa.UI.Layouts;
 /// <summary>
 /// Provides access to the "Worker" table.
 /// </summary>
-public class WorkerTableLayout
+public sealed class WorkerTableLayout(CommonElement layoutWrapper, string pageName) : BaseLayout<CommonElement>(layoutWrapper, pageName)
 {
-    private const string PageName = nameof(WebTablesPage);
-    private const string TableName = nameof(WorkerTableLayout);
+    private readonly ReactTableComponent _tableComponent = new(layoutWrapper);
     
-    private readonly ReactTableComponent _tableComponent;
+    protected override string LayoutName => "\"Worker\" table";
 
-    internal WorkerTableLayout(Element tableWrapper)
-    {
-        _tableComponent = new(tableWrapper);
-    }
-    
     /// <summary>
     /// Gets a specific row where the cell value under a given header matches the specified text.
     /// </summary>
@@ -30,11 +24,11 @@ public class WorkerTableLayout
     /// <param name="cellText">The cell text to match under the specified header column.</param>
     public WorkerTableRowLayout? GetRow(WorkerTableHeader header, string cellText)
     {
-        Log.Information("{PageName}-{TableName}: Checking row where `{HeaderText}` header has `{CellText}` cell text.", PageName, TableName, header, cellText);
+        Log.Information("{PageName}[{LayoutName}]: Checking row where `{HeaderText}` header has `{CellText}` cell text.", PageName, LayoutName, header, cellText);
 
         string headerText = header.GetStringValue();
         ReactTableRowComponent? row = _tableComponent.GetRow(headerText, cellText);
-        Log.Debug("{PageName}-{TableName}: row = {Row}", PageName, TableName, row == null ? "null" : "not null");
+        Log.Debug("{PageName}[{LayoutName}]: row = {Row}", PageName, LayoutName, row == null ? "null" : "not null");
         
         return row == null 
             ? null 
@@ -48,7 +42,7 @@ public class WorkerTableLayout
 public class WorkerTableRowLayout
 {
     private const string PageName = nameof(WebTablesPage);
-    private const string TableName = nameof(WorkerTableLayout);
+    private const string LayoutName = nameof(WorkerTableLayout);
     
     private readonly ReactTableRowComponent _rowComponent;
     
@@ -65,7 +59,7 @@ public class WorkerTableRowLayout
     /// </summary>
     public void ClickDelete()
     {
-        Log.Information("{PageName}-{TableName}: Clicking on the \"Delete\" icon.", PageName, TableName);
+        Log.Information("{PageName}[{LayoutName}]: Clicking on the \"Delete\" icon.", PageName, LayoutName);
         
         Delete.Click();
     }
@@ -75,7 +69,7 @@ public class WorkerTableRowLayout
     /// </summary>
     public void ClickEdit()
     {
-        Log.Information("{PageName}-{TableName}: Clicking on the \"Edit\" icon.", PageName, TableName);
+        Log.Information("{PageName}[{LayoutName}]: Clicking on the \"Edit\" icon.", PageName, LayoutName);
         
         Edit.Click();
     }
@@ -86,11 +80,11 @@ public class WorkerTableRowLayout
     /// <param name="header">The header of the column whose cell text is to be retrieved.</param>
     public string GetCellText(WorkerTableHeader header)
     {
-        Log.Information("{PageName}-{TableName}: Checking cell text for \"{Header}\" header.", PageName, TableName, header);
+        Log.Information("{PageName}[{LayoutName}]: Checking cell text for \"{Header}\" header.", PageName, LayoutName, header);
         
         string headerText = header.GetStringValue();
         string cellText = _rowComponent.GetCellText(headerText);
-        Log.Debug("{PageName}-{TableName}: cellText = `{CellText}`", PageName, TableName, cellText);
+        Log.Debug("{PageName}[{LayoutName}]: cellText = `{CellText}`", PageName, LayoutName, cellText);
         
         return cellText;
     }

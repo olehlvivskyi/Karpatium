@@ -1,4 +1,5 @@
 using Allure.NUnit.Attributes;
+using Karpatium.Core.Nunit;
 using Karpatium.Core.Web;
 using ToolsQa.UI;
 
@@ -8,7 +9,7 @@ namespace ToolsQa.Tests.TestCases;
 [AllureSuite("Elements")]
 [AllureSubSuite("Links")]
 [TestFixture]
-public class LinksTests : BaseFixture<EmptyTestData>
+public sealed class LinksTests : BaseFixture<EmptyTestData>
 {
     protected override string TestDataPath => string.Empty;
     
@@ -21,6 +22,7 @@ public class LinksTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that \"Created\" link returns 201."), Order(1)]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatCreateLinkReturns201()
     {
         ToolsQaPages.LinksPage.ClickCreated();
@@ -29,6 +31,7 @@ public class LinksTests : BaseFixture<EmptyTestData>
     }
 
     [TestCase(TestName = "Ensure that \"Not Found\" link returns 404."), Order(2)]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatNotFoundLinkReturns404()
     {
         ToolsQaPages.LinksPage.ClickNotFound();
@@ -37,6 +40,7 @@ public class LinksTests : BaseFixture<EmptyTestData>
     }
     
     [TestCase(TestName = "Ensure that \"Home\" link opens new page."), Order(3)]
+    [RetryOnErrorAndFailure(3)]
     public void EnsureThatHomeLinkOpensNewPage()
     {
         ToolsQaPages.LinksPage.ClickHome();

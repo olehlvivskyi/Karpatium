@@ -8,7 +8,7 @@ namespace ToolsQa.UI.Modals;
 /// <summary>
 /// Provides access to the "Registration Form" modal.
 /// </summary>
-public class RegistrationFormModal(Element modalWrapper, string pageName) : BaseModal(modalWrapper, pageName)
+public sealed class RegistrationFormModal(CommonElement modalWrapper, string pageName) : BaseModal<CommonElement>(modalWrapper, pageName)
 {
     private const string ModalName = nameof(RegistrationFormModal);
 

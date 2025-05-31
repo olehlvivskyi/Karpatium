@@ -76,7 +76,7 @@ public sealed class RadioButtonPage(string relativePath) : BasePage(relativePath
             Log.Information("{PageName}: Checking the text displayed for the currently selected radio button.", PageName);
             
             string selectedRadioButtonText = TextSuccess.Text;
-            Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, selectedRadioButtonText);
+            Log.Debug("{PageName}: {MemberName} = `{MemberValue}`", PageName, nameof(SelectedRadioButtonText), selectedRadioButtonText);
             
             return selectedRadioButtonText;
         }

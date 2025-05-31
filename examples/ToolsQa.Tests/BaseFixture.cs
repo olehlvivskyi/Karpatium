@@ -38,7 +38,7 @@ public abstract class BaseFixture<TTestData>
         AllureReporter.CreateEnvironmentPropertiesFile();
         
         TestCaseUser = GetTestCaseUser();
-        Log.Information($"Test user: `{TestCaseUser.Email}`");
+        Log.Information($"{nameof(UsersPool)}: Engaged `{TestCaseUser.Email}` user.");
         
         WebManager.Initialize(TestConfiguration.WebManagerSettings);
         WebManager.Browser.MaximizeWindow();
