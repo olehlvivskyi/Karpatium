@@ -41,13 +41,13 @@ Karpatium leverages **NUnit** as its primary testing framework, ensuring the sim
 You can add Karpatium to your project via the .NET CLI:
 
 ```bash
-dotnet add package Karpatium --version 1.0.0
+dotnet add package Karpatium --version 1.0.1
 ```
 
 Or from the NuGet Package Manager:
 
 ```bash
-Install-Package Karpatium -Version 1.0.0
+Install-Package Karpatium -Version 1.0.1
 ```
 
 ## Contribute
