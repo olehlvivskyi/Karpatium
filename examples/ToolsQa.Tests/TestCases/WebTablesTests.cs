@@ -32,8 +32,8 @@ public sealed class WebTablesTests : BaseFixture<EmptyTestData>
         WorkerDto worker = GetRandomWorker();
         
         ToolsQaPages.WebTablesPage.ClickAdd();
-        ToolsQaPages.WebTablesPage.RegistrationFormModal.FillForm(worker);
-        ToolsQaPages.WebTablesPage.RegistrationFormModal.ClickSubmit();
+        ToolsQaPages.WebTablesPage.RegistrationFormDialog.FillForm(worker);
+        ToolsQaPages.WebTablesPage.RegistrationFormDialog.ClickSubmit();
 
         WorkerTableRowItem row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
                                    ?? throw new Exception($"Row with `{worker.Email}` email not found.");
@@ -62,8 +62,8 @@ public sealed class WebTablesTests : BaseFixture<EmptyTestData>
         WorkerDto worker = GetRandomWorker();
         
         ToolsQaPages.WebTablesPage.ClickAdd();
-        ToolsQaPages.WebTablesPage.RegistrationFormModal.FillForm(worker);
-        ToolsQaPages.WebTablesPage.RegistrationFormModal.ClickSubmit();
+        ToolsQaPages.WebTablesPage.RegistrationFormDialog.FillForm(worker);
+        ToolsQaPages.WebTablesPage.RegistrationFormDialog.ClickSubmit();
 
         WorkerTableRowItem? row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
                                     ?? throw new Exception($"Row with `{worker.Email}` email not found.");
@@ -80,16 +80,16 @@ public sealed class WebTablesTests : BaseFixture<EmptyTestData>
         WorkerDto worker = GetRandomWorker();
         
         ToolsQaPages.WebTablesPage.ClickAdd();
-        ToolsQaPages.WebTablesPage.RegistrationFormModal.FillForm(worker);
-        ToolsQaPages.WebTablesPage.RegistrationFormModal.ClickSubmit();
+        ToolsQaPages.WebTablesPage.RegistrationFormDialog.FillForm(worker);
+        ToolsQaPages.WebTablesPage.RegistrationFormDialog.ClickSubmit();
 
         WorkerTableRowItem row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
                               ?? throw new Exception($"Row with `{worker.Email}` email not found.");
         row.ClickEdit();
         
         worker = GetRandomWorker();
-        ToolsQaPages.WebTablesPage.RegistrationFormModal.FillForm(worker);
-        ToolsQaPages.WebTablesPage.RegistrationFormModal.ClickSubmit();
+        ToolsQaPages.WebTablesPage.RegistrationFormDialog.FillForm(worker);
+        ToolsQaPages.WebTablesPage.RegistrationFormDialog.ClickSubmit();
 
         row = ToolsQaPages.WebTablesPage.WorkerTable.GetRow(WorkerTableHeader.Email, worker.Email) 
               ?? throw new Exception($"Row with `{worker.Email}` email not found.");
