@@ -3,29 +3,29 @@ using Karpatium.Core.Web.Elements;
 using Serilog;
 using ToolsQa.UI.Dto;
 
-namespace ToolsQa.UI.Modals;
+namespace ToolsQa.UI.Dialogs;
 
 /// <summary>
-/// Provides access to the "Registration Form" modal.
+/// Provides access to the "Registration Form" dialog.
 /// </summary>
-public sealed class RegistrationFormModal(CommonElement modalWrapper, string pageName) : BaseModal<CommonElement>(modalWrapper, pageName)
+public sealed class RegistrationFormDialog(CommonElement dialogWrapper, string pageName) : BaseDialog<CommonElement>(dialogWrapper, pageName)
 {
-    protected override string ModalName => "\"Registration Form\" modal";
+    protected override string DialogName => "\"Registration Form\" dialog";
 
-    private InputElement Age => ElementFactory.Create<InputElement>(Selector.Id("age"), ModalWrapper);
-    private InputElement Department => ElementFactory.Create<InputElement>(Selector.Id("department"), ModalWrapper);
-    private InputElement Email => ElementFactory.Create<InputElement>(Selector.Id("userEmail"), ModalWrapper);
-    private InputElement FirstName => ElementFactory.Create<InputElement>(Selector.Id("firstName"), ModalWrapper);
-    private InputElement LastName => ElementFactory.Create<InputElement>(Selector.Id("lastName"), ModalWrapper);
-    private InputElement Salary => ElementFactory.Create<InputElement>(Selector.Id("salary"), ModalWrapper);
-    private CommonElement Submit => ElementFactory.Create<CommonElement>(Selector.Id("submit"), ModalWrapper);
+    private InputElement Age => ElementFactory.Create<InputElement>(Selector.Id("age"), DialogWrapper);
+    private InputElement Department => ElementFactory.Create<InputElement>(Selector.Id("department"), DialogWrapper);
+    private InputElement Email => ElementFactory.Create<InputElement>(Selector.Id("userEmail"), DialogWrapper);
+    private InputElement FirstName => ElementFactory.Create<InputElement>(Selector.Id("firstName"), DialogWrapper);
+    private InputElement LastName => ElementFactory.Create<InputElement>(Selector.Id("lastName"), DialogWrapper);
+    private InputElement Salary => ElementFactory.Create<InputElement>(Selector.Id("salary"), DialogWrapper);
+    private CommonElement Submit => ElementFactory.Create<CommonElement>(Selector.Id("submit"), DialogWrapper);
 
     /// <summary>
     /// Clicks on the "Submit" button.
     /// </summary>
     public void ClickSubmit()
     {
-        Log.Information("{PageName}[{ModalName}]: Clicking on the \"Submit\" button.", PageName, ModalName);
+        Log.Information("{PageName}[{DialogName}]: Clicking on the \"Submit\" button.", PageName, DialogName);
         
         Submit.Click();
     }
@@ -36,7 +36,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="age">The text to set as the age.</param>
     public void SetAge(string age)
     {
-        Log.Information("{PageName}[{ModalName}]: Setting `{Age}` for \"Age\" field.", PageName, ModalName, age);
+        Log.Information("{PageName}[{DialogName}]: Setting `{Age}` for \"Age\" field.", PageName, DialogName, age);
         
         Age.SetText(age);
     }
@@ -47,7 +47,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="department">The text to set as the department.</param>
     public void SetDepartment(string department)
     {
-        Log.Information("{PageName}[{ModalName}]: Setting `{Department}` for \"Department\" field.", PageName, ModalName, department);
+        Log.Information("{PageName}[{DialogName}]: Setting `{Department}` for \"Department\" field.", PageName, DialogName, department);
         
         Department.SetText(department);
     }
@@ -58,7 +58,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="email">The text to set as the email.</param>
     public void SetEmail(string email)
     {
-        Log.Information("{PageName}[{ModalName}]: Setting `{Email}` for \"Email\" field.", PageName, ModalName, email);
+        Log.Information("{PageName}[{DialogName}]: Setting `{Email}` for \"Email\" field.", PageName, DialogName, email);
         
         Email.SetText(email);
     }
@@ -69,7 +69,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="firstName">The text to set as the first name.</param>
     public void SetFirstName(string firstName)
     {
-        Log.Information("{PageName}[{ModalName}]: Setting `{FirstName}` for \"First Name\" field.", PageName, ModalName, firstName);
+        Log.Information("{PageName}[{DialogName}]: Setting `{FirstName}` for \"First Name\" field.", PageName, DialogName, firstName);
         
         FirstName.SetText(firstName);
     }
@@ -80,7 +80,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="lastName">The text to set as the last name.</param>
     public void SetLastName(string lastName)
     {
-        Log.Information("{PageName}[{ModalName}]: Setting `{LastName}` for \"Last Name\" field.", PageName, ModalName, lastName);
+        Log.Information("{PageName}[{DialogName}]: Setting `{LastName}` for \"Last Name\" field.", PageName, DialogName, lastName);
         
         LastName.SetText(lastName);
     }
@@ -91,7 +91,7 @@ public sealed class RegistrationFormModal(CommonElement modalWrapper, string pag
     /// <param name="salary">The text to set as the salary.</param>
     public void SetSalary(string salary)
     {
-        Log.Information("{PageName}[{ModalName}]: Setting `{Salary}` for \"Salary\" field.", PageName, ModalName, salary);
+        Log.Information("{PageName}[{DialogName}]: Setting `{Salary}` for \"Salary\" field.", PageName, DialogName, salary);
         
         Salary.SetText(salary);
     }

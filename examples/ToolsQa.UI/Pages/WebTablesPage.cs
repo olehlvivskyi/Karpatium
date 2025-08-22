@@ -1,8 +1,8 @@
 using Karpatium.Core.Web;
 using Karpatium.Core.Web.Elements;
 using Serilog;
+using ToolsQa.UI.Dialogs;
 using ToolsQa.UI.Layouts;
-using ToolsQa.UI.Modals;
 
 namespace ToolsQa.UI.Pages;
 
@@ -14,13 +14,13 @@ public class WebTablesPage(string relativePath) : BasePage(relativePath)
     protected override string PageName => "\"Web Tables\" page";
     
     private CommonElement Add => ElementFactory.Create<CommonElement>(Selector.Id("addNewRecordButton"));
-    private CommonElement RegistrationFormModalWrapper => ElementFactory.Create<CommonElement>(Selector.Class("modal-content"));
+    private CommonElement RegistrationFormDialogWrapper => ElementFactory.Create<CommonElement>(Selector.Class("modal-content"));
     private CommonElement WorkerTableWrapper => ElementFactory.Create<CommonElement>(Selector.Class("ReactTable"));
 
     /// <summary>
-    /// Provides access to the "Registration Form" modal.
+    /// Provides access to the "Registration Form" dialog.
     /// </summary>
-    public RegistrationFormModal RegistrationFormModal => new(RegistrationFormModalWrapper, PageName);
+    public RegistrationFormDialog RegistrationFormDialog => new(RegistrationFormDialogWrapper, PageName);
     
     /// <summary>
     /// Provides access to the "Worker" table.
