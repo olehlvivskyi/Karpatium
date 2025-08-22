@@ -30,7 +30,7 @@
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Karpatium</PackageId>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <Authors>Oleh Lvivskyi</Authors>
         <PackageIcon>icon.png</PackageIcon>
         <PackageDescription>
@@ -38,7 +38,7 @@ Selenium-powered and NUnit-based test automation framework with Ukrainian roots 
 Feel free to contribute, submit issues, or propose new features via our GitHub repository.
         </PackageDescription>
         <PackageReleaseNotes>
-This is the stable release (v1.0.1).
+This is the stable release (v1.0.2).
 - Selenium-powered and NUnit-based test automation framework.
 - Major features are now considered stable with production-readiness.
 - Thank you for using Karpatium! Stay tuned for future updates! 🏔️
