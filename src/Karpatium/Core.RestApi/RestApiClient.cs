@@ -203,7 +203,7 @@ public class RestApiClient(string baseUrl)
     {
         Log.Verbose("RestApiClient: Executing POST `{Path}` API.", Path.Combine(baseUrl, request.RequestWrapper.Resource));
         
-        RestResponse response = await _clientWrapper.ExecuteGetAsync(request.RequestWrapper);
+        RestResponse response = await _clientWrapper.ExecutePostAsync(request.RequestWrapper);
         RestApiResponse responseFinal = new RestApiResponse
         {
             Content = response.Content,
@@ -221,7 +221,7 @@ public class RestApiClient(string baseUrl)
     {
         Log.Verbose("RestApiClient: Executing POST `{Path}` API.", Path.Combine(baseUrl, request.RequestWrapper.Resource));
         
-        RestResponse<T> response = await _clientWrapper.ExecuteGetAsync<T>(request.RequestWrapper);
+        RestResponse<T> response = await _clientWrapper.ExecutePostAsync<T>(request.RequestWrapper);
         RestApiResponse<T> responseFinal = new RestApiResponse<T>
         {
             Content = response.Content,
@@ -240,7 +240,7 @@ public class RestApiClient(string baseUrl)
     {
         Log.Verbose("RestApiClient: Executing PUT `{Path}` API.", Path.Combine(baseUrl, request.RequestWrapper.Resource));
         
-        RestResponse response = await _clientWrapper.ExecuteGetAsync(request.RequestWrapper);
+        RestResponse response = await _clientWrapper.ExecutePutAsync(request.RequestWrapper);
         RestApiResponse responseFinal = new RestApiResponse
         {
             Content = response.Content,
@@ -258,7 +258,7 @@ public class RestApiClient(string baseUrl)
     {
         Log.Verbose("RestApiClient: Executing PUT `{Path}` API.", Path.Combine(baseUrl, request.RequestWrapper.Resource));
         
-        RestResponse<T> response = await _clientWrapper.ExecuteGetAsync<T>(request.RequestWrapper);
+        RestResponse<T> response = await _clientWrapper.ExecutePutAsync<T>(request.RequestWrapper);
         RestApiResponse<T> responseFinal = new RestApiResponse<T>
         {
             Content = response.Content,

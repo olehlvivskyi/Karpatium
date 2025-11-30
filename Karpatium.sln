@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsQa.UI", "examples\Tool
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsQa.Tests", "examples\ToolsQa.Tests\ToolsQa.Tests.csproj", "{E2F97126-8894-4642-886D-B5E5C310597F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrudCrud.API", "examples\CrudCrud.API\CrudCrud.API.csproj", "{126260A5-3286-4F7D-A330-1FCA51923A21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrudCrud.Tests", "examples\CrudCrud.Tests\CrudCrud.Tests.csproj", "{C67190A3-13A9-4DB4-9C03-FCE9D5D13B4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{E2F97126-8894-4642-886D-B5E5C310597F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2F97126-8894-4642-886D-B5E5C310597F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2F97126-8894-4642-886D-B5E5C310597F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{126260A5-3286-4F7D-A330-1FCA51923A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126260A5-3286-4F7D-A330-1FCA51923A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126260A5-3286-4F7D-A330-1FCA51923A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126260A5-3286-4F7D-A330-1FCA51923A21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C67190A3-13A9-4DB4-9C03-FCE9D5D13B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C67190A3-13A9-4DB4-9C03-FCE9D5D13B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C67190A3-13A9-4DB4-9C03-FCE9D5D13B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C67190A3-13A9-4DB4-9C03-FCE9D5D13B4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2025-11-30
+
+### Added
+
+- Example for API testing, including API objects and API tests.
+- Browser extensions to enhance functionality.
+- Expanded browser actions, including scoped element search.
+- Extended waiters for more flexible and reliable wait conditions.
+
+### Updated
+
+- Updated NuGet package dependencies to the latest stable versions.
+
+[2.0.0]: https://www.nuget.org/packages/Karpatium/2.0.0
+
+## [1.0.3] - 2025-11-16
+
+### Updated
+
+- Updated NuGet package dependencies to the latest stable versions.
+
+[1.0.3]: https://www.nuget.org/packages/Karpatium/1.0.3
+
+## [1.0.2] - 2025-08-23
+
+### Added
+
+- Skeleton for API and database interaction functionality.
+
+### Changed
+
+- Renamed components for improved clarity and organization.
+
+[1.0.2]: https://www.nuget.org/packages/Karpatium/1.0.2
+
 ## [1.0.1] - 2025-07-09
 
 ### Updated
