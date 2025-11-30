@@ -1,13 +1,13 @@
 # Karpatium
 
-**Selenium-powered and NUnit-based test automation framework with Ukrainian roots and a mountain of features** 🏔️
+**Selenium- and RestSharp-powered, Allure- and NUnit-based test automation framework with Ukrainian roots and a mountain of features** 🏔️
 
 [![Build](https://img.shields.io/github/actions/workflow/status/olehlvivskyi/Karpatium/run-tests.yml?branch=main)](https://github.com/olehlvivskyi/Karpatium/actions)
 [![Dependencies](https://img.shields.io/librariesio/release/nuget/Karpatium)](https://libraries.io/nuget/Karpatium)
 [![Last Commit](https://img.shields.io/github/last-commit/olehlvivskyi/Karpatium)](https://github.com/olehlvivskyi/Karpatium/commits/main)
 
 
-[![NuGet Publish](https://img.shields.io/github/actions/workflow/status/olehlvivskyi/Karpatium/publish-nuget-package.yml?label=NuGet%20Publish&tag=0.1.0)](https://github.com/olehlvivskyi/Karpatium/actions)
+[![NuGet Publish](https://img.shields.io/github/actions/workflow/status/olehlvivskyi/Karpatium/publish-nuget-package.yml?label=NuGet%20Publish&tag=2.0.0)](https://github.com/olehlvivskyi/Karpatium/actions)
 [![NuGet Version](https://img.shields.io/nuget/v/Karpatium)](https://www.nuget.org/packages/Karpatium)
 [![Downloads](https://img.shields.io/nuget/dt/Karpatium)](https://www.nuget.org/packages/Karpatium)
 
@@ -21,14 +21,16 @@
 
 ## Overview
 
-**Karpatium** is a robust and flexible test automation framework built on top of **Selenium**. It aims to provide developers and testers with an efficient toolset for ensuring the quality of web applications, combining ease of use with powerful features.
+**Karpatium** is a robust and flexible test automation framework built on top of **Selenium** and **RestSharp**. It aims to provide developers and testers with an efficient toolset for ensuring the quality of web applications, combining ease of use with powerful features.
 
-Karpatium leverages **NUnit** as its primary testing framework, ensuring the simplicity, extensibility, and seamless integration of your test suite. NUnit is a trusted and widely-used tool among automation engineers for testing .NET applications due to its ease of use and rich feature set.
+Karpatium leverages **NUnit** as its primary testing framework, ensuring the simplicity, extensibility, and seamless integration of your test suite. The framework also integrates seamlessly with **Allure** for generating comprehensive, user-friendly test reports that make debugging and results analysis more efficient. NUnit is a trusted and widely-used tool among automation engineers for testing .NET applications due to its ease of use and rich feature set.
 
 ## Features
 
 - ✅ **Selenium-powered browser automation** for testing web applications.
+- ✅ **RestSharp integration** for robust and efficient API testing.
 - ✅ **NUnit integration** for structuring and running tests with ease.
+- ✅ **Allure reporting** for clear, detailed, and professional test insights.
 - ✅ **Cross-browser support** (Chrome, Firefox, Edge, Safari).
 - ✅ **Modern syntax** with .NET 9.0 and C# 13.0 support.
 - ✅ **Detailed logging** with Serilog integration for better debugging.
@@ -41,13 +43,13 @@ Karpatium leverages **NUnit** as its primary testing framework, ensuring the sim
 You can add Karpatium to your project via the .NET CLI:
 
 ```bash
-dotnet add package Karpatium --version 1.0.3
+dotnet add package Karpatium --version 2.0.0
 ```
 
 Or from the NuGet Package Manager:
 
 ```bash
-Install-Package Karpatium -Version 1.0.3
+Install-Package Karpatium -Version 2.0.0
 ```
 
 ## Contribute

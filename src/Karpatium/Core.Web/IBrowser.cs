@@ -9,6 +9,11 @@ namespace Karpatium.Core.Web;
 public interface IBrowser
 {
     /// <summary>
+    /// Gets the duration for which the browser waits when searching for an element if it is not immediately present.
+    /// </summary>
+    public TimeSpan ImplicitWait { get; set; }
+    
+    /// <summary>
     /// Gets the source code of the current webpage loaded in the browser instance.
     /// </summary>
     public string PageSource { get; }

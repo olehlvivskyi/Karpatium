@@ -46,8 +46,14 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
     /// </summary>
     internal void Quit() => DriverWrapper.Quit();
     
+    public TimeSpan ImplicitWait
+    {
+        get => DriverWrapper.Manage().Timeouts().ImplicitWait;
+        set => DriverWrapper.Manage().Timeouts().ImplicitWait = value;
+    }
+
     public string PageSource => DriverWrapper.PageSource;
-    
+
     public string Title => DriverWrapper.Title;
 
     public string Url => DriverWrapper.Url;

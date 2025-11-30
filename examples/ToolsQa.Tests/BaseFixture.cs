@@ -60,9 +60,9 @@ public abstract class BaseFixture<TTestData>
         if (!TestContext.CurrentContext.Result.Outcome.Equals(ResultState.Success))
         {
             string fileName = $"{DateTime.Now:yyyy.MM.dd-hh.mm.ss} - {GetTestName()}";
-            string browserLogsPath = WebManager.DebugBrowserLogs(fileName);
-            string pageSourcePath = WebManager.DebugPageSource(fileName);
-            string screenshotPath = WebManager.DebugScreenshot(fileName);
+            string browserLogsPath = WebManager.SaveBrowserLogs(fileName);
+            string pageSourcePath = WebManager.SavePageSource(fileName);
+            string screenshotPath = WebManager.SaveScreenshot(fileName);
             Log.Error($"### Test Failed: {GetTestName()} ###");
             Log.Verbose($"### Browser Logs: {browserLogsPath} ###");
             Log.Verbose($"### Page source: {pageSourcePath} ###");

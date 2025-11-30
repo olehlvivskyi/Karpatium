@@ -107,10 +107,10 @@ public static class WebManager
     }
 
     /// <summary>
-    /// Generates browser log files for debugging purposes and saves it to a specified location.
+    /// Saves browser log files for debugging purposes.
     /// </summary>
     /// <param name="fileName">The name of the file (excluding extension) where the browser logs should be saved.</param>
-    public static string DebugBrowserLogs(string fileName)
+    public static string SaveBrowserLogs(string fileName)
     {
         FileInfo fileInfo = new FileInfo(Path.Join(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Logs", $"{fileName}.browserlogs.txt"));
         Directory.CreateDirectory(fileInfo.DirectoryName!);
@@ -124,7 +124,7 @@ public static class WebManager
     /// </summary>
     /// <param name="fileName">The name of the file (without extension) to store the page source.</param>
     /// <returns>The full path to the file containing the page source.</returns>
-    public static string DebugPageSource(string fileName)
+    public static string SavePageSource(string fileName)
     {
         FileInfo fileInfo = new FileInfo(Path.Join(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Logs", $"{fileName}.pageSource.txt"));
         Directory.CreateDirectory(fileInfo.DirectoryName!);
@@ -134,11 +134,11 @@ public static class WebManager
     }
 
     /// <summary>
-    /// Captures a screenshot of the current browser window and saves it to the specified file path.
+    /// Saves a screenshot of the current browser window.
     /// </summary>
     /// <param name="fileName">The name of the file (without extension) where the screenshot will be saved.</param>
     /// <returns>The full path of the file where the screenshot was saved.</returns>
-    public static string DebugScreenshot(string fileName)
+    public static string SaveScreenshot(string fileName)
     {
         FileInfo fileInfo = new FileInfo(Path.Join(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Logs", $"{fileName}.screenshot.png"));
         Directory.CreateDirectory(fileInfo.DirectoryName!);

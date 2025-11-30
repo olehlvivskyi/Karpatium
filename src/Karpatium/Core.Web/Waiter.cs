@@ -48,6 +48,16 @@ internal sealed class Waiter(Browser browser) : IWaiter
     {
         ConditionalWaiter.ForTrue(() => BrowserWrapper.ExecuteJavascript(condition)?.ToString() == "true", $"{nameof(Waiter)}: {nameof(ForJavaScriptConditionToBeTrue)} failed.", timeOutInSeconds);
     }
+    
+    public void ForLoadersToDisappear(IReadOnlyList<string> cssClasses, int timeOutInSeconds = 10)
+    {
+        ConditionalWaiter.ForFalse(() =>
+        {
+            var classesList = string.Join(",", cssClasses.Select(cssClass => $"'{cssClass}'"));
+            var script = $"return [{classesList}].some(cssClass => document.getElementsByClassName(cssClass).length > 0);";
+            return Convert.ToBoolean(BrowserWrapper.ExecuteJavascript(script));
+        }, $"{nameof(Waiter)}: {nameof(ForLoadersToDisappear)} failed.", timeOutInSeconds);
+    }
 
     public void ForPageSourceIsNotChanged(int timeOutInSeconds = 10, int pollingIntervalInMilliseconds = 100)
     {
