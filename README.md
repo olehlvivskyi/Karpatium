@@ -32,8 +32,9 @@ Karpatium leverages **NUnit** as its primary testing framework, ensuring the sim
 - ✅ **NUnit integration** for structuring and running tests with ease.
 - ✅ **Allure reporting** for clear, detailed, and professional test insights.
 - ✅ **Cross-browser support** (Chrome, Firefox, Edge, Safari).
-- ✅ **Modern syntax** with .NET 9.0 and C# 13.0 support.
+- ✅ **Modern syntax** with .NET 10.0 and C# 14.0 support.
 - ✅ **Detailed logging** with Serilog integration for better debugging.
+- ✅ **Additional features** like QR Code decoding, PDF extraction.
 - ✅ **Extensible architecture** to suit custom requirements.
 
 ## Getting Started
@@ -43,13 +44,13 @@ Karpatium leverages **NUnit** as its primary testing framework, ensuring the sim
 You can add Karpatium to your project via the .NET CLI:
 
 ```bash
-dotnet add package Karpatium --version 2.0.0
+dotnet add package Karpatium --version 2.1.0
 ```
 
 Or from the NuGet Package Manager:
 
 ```bash
-Install-Package Karpatium -Version 2.0.0
+Install-Package Karpatium -Version 2.1.0
 ```
 
 ## Contribute

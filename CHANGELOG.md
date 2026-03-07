@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2026-03-07
+
+### Added
+
+- Support for Element in ExecuteScript.
+- PDF extraction support.
+- QR code decoding support.
+
+### Updated
+
+- Updated the project to .NET 10.0.
+- Updated NuGet package dependencies to the latest stable versions.
+
+[2.1.0]: https://www.nuget.org/packages/Karpatium/2.1.0
+
 ## [2.0.0] - 2025-11-30
 
 ### Added
@@ -14,6 +29,7 @@ All notable changes to this project will be documented in this file.
 ### Updated
 
 - Updated NuGet package dependencies to the latest stable versions.
+- Updated tests according to the latest changes.
 
 [2.0.0]: https://www.nuget.org/packages/Karpatium/2.0.0
 

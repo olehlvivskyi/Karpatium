@@ -116,6 +116,15 @@ public abstract class Element
     }
 
     /// <summary>
+    /// Executes a JavaScript click action on the element.
+    /// </summary>
+    public void ClickWithJavaScript()
+    {
+        ConditionalWaiter.ForNoException(() => WebManager.BrowserWrapper.ExecuteJavascript("arguments[0].click();", WebElementWrapper), $"{nameof(ClickWithJavaScript)} failed.");
+        WebManager.Waiter.ForPageSourceIsNotChanged();
+    }
+
+    /// <summary>
     /// Simulates a double-click action on the element.
     /// </summary>
     public void DoubleClick()

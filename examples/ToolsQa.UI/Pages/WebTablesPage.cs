@@ -15,7 +15,7 @@ public class WebTablesPage(string relativePath) : BasePage(relativePath)
     
     private CommonElement Add => ElementFactory.Create<CommonElement>(Selector.Id("addNewRecordButton"));
     private CommonElement RegistrationFormDialogWrapper => ElementFactory.Create<CommonElement>(Selector.Class("modal-content"));
-    private CommonElement WorkerTableWrapper => ElementFactory.Create<CommonElement>(Selector.Class("ReactTable"));
+    private CommonElement WorkerTableWrapper => ElementFactory.Create<CommonElement>(Selector.Class("web-tables-wrapper"));
 
     /// <summary>
     /// Provides access to the "Registration Form" dialog.

@@ -8,7 +8,7 @@ namespace ToolsQa.UI.Components.React;
 /// </summary>
 internal sealed class ReactTableRowComponent(CommonElement componentWrapper, List<string> headers) : BaseComponent<CommonElement>(componentWrapper)
 {
-    private ElementCollection<CommonElement> Cells => ElementFactory.CreateMultiple<CommonElement>(Selector.Class("rt-td"), ComponentWrapper);
+    private ElementCollection<CommonElement> Cells => ElementFactory.CreateMultiple<CommonElement>(Selector.Tag("td"), ComponentWrapper);
 
     internal string GetCellText(string headerText)
     {

@@ -1,5 +1,6 @@
 {
-  "multipleNodesName1": "Commands",
+  "multipleNodesName1": "Veu",
   "multipleNodesName2": "React",
-  "singleNodeName": "Classified"
+  "nodesToExpand": ["Home", "Documents", "WorkSpace"],
+  "singleNodeName": "Angular"
 }

@@ -97,7 +97,8 @@ internal sealed class Browser(IWebDriver driver) : IBrowser
 
     public object? ExecuteJavascript(string script, params object[] args)
     {
-        object? result = JavaScriptExecutorWrapper.ExecuteScript(script, args);
+        object[] normalizedArgs = args.Select(arg => arg is Element element ? element.WebElementWrapper : arg).ToArray();
+        object? result = JavaScriptExecutorWrapper.ExecuteScript(script, normalizedArgs);
         return result;
     }
     

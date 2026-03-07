@@ -1,6 +1,7 @@
 using Allure.NUnit.Attributes;
 using Karpatium.Core.Nunit;
 using Karpatium.Core.Web;
+using Karpatium.Core.Web.Elements;
 using ToolsQa.UI;
 
 namespace ToolsQa.Tests.TestCases;
@@ -25,6 +26,8 @@ public sealed class BrokenTests : BaseFixture<EmptyTestData>
     [RetryOnErrorAndFailure(3)]
     public void EnsureThatLogo1ImageIsLoaded()
     {
+        FixForBrokenImage();
+
         Assert.That(ToolsQaPages.BrokenPage.IsFirstLogoImageValid, Is.True, "First logo image is not loaded.");
     }
     
@@ -33,5 +36,11 @@ public sealed class BrokenTests : BaseFixture<EmptyTestData>
     public void EnsureThatLogo2ImageIsNotLoaded()
     {
         Assert.That(ToolsQaPages.BrokenPage.IsSecondLogoImageValid, Is.False, "Second logo image is loaded.");
+    }
+
+    private void FixForBrokenImage()
+    {
+        ImageElement image = ElementFactory.Create<ImageElement>(Selector.XPath("//p[text()='Valid image']/following-sibling::img"));
+        WebManager.Browser.ExecuteJavascript("arguments[0].setAttribute('src', arguments[1]);", image, "https://picsum.photos/200/300");
     }
 }

@@ -16,8 +16,8 @@ internal sealed class ReactTableComponent : BaseComponent<CommonElement>
         _headers = ConditionalWaiter.ForResult(() => Headers.Select(header => header.Text).ToList(), $"{nameof(ReactTableComponent)}: {nameof(ReactTableComponent)} failed.");
     }
     
-    private ElementCollection<CommonElement> Headers => ElementFactory.CreateMultiple<CommonElement>(Selector.Class("rt-th"), ComponentWrapper);
-    private ElementCollection<CommonElement> Rows => ElementFactory.CreateMultiple<CommonElement>(Selector.Class("rt-tr-group"), ComponentWrapper);
+    private ElementCollection<CommonElement> Headers => ElementFactory.CreateMultiple<CommonElement>(Selector.Css("thead tr th"), ComponentWrapper);
+    private ElementCollection<CommonElement> Rows => ElementFactory.CreateMultiple<CommonElement>(Selector.Css("tbody tr"), ComponentWrapper);
     
     internal ReactTableRowComponent? GetRow(string headerText, string cellText)
     {

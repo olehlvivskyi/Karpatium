@@ -21,7 +21,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
 
       - name: Restore dependencies
         run: dotnet restore
@@ -30,4 +30,21 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Test
+        id: test
         run: dotnet test --no-build --verbosity normal
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: examples/ToolsQa.Tests/bin/Debug/net10.0/Logs/
+          retention-days: 7
+
+      - name: Upload allure-results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: examples/ToolsQa.Tests/bin/Debug/net10.0/allure-results/
+          retention-days: 7

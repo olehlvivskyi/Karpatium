@@ -43,7 +43,7 @@ public abstract class BaseFixture<TTestData>
         Log.Information($"{nameof(UsersPool)}: Engaged `{TestCaseUser.Email}` user.");
         
         WebManager.Initialize(TestConfiguration.WebManagerSettings);
-        WebManager.Browser.MaximizeWindow();
+        ResizeWindowForCi();
     }
 
     [AllureBefore]
@@ -115,4 +115,16 @@ public abstract class BaseFixture<TTestData>
     }
 
     private string GetTestName() => $"{TestContext.CurrentContext.Test.DisplayName}.{TestContext.CurrentContext.Test.MethodName}";
+
+    private void ResizeWindowForCi()
+    {
+        if (Environment.GetEnvironmentVariable("CI") == "true")
+        {
+            WebManager.Browser.ResizeWindow(1920, 1080);
+        }
+        else
+        {
+            WebManager.Browser.MaximizeWindow();
+        }
+    }
 }

@@ -12,19 +12,24 @@ public sealed class CheckBoxPage(string relativePath) : BasePage(relativePath)
 {
     protected override string PageName => "\"Check Box\" page";
     
-    private CommonElement ExpandAll => ElementFactory.Create<CommonElement>(Selector.Class("rct-option-expand-all"));
-    private CommonElement GetNodeCheckbox(CommonElement node) => ElementFactory.Create<CommonElement>(Selector.Class("rct-checkbox"), node);
-    private ElementCollection<CommonElement> Nodes => ElementFactory.CreateMultiple<CommonElement>(Selector.Class("rct-node-leaf"));
+    private CommonElement GetNodeSwitcher(CommonElement node) => ElementFactory.Create<CommonElement>(Selector.Class("rc-tree-switcher"), node);
+    private CommonElement GetNodeCheckbox(CommonElement node) => ElementFactory.Create<CommonElement>(Selector.Class("rc-tree-checkbox"), node);
+    private ElementCollection<CommonElement> Nodes => ElementFactory.CreateMultiple<CommonElement>(Selector.Css(".rc-tree-list .rc-tree-treenode"));
     private ElementCollection<CommonElement> SelectedNodes => ElementFactory.CreateMultiple<CommonElement>(Selector.Class("text-success"));
 
     /// <summary>
-    /// Clicks on the "Expand All" button.
+    /// Expands a node by its name.
     /// </summary>
-    public void ClickExpandAll()
+    /// <param name="nodeName">The name of the node to be expanded.</param>
+    public void ExpandNode(string nodeName)
     {
-        Log.Information("{PageName}: Clicking on the \"Expand All\" button.", PageName);
-        
-        ExpandAll.Click();
+        Log.Information("{PageName}: Expanding `{NodeName}` node.", PageName, nodeName);
+
+        CommonElement nodeToSelect = ConditionalWaiter.ForResult(() => Nodes.First(node => node.Text.Contains(nodeName)), $"{PageName}: {nameof(SelectNode)} failed.");
+        CommonElement nodeSwitcher = GetNodeSwitcher(nodeToSelect);
+
+        nodeSwitcher.Click();
+        WebManager.Waiter.ForPageSourceIsNotChanged();
     }
 
     /// <summary>

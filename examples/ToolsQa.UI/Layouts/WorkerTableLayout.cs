@@ -60,7 +60,7 @@ public class WorkerTableRowItem
     public void ClickDelete()
     {
         Log.Information("{PageName}[{LayoutName}]: Clicking on the \"Delete\" icon.", _pageName, _layoutName);
-        
+
         Delete.Click();
     }
 
@@ -70,7 +70,7 @@ public class WorkerTableRowItem
     public void ClickEdit()
     {
         Log.Information("{PageName}[{LayoutName}]: Clicking on the \"Edit\" icon.", _pageName, _layoutName);
-        
+
         Edit.Click();
     }
 

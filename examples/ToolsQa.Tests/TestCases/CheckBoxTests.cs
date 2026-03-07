@@ -26,8 +26,11 @@ public sealed class CheckBoxTests : BaseFixture<CheckBoxTestData>
     public void EnsureThatMultipleNodesAreSelected()
     {
         IReadOnlyList<string> nodeNames = [TestData.MultipleNodesName1.ToLowerInvariant(), TestData.MultipleNodesName2.ToLowerInvariant() ];
-        
-        ToolsQaPages.CheckBoxPage.ClickExpandAll();
+
+        foreach (string nodeToExpand in TestData.NodesToExpand)
+        {
+            ToolsQaPages.CheckBoxPage.ExpandNode(nodeToExpand);
+        }
         ToolsQaPages.CheckBoxPage.SelectNode(TestData.MultipleNodesName1);
         ToolsQaPages.CheckBoxPage.SelectNode(TestData.MultipleNodesName2);
 
@@ -39,7 +42,10 @@ public sealed class CheckBoxTests : BaseFixture<CheckBoxTestData>
     [RetryOnErrorAndFailure(3)]
     public void EnsureThatSingleNodeIsSelected()
     {
-        ToolsQaPages.CheckBoxPage.ClickExpandAll();
+        foreach (string nodeToExpand in TestData.NodesToExpand)
+        {
+            ToolsQaPages.CheckBoxPage.ExpandNode(nodeToExpand);
+        }
         ToolsQaPages.CheckBoxPage.SelectNode(TestData.SingleNodeName);
 
         IReadOnlyList<string> selectedNodeNames = ToolsQaPages.CheckBoxPage.GetSelectedNodes();
@@ -52,5 +58,6 @@ public sealed class CheckBoxTestData
 {
     public required string MultipleNodesName1 { get; init; }
     public required string MultipleNodesName2 { get; init; }
+    public required IEnumerable<string> NodesToExpand { get; init; }
     public required string SingleNodeName { get; init; }
 }
