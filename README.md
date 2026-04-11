@@ -21,14 +21,15 @@
 
 ## Overview
 
-**Karpatium** is a robust and flexible test automation framework built on top of **Selenium** and **RestSharp**. It aims to provide developers and testers with an efficient toolset for ensuring the quality of web applications, combining ease of use with powerful features.
+**Karpatium** is a robust and flexible test automation framework built on top of **Selenium**, **RestSharp** and **Appium**. It aims to provide developers and testers with an efficient toolset for ensuring the quality of web applications, API, mobile applications, combining ease of use with powerful features.
 
 Karpatium leverages **NUnit** as its primary testing framework, ensuring the simplicity, extensibility, and seamless integration of your test suite. The framework also integrates seamlessly with **Allure** for generating comprehensive, user-friendly test reports that make debugging and results analysis more efficient. NUnit is a trusted and widely-used tool among automation engineers for testing .NET applications due to its ease of use and rich feature set.
 
 ## Features
 
 - ✅ **Selenium-powered browser automation** for testing web applications.
-- ✅ **RestSharp integration** for robust and efficient API testing.
+- ✅ **RestSharp-powered API automation** for robust and efficient API testing.
+- ✅ **Appium-powered mobile automation** for testing mobile applications.
 - ✅ **NUnit integration** for structuring and running tests with ease.
 - ✅ **Allure reporting** for clear, detailed, and professional test insights.
 - ✅ **Cross-browser support** (Chrome, Firefox, Edge, Safari).
@@ -44,13 +45,13 @@ Karpatium leverages **NUnit** as its primary testing framework, ensuring the sim
 You can add Karpatium to your project via the .NET CLI:
 
 ```bash
-dotnet add package Karpatium --version 2.1.0
+dotnet add package Karpatium --version 3.0.0
 ```
 
 Or from the NuGet Package Manager:
 
 ```bash
-Install-Package Karpatium -Version 2.1.0
+Install-Package Karpatium -Version 3.0.0
 ```
 
 ## Contribute

@@ -1,3 +1,4 @@
+using Karpatium.Core.Mobile;
 using Karpatium.Core.Web;
 using Microsoft.Extensions.Configuration;
 using ToolsQa.Tests.TestUsers;
@@ -45,6 +46,14 @@ public static class TestConfiguration
         .Value
         .GetSection("WebManagerSettings")
         .Get<WebManagerSettings>()!;
+
+    /// <summary>
+    /// Represents the configuration settings related to the web manager.
+    /// </summary>
+    public static MobileManagerSettings MobileManagerSettings => LazyConfig
+        .Value
+        .GetSection("MobileManagerSettings")
+        .Get<MobileManagerSettings>()!;
 }
 
 /// <summary>
@@ -112,4 +121,18 @@ public sealed class WebManagerSettings : IBrowserSettings
     public required bool IsHeadlessEnabled { get; init; }
     public required bool IsLocalExecution { get; init; }
     public required string RemoteUrl { get; init; }
+}
+
+/// <summary>
+/// Represents the configuration settings related to the mobile manager.
+/// </summary>
+[Serializable]
+public sealed class MobileManagerSettings : IMobileSettings
+{
+    public required MobilePlatform MobilePlatform { get; init; }
+    public required string AppiumServerUrl { get; init; }
+    public required string DeviceName { get; init; }
+    public required string PlatformVersion { get; init; }
+    public required string App { get; init; }
+    public required int ImplicitWaitInSeconds { get; init; }
 }

@@ -39,5 +39,13 @@
     "IsHeadlessEnabled": false,
     "IsLocalExecution":  true,
     "RemoteUrl": ""
+  },
+  "MobileManagerSettings": {
+    "MobilePlatform": "Android",
+    "AppiumServerUrl": "http://localhost:4723",
+    "DeviceName": "Pixel_8a",
+    "PlatformVersion": "15",
+    "App": "/Users/username/pathToApp/ApiDemos-debug.apk",
+    "ImplicitWaitInSeconds": "120"
   }
 }

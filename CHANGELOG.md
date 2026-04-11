@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] - 2026-04-11
+
+### Added
+
+- Mobile Automation support (quick and simple structure)
+
+### Updated
+
+- Updated the pipeline to .NET 10.0.
+- Updated NuGet package dependencies to the latest stable versions.
+
+[3.0.0]: https://www.nuget.org/packages/Karpatium/3.0.0
+
 ## [2.1.0] - 2026-03-07
 
 ### Added
